@@ -1,0 +1,1392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Treasure Trove — Danny Gardner</title>
+  <meta name="description" content="Skills, tools, workflows, and projects for AI-powered development — all in one place.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    :root {
+      --vanilla-cream: #faf7f0;
+      --warm-beige: #f5f1e8;
+      --soft-tan: #eae5d6;
+      --warm-brown: #8b7355;
+      --deep-brown: #5d4e37;
+      --coral-accent: #ff6b6b;
+      --sage-green: #87a96b;
+      --warm-gold: #d4af37;
+      --sunset-orange: #ff8c42;
+      --text-primary: #2c2417;
+      --text-secondary: #5d4e37;
+      --bg-primary: #faf7f0;
+      --bg-secondary: #f5f1e8;
+      --card-bg: #ffffff;
+      --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font);
+      color: var(--text-primary);
+      background: var(--bg-primary);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* ── NAV ── */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: rgba(250, 247, 240, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--soft-tan);
+      transition: box-shadow 0.3s ease;
+    }
+
+    .nav.scrolled {
+      box-shadow: 0 2px 20px rgba(139, 115, 85, 0.12);
+    }
+
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+
+    .nav-logo {
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: var(--warm-brown);
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      font-weight: 500;
+      position: relative;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--coral-accent);
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a.active { color: var(--coral-accent); }
+    .nav-links a.active::after { width: 100%; }
+    .nav-links a:hover { color: var(--coral-accent); }
+
+    .nav-links .external {
+      color: var(--warm-brown);
+      font-weight: 600;
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--text-primary);
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    /* ── SECTIONS ── */
+    section { padding: 5rem 0; }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2.5rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .section-header h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .section-badge {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      background: var(--soft-tan);
+      padding: 0.35rem 1rem;
+      border-radius: 20px;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      padding-top: 9rem;
+      padding-bottom: 5rem;
+      background: var(--bg-primary);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .hero h1 {
+      font-size: 3.5rem;
+      font-weight: 700;
+      line-height: 1.15;
+      color: var(--text-primary);
+      margin-bottom: 1.25rem;
+    }
+
+    .hero h1 em {
+      color: var(--coral-accent);
+      font-style: italic;
+    }
+
+    .hero-subtitle {
+      font-size: 1.15rem;
+      font-weight: 400;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 2rem;
+      max-width: 480px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.85rem 1.75rem;
+      border-radius: 12px;
+      font-family: var(--font);
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+    }
+
+    .btn-coral {
+      background: var(--coral-accent);
+      color: #fff;
+      border-color: var(--coral-accent);
+    }
+    .btn-coral:hover {
+      background: #e85d5d;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255, 107, 107, 0.3);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--warm-brown);
+      border-color: var(--warm-brown);
+    }
+    .btn-outline:hover {
+      background: var(--warm-brown);
+      color: #fff;
+      transform: translateY(-2px);
+    }
+
+    /* Hero floating icons */
+    .hero-icons {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+      max-width: 340px;
+      justify-self: center;
+    }
+
+    .hero-icon-block {
+      width: 80px;
+      height: 80px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: floatY 3s ease-in-out infinite;
+    }
+
+    .hero-icon-block img {
+      width: 36px;
+      height: 36px;
+    }
+
+    .hero-icon-block.dark {
+      background: var(--text-primary);
+    }
+    .hero-icon-block.dark img { filter: brightness(0) invert(1); }
+
+    .hero-icon-block.coral {
+      background: var(--coral-accent);
+    }
+    .hero-icon-block.coral img { filter: brightness(0) invert(1); }
+
+    .hero-icon-block.light {
+      background: #fff;
+      border: 1px solid var(--soft-tan);
+    }
+
+    .hero-icon-block:nth-child(1) { animation-duration: 3.2s; animation-delay: 0s; }
+    .hero-icon-block:nth-child(2) { animation-duration: 2.8s; animation-delay: 0.4s; }
+    .hero-icon-block:nth-child(3) { animation-duration: 3.5s; animation-delay: 0.8s; }
+    .hero-icon-block:nth-child(4) { animation-duration: 3s; animation-delay: 0.2s; }
+    .hero-icon-block:nth-child(5) { animation-duration: 3.4s; animation-delay: 0.6s; }
+    .hero-icon-block:nth-child(6) { animation-duration: 2.9s; animation-delay: 1s; }
+
+    @keyframes floatY {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+
+    /* ── SKILLS ── */
+    .skills-section { background: var(--bg-secondary); }
+
+    .filter-bar {
+      display: flex;
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      padding: 0.45rem 1.25rem;
+      border-radius: 20px;
+      font-family: var(--font);
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 2px solid;
+    }
+
+    .filter-btn[data-filter="all"] { border-color: var(--warm-brown); color: var(--warm-brown); background: transparent; }
+    .filter-btn[data-filter="all"].active { background: var(--warm-brown); color: #fff; }
+
+    .filter-btn[data-filter="video"] { border-color: var(--coral-accent); color: var(--coral-accent); background: transparent; }
+    .filter-btn[data-filter="video"].active { background: var(--coral-accent); color: #fff; }
+
+    .filter-btn[data-filter="image"] { border-color: var(--sage-green); color: var(--sage-green); background: transparent; }
+    .filter-btn[data-filter="image"].active { background: var(--sage-green); color: #fff; }
+
+    .filter-btn[data-filter="content"] { border-color: var(--warm-gold); color: var(--warm-gold); background: transparent; }
+    .filter-btn[data-filter="content"].active { background: var(--warm-gold); color: #fff; }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .skill-card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 6px 25px rgba(139, 115, 85, 0.1);
+      cursor: pointer;
+      transition: all 0.4s ease;
+    }
+
+    .skill-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 40px rgba(139, 115, 85, 0.18);
+    }
+
+    .skill-card-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .skill-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    .skill-icon.coral { background: var(--coral-accent); }
+    .skill-icon.sage { background: var(--sage-green); }
+    .skill-icon.gold { background: var(--warm-gold); }
+
+    .skill-card h3 {
+      font-size: 1.15rem;
+      font-weight: 600;
+    }
+
+    .skill-tag {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.2rem 0.65rem;
+      border-radius: 12px;
+      color: #fff;
+      margin-bottom: 0.75rem;
+    }
+
+    .skill-tag.coral { background: var(--coral-accent); }
+    .skill-tag.sage { background: var(--sage-green); }
+    .skill-tag.gold { background: var(--warm-gold); }
+
+    .skill-card p {
+      color: var(--text-secondary);
+      font-size: 0.92rem;
+      line-height: 1.65;
+    }
+
+    .skill-detail {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, margin-top 0.3s ease;
+      margin-top: 0;
+    }
+
+    .skill-card.expanded .skill-detail {
+      max-height: 300px;
+      margin-top: 1rem;
+    }
+
+    .skill-detail-inner {
+      padding-top: 1rem;
+      border-top: 1px solid var(--soft-tan);
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+      line-height: 1.7;
+    }
+
+    .skill-card[data-category].hidden { display: none; }
+
+    /* ── BUNDLEDOWNLOAD ── */
+    .tools-section { background: var(--bg-primary); }
+
+    .tools-subtitle {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      margin-top: -1.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .install-blocks {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 3rem;
+    }
+
+    .install-block {
+      background: var(--text-primary);
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .install-block:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(44, 36, 23, 0.3);
+    }
+
+    .install-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--warm-brown);
+      margin-bottom: 0.5rem;
+    }
+
+    .install-cmd {
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 0.85rem;
+      color: var(--vanilla-cream);
+      word-break: break-all;
+    }
+
+    .install-block .copied-toast {
+      position: absolute;
+      top: 0.75rem;
+      right: 1rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--coral-accent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .install-block.copied .copied-toast { opacity: 1; }
+
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-bottom: 3rem;
+    }
+
+    .tool-card {
+      background: var(--card-bg);
+      border: 1px solid var(--soft-tan);
+      border-radius: 12px;
+      padding: 1.25rem;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .tool-card:hover {
+      border-color: var(--warm-brown);
+      transform: translateY(-4px);
+      box-shadow: 0 6px 20px rgba(139, 115, 85, 0.1);
+    }
+
+    .tool-card img {
+      width: 32px;
+      height: 32px;
+      margin-bottom: 0.5rem;
+    }
+
+    .tool-card h4 {
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+
+    .tool-phase {
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--coral-accent);
+    }
+
+    .presets-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .presets-header h3 {
+      font-size: 1.3rem;
+      font-weight: 700;
+    }
+
+    .presets-header span {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      font-style: italic;
+    }
+
+    .presets-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+    }
+
+    .preset-card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 1.75rem;
+      box-shadow: 0 6px 25px rgba(139, 115, 85, 0.1);
+      transition: all 0.4s ease;
+    }
+
+    .preset-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 35px rgba(139, 115, 85, 0.16);
+    }
+
+    .preset-card h4 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+
+    .preset-card .preset-desc {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      font-style: italic;
+      margin-bottom: 1rem;
+    }
+
+    .preset-tools {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 1rem;
+    }
+
+    .preset-pill {
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 0.2rem 0.6rem;
+      border-radius: 10px;
+      background: var(--bg-secondary);
+      color: var(--text-secondary);
+    }
+
+    .preset-cmd {
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 0.78rem;
+      background: var(--text-primary);
+      color: var(--vanilla-cream);
+      padding: 0.6rem 0.85rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .preset-cmd:hover {
+      box-shadow: 0 4px 12px rgba(44, 36, 23, 0.3);
+    }
+
+    .preset-cmd .copied-toast {
+      position: absolute;
+      top: 50%;
+      right: 0.85rem;
+      transform: translateY(-50%);
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--coral-accent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .preset-cmd.copied .copied-toast { opacity: 1; }
+
+    /* ── OPENCLAW ── */
+    .openclaw-section { background: var(--bg-secondary); }
+
+    .openclaw-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .openclaw-badge {
+      display: inline-block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 0.3rem 0.9rem;
+      border-radius: 14px;
+      background: var(--sage-green);
+      color: #fff;
+      margin-bottom: 1rem;
+    }
+
+    .openclaw-grid h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .openclaw-desc {
+      color: var(--text-secondary);
+      font-size: 1rem;
+      line-height: 1.7;
+      margin-bottom: 1.75rem;
+    }
+
+    .openclaw-features {
+      list-style: none;
+      margin-bottom: 2rem;
+    }
+
+    .openclaw-features li {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.5rem 0;
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+    }
+
+    .openclaw-features li i {
+      color: var(--sage-green);
+      width: 20px;
+      text-align: center;
+    }
+
+    .openclaw-preview {
+      border: 2px dashed var(--soft-tan);
+      border-radius: 16px;
+      height: 300px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      color: var(--warm-brown);
+    }
+
+    .openclaw-preview i {
+      font-size: 3rem;
+      opacity: 0.4;
+    }
+
+    .openclaw-preview span {
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    /* ── WORKFLOWS ── */
+    .workflows-section { background: var(--bg-primary); }
+
+    .workflows-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .workflow-card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 1.75rem;
+      box-shadow: 0 6px 25px rgba(139, 115, 85, 0.1);
+      border-left: 4px solid;
+      transition: all 0.4s ease;
+    }
+
+    .workflow-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 35px rgba(139, 115, 85, 0.16);
+    }
+
+    .workflow-card.coral-border { border-left-color: var(--coral-accent); }
+    .workflow-card.sage-border { border-left-color: var(--sage-green); }
+    .workflow-card.gold-border { border-left-color: var(--warm-gold); }
+    .workflow-card.orange-border { border-left-color: var(--sunset-orange); }
+
+    .workflow-card h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .workflow-card p {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    .workflow-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .workflow-tools {
+      display: flex;
+      gap: 0.4rem;
+    }
+
+    .workflow-tool-icon {
+      width: 28px;
+      height: 28px;
+      background: var(--bg-secondary);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .workflow-tool-icon img { width: 18px; height: 18px; }
+
+    .status-pill {
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 0.2rem 0.7rem;
+      border-radius: 10px;
+      color: #fff;
+    }
+
+    .status-pill.active { background: var(--sage-green); }
+    .status-pill.experimental { background: var(--sunset-orange); }
+
+    /* ── PROJECTS ── */
+    .projects-section { background: var(--bg-secondary); }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .project-card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 6px 25px rgba(139, 115, 85, 0.1);
+      transition: all 0.4s ease;
+    }
+
+    .project-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 40px rgba(139, 115, 85, 0.18);
+    }
+
+    .project-img {
+      height: 200px;
+      background: var(--soft-tan);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .project-img i {
+      font-size: 3rem;
+      color: var(--warm-brown);
+      opacity: 0.35;
+    }
+
+    .project-body {
+      padding: 1.5rem;
+    }
+
+    .project-body h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .project-body p {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    .project-link {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--coral-accent);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .project-link:hover { color: #e85d5d; }
+
+    .project-link.disabled {
+      color: var(--warm-brown);
+      opacity: 0.6;
+      cursor: default;
+    }
+
+    /* ── FOOTER ── */
+    .site-footer {
+      background: var(--deep-brown);
+      padding: 2.5rem 0;
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-left {
+      color: var(--warm-beige);
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .footer-links a {
+      color: var(--warm-beige);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.3s ease;
+    }
+
+    .footer-links a:hover { color: var(--coral-accent); }
+
+    .footer-copy {
+      width: 100%;
+      text-align: center;
+      margin-top: 1.5rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid rgba(245, 241, 232, 0.15);
+      color: rgba(245, 241, 232, 0.5);
+      font-size: 0.8rem;
+    }
+
+    /* ── FADE IN ANIMATIONS ── */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .hero-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .hero-icons { justify-self: start; }
+      .hero h1 { font-size: 2.8rem; }
+      .skills-grid { grid-template-columns: 1fr; }
+      .install-blocks { grid-template-columns: 1fr; }
+      .tools-grid { grid-template-columns: repeat(3, 1fr); }
+      .presets-grid { grid-template-columns: 1fr; }
+      .openclaw-grid { grid-template-columns: 1fr; }
+      .workflows-grid { grid-template-columns: 1fr; }
+      .projects-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 2.2rem; }
+      .hero { padding-top: 7rem; }
+      section { padding: 3.5rem 0; }
+      .container { padding: 0 1.25rem; }
+      .nav-links { display: none; }
+      .nav-links.open {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 64px;
+        left: 0;
+        right: 0;
+        background: rgba(250, 247, 240, 0.98);
+        backdrop-filter: blur(20px);
+        padding: 1.5rem 2rem;
+        border-bottom: 1px solid var(--soft-tan);
+        gap: 1.25rem;
+      }
+      .hamburger { display: flex; }
+      .tools-grid { grid-template-columns: 1fr 1fr; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .hero-icons { grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+      .hero-icon-block { width: 64px; height: 64px; }
+      .hero-icon-block img { width: 28px; height: 28px; }
+      .section-header h2 { font-size: 1.6rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a class="nav-logo" onclick="window.scrollTo({top:0,behavior:'smooth'})">AI Treasure Trove</a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#skills" data-section="skills">Skills</a></li>
+        <li><a href="#tools" data-section="tools">Tools</a></li>
+        <li><a href="#openclaw" data-section="openclaw">OpenClaw</a></li>
+        <li><a href="#workflows" data-section="workflows">Workflows</a></li>
+        <li><a href="#projects" data-section="projects">Projects</a></li>
+        <li><a href="https://dannygardner.me" target="_blank" class="external">dannygardner.me &#8599;</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <div class="fade-in">
+          <h1>AI Treasure<br><em>Trove</em></h1>
+          <p class="hero-subtitle">Skills, tools, workflows, and projects for AI-powered development &mdash; all in one place.</p>
+          <div class="hero-buttons">
+            <a href="#skills" class="btn btn-coral">Explore Skills</a>
+            <a href="https://dannygardner.me" target="_blank" class="btn btn-outline">Visit Portfolio &rarr;</a>
+          </div>
+        </div>
+        <div class="hero-icons fade-in">
+          <div class="hero-icon-block dark"><img src="assets/icons/anthropic.svg" alt="Anthropic"></div>
+          <div class="hero-icon-block coral"><img src="assets/icons/node.svg" alt="Node.js"></div>
+          <div class="hero-icon-block light"><img src="assets/icons/vercel.svg" alt="Vercel"></div>
+          <div class="hero-icon-block light"><img src="assets/icons/cloudflare.svg" alt="Cloudflare"></div>
+          <div class="hero-icon-block dark"><img src="assets/icons/github.svg" alt="GitHub"></div>
+          <div class="hero-icon-block coral"><img src="assets/icons/googlecloud.svg" alt="Google Cloud"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section class="skills-section" id="skills">
+    <div class="container">
+      <div class="section-header fade-in">
+        <h2>Skills</h2>
+        <span class="section-badge">4 Claude Code skills</span>
+      </div>
+
+      <div class="filter-bar fade-in">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="video">Video</button>
+        <button class="filter-btn" data-filter="image">Image</button>
+        <button class="filter-btn" data-filter="content">Content</button>
+      </div>
+
+      <div class="skills-grid">
+        <!-- 3D Animation Creator -->
+        <div class="skill-card fade-in" data-category="video" onclick="this.classList.toggle('expanded')">
+          <div class="skill-card-header">
+            <div class="skill-icon coral"><i class="fas fa-film"></i></div>
+            <h3>3D Animation Creator</h3>
+          </div>
+          <span class="skill-tag coral">Video</span>
+          <p>Turn any video into an Apple-style scroll-driven animation website. Frame extraction, canvas rendering, snap-stop scroll effects.</p>
+          <div class="skill-detail">
+            <div class="skill-detail-inner">
+              Trigger: &lsquo;3D animation&rsquo;, &lsquo;scroll-stop build&rsquo;, &lsquo;scroll animation website&rsquo; &mdash; Includes starscape background, annotation cards, navbar pill transform, count-up animations, full mobile responsiveness.
+            </div>
+          </div>
+        </div>
+
+        <!-- Image Generator -->
+        <div class="skill-card fade-in" data-category="image" onclick="this.classList.toggle('expanded')">
+          <div class="skill-card-header">
+            <div class="skill-icon sage"><i class="fas fa-images"></i></div>
+            <h3>Image Generator</h3>
+          </div>
+          <span class="skill-tag sage">Image</span>
+          <p>Generate coordinated prompt sets for scroll-stopping video content &mdash; hero shot, exploded view, and video transition.</p>
+          <div class="skill-detail">
+            <div class="skill-detail-inner">
+              Trigger: &lsquo;image generator&rsquo;, &lsquo;scroll-stop prompt&rsquo;, &lsquo;exploded view prompt&rsquo; &mdash; Delivers via premium HTML page with tabbed navigation, one-click copy, and confetti animation.
+            </div>
+          </div>
+        </div>
+
+        <!-- Gemini Image Generation -->
+        <div class="skill-card fade-in" data-category="image" onclick="this.classList.toggle('expanded')">
+          <div class="skill-card-header">
+            <div class="skill-icon sage"><i class="fas fa-wand-magic-sparkles"></i></div>
+            <h3>Gemini Image Generation</h3>
+          </div>
+          <span class="skill-tag sage">Image</span>
+          <p>Reference guide for AI image generation via Gemini API, Vertex AI (Imagen 4, Veo 2), with model comparison and error recovery.</p>
+          <div class="skill-detail">
+            <div class="skill-detail-inner">
+              Models: gemini-3-pro (highest quality), gemini-2.5-flash (most reliable). Includes Vertex AI integration with gcloud auth, dark UI handling, video generation options.
+            </div>
+          </div>
+        </div>
+
+        <!-- LinkedIn Post Writer -->
+        <div class="skill-card fade-in" data-category="content" onclick="this.classList.toggle('expanded')">
+          <div class="skill-card-header">
+            <div class="skill-icon gold"><i class="fab fa-linkedin"></i></div>
+            <h3>LinkedIn Post Writer</h3>
+          </div>
+          <span class="skill-tag gold">Content</span>
+          <p>Story-driven LinkedIn posts about developer workflows, architectural thinking, and AI-as-a-team philosophy.</p>
+          <div class="skill-detail">
+            <div class="skill-detail-inner">
+              Trigger: &lsquo;linkedin post&rsquo;, &lsquo;draft a post&rsquo; &mdash; Structure: Hook &rarr; Tension &rarr; Shift &rarr; Implication &rarr; Closer. Voice: first-person, conversational, tension-based.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BUNDLEDOWNLOAD / TOOLS -->
+  <section class="tools-section" id="tools">
+    <div class="container">
+      <div class="section-header fade-in">
+        <h2>BundleDownload</h2>
+        <span class="section-badge">12 tools, 4 presets</span>
+      </div>
+      <p class="tools-subtitle fade-in">One command. Every tool. Stop spending your first day installing things.</p>
+
+      <div class="install-blocks fade-in">
+        <div class="install-block" onclick="copyCmd(this)">
+          <div class="install-label">Mac / Linux</div>
+          <div class="install-cmd">curl -fsSL bundledownload.dev/install.sh | bash</div>
+          <span class="copied-toast">Copied!</span>
+        </div>
+        <div class="install-block" onclick="copyCmd(this)">
+          <div class="install-label">Windows</div>
+          <div class="install-cmd">irm bundledownload.dev/install.ps1 | iex</div>
+          <span class="copied-toast">Copied!</span>
+        </div>
+      </div>
+
+      <div class="tools-grid">
+        <div class="tool-card fade-in"><img src="assets/icons/git.svg" alt="Git"><h4>Git</h4><div class="tool-phase">Foundation</div></div>
+        <div class="tool-card fade-in"><img src="assets/icons/node.svg" alt="Node.js"><h4>Node.js</h4><div class="tool-phase">Foundation</div></div>
+        <div class="tool-card fade-in"><img src="assets/icons/github.svg" alt="GitHub CLI"><h4>GitHub CLI</h4><div class="tool-phase">Standalone</div></div>
+        <div class="tool-card fade-in"><img src="assets/icons/anthropic.svg" alt="Claude Code"><h4>Claude Code</h4><div class="tool-phase">Standalone</div></div>
+        <div class="tool-card fade-in"><img src="assets/icons/aws.svg" alt="AWS CLI"><h4>AWS CLI</h4><div class="tool-phase">Standalone</div></div>
+        <div class="tool-card fade-in"><img src="assets/icons/azure.svg" alt="Azure CLI"><h4>Azure CLI</h4><div class="tool-phase">Standalone</div></div>
+        <div class="tool-card fade-in"><img src="assets/icons/googlecloud.svg" alt="Google Cloud CLI"><h4>Google Cloud CLI</h4><div class="tool-phase">Standalone</div></div>
+        <div class="tool-card fade-in"><img src="assets/icons/vercel.svg" alt="Vercel CLI"><h4>Vercel CLI</h4><div class="tool-phase">NPM Tool</div></div>
+        <div class="tool-card fade-in"><img src="assets/icons/cloudflare.svg" alt="Wrangler"><h4>Wrangler</h4><div class="tool-phase">NPM Tool</div></div>
+        <div class="tool-card fade-in"><img src="assets/icons/supabase.svg" alt="Supabase CLI"><h4>Supabase CLI</h4><div class="tool-phase">NPM Tool</div></div>
+        <div class="tool-card fade-in"><img src="assets/icons/tabby.svg" alt="Tabby"><h4>Tabby</h4><div class="tool-phase">App</div></div>
+        <div class="tool-card fade-in"><img src="assets/icons/whisperflow.svg" alt="WhisperFlow"><h4>WhisperFlow</h4><div class="tool-phase">App</div></div>
+      </div>
+
+      <div class="presets-header fade-in">
+        <h3>Presets</h3>
+        <span>or bring your own config</span>
+      </div>
+
+      <div class="presets-grid">
+        <div class="preset-card fade-in">
+          <h4>danny's-stack</h4>
+          <p class="preset-desc">The essentials for full-stack web development</p>
+          <div class="preset-tools">
+            <span class="preset-pill">node</span>
+            <span class="preset-pill">git</span>
+            <span class="preset-pill">gh</span>
+            <span class="preset-pill">claude-code</span>
+            <span class="preset-pill">vercel</span>
+            <span class="preset-pill">supabase</span>
+            <span class="preset-pill">wrangler</span>
+            <span class="preset-pill">tabby</span>
+          </div>
+          <div class="preset-cmd" onclick="copyCmd(this)">
+            bundledownload --preset danny's-stack
+            <span class="copied-toast">Copied!</span>
+          </div>
+        </div>
+
+        <div class="preset-card fade-in">
+          <h4>frontend-dev</h4>
+          <p class="preset-desc">Frontend development essentials</p>
+          <div class="preset-tools">
+            <span class="preset-pill">node</span>
+            <span class="preset-pill">git</span>
+            <span class="preset-pill">gh</span>
+            <span class="preset-pill">vercel</span>
+            <span class="preset-pill">wrangler</span>
+          </div>
+          <div class="preset-cmd" onclick="copyCmd(this)">
+            bundledownload --preset frontend-dev
+            <span class="copied-toast">Copied!</span>
+          </div>
+        </div>
+
+        <div class="preset-card fade-in">
+          <h4>cloud-ops</h4>
+          <p class="preset-desc">Cloud platform CLIs for infrastructure</p>
+          <div class="preset-tools">
+            <span class="preset-pill">git</span>
+            <span class="preset-pill">gh</span>
+            <span class="preset-pill">aws</span>
+            <span class="preset-pill">az</span>
+            <span class="preset-pill">gcloud</span>
+          </div>
+          <div class="preset-cmd" onclick="copyCmd(this)">
+            bundledownload --preset cloud-ops
+            <span class="copied-toast">Copied!</span>
+          </div>
+        </div>
+
+        <div class="preset-card fade-in">
+          <h4>full-stack</h4>
+          <p class="preset-desc">Everything. All 12 tools.</p>
+          <div class="preset-tools">
+            <span class="preset-pill">node</span>
+            <span class="preset-pill">git</span>
+            <span class="preset-pill">gh</span>
+            <span class="preset-pill">claude-code</span>
+            <span class="preset-pill">aws</span>
+            <span class="preset-pill">az</span>
+            <span class="preset-pill">gcloud</span>
+            <span class="preset-pill">vercel</span>
+            <span class="preset-pill">wrangler</span>
+            <span class="preset-pill">supabase</span>
+            <span class="preset-pill">tabby</span>
+            <span class="preset-pill">whisperflow</span>
+          </div>
+          <div class="preset-cmd" onclick="copyCmd(this)">
+            bundledownload --preset full-stack
+            <span class="copied-toast">Copied!</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OPENCLAW -->
+  <section class="openclaw-section" id="openclaw">
+    <div class="container">
+      <div class="openclaw-grid">
+        <div class="fade-in">
+          <span class="openclaw-badge">Fleet Dashboard</span>
+          <h2>OpenClaw</h2>
+          <p class="openclaw-desc">Command and monitoring interface for distributed AI agent fleets. Configure Claude Code for autonomous development with coordinated workflows.</p>
+          <ul class="openclaw-features">
+            <li><i class="fas fa-robot"></i> Autonomous agent coordination</li>
+            <li><i class="fas fa-terminal"></i> Claude Code configuration management</li>
+            <li><i class="fas fa-chart-line"></i> Fleet monitoring &amp; orchestration</li>
+          </ul>
+          <span class="btn btn-outline" style="opacity:0.6; cursor:default;">Coming Soon</span>
+        </div>
+        <div class="openclaw-preview fade-in">
+          <i class="fas fa-desktop"></i>
+          <span>Dashboard Preview</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORKFLOWS -->
+  <section class="workflows-section" id="workflows">
+    <div class="container">
+      <div class="section-header fade-in">
+        <h2>AI Workflows</h2>
+        <span class="section-badge">4 active pipelines</span>
+      </div>
+
+      <div class="workflows-grid">
+        <div class="workflow-card coral-border fade-in">
+          <h3>Vertex AI Image Gen</h3>
+          <p>Generate images with Imagen 4 and video with Veo 2, authenticated via gcloud CLI.</p>
+          <div class="workflow-meta">
+            <div class="workflow-tools">
+              <div class="workflow-tool-icon"><img src="assets/icons/googlecloud.svg" alt="Google Cloud"></div>
+              <div class="workflow-tool-icon"><img src="assets/icons/anthropic.svg" alt="Anthropic"></div>
+            </div>
+            <span class="status-pill active">Active</span>
+          </div>
+        </div>
+
+        <div class="workflow-card sage-border fade-in">
+          <h3>Gemini Pipeline</h3>
+          <p>Multi-model image generation with fallback strategies &mdash; Pro for quality, Flash for reliability.</p>
+          <div class="workflow-meta">
+            <div class="workflow-tools">
+              <div class="workflow-tool-icon"><img src="assets/icons/googlecloud.svg" alt="Google Cloud"></div>
+            </div>
+            <span class="status-pill active">Active</span>
+          </div>
+        </div>
+
+        <div class="workflow-card gold-border fade-in">
+          <h3>Video Generation</h3>
+          <p>Start + end frame video transitions via Runway Gen-3, Kling 2.0, or Google Veo 2.</p>
+          <div class="workflow-meta">
+            <div class="workflow-tools">
+              <div class="workflow-tool-icon"><img src="assets/icons/googlecloud.svg" alt="Google Cloud"></div>
+            </div>
+            <span class="status-pill experimental">Experimental</span>
+          </div>
+        </div>
+
+        <div class="workflow-card orange-border fade-in">
+          <h3>Frontend Design</h3>
+          <p>Skills &rarr; AI generation &rarr; scroll-stop site. Full pipeline from prompt to deployed page.</p>
+          <div class="workflow-meta">
+            <div class="workflow-tools">
+              <div class="workflow-tool-icon"><img src="assets/icons/vercel.svg" alt="Vercel"></div>
+              <div class="workflow-tool-icon"><img src="assets/icons/cloudflare.svg" alt="Cloudflare"></div>
+            </div>
+            <span class="status-pill active">Active</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section class="projects-section" id="projects">
+    <div class="container">
+      <div class="section-header fade-in">
+        <h2>Projects &amp; Demos</h2>
+        <span class="section-badge">Built with AI</span>
+      </div>
+
+      <div class="projects-grid">
+        <div class="project-card fade-in">
+          <div class="project-img"><i class="fas fa-terminal"></i></div>
+          <div class="project-body">
+            <h3>BundleDownload</h3>
+            <p>One-command developer tool installer with animated landing page.</p>
+            <a href="https://bundledownload.dev" target="_blank" class="project-link">View Site &rarr;</a>
+          </div>
+        </div>
+
+        <div class="project-card fade-in">
+          <div class="project-img"><i class="fas fa-scroll"></i></div>
+          <div class="project-body">
+            <h3>Scroll-Stop Builder</h3>
+            <p>Apple-style scroll-driven video websites generated from a single video file.</p>
+            <span class="project-link disabled">Coming Soon</span>
+          </div>
+        </div>
+
+        <div class="project-card fade-in">
+          <div class="project-img"><i class="fas fa-robot"></i></div>
+          <div class="project-body">
+            <h3>OpenClaw Dashboard</h3>
+            <p>Fleet management interface for distributed AI agent operations.</p>
+            <span class="project-link" style="opacity:0.5; cursor:default;">Coming Soon</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-left">Built by Danny Gardner</div>
+        <div class="footer-links">
+          <a href="https://dannygardner.me" target="_blank">Portfolio</a>
+          <a href="https://github.com/dangardner" target="_blank">GitHub</a>
+          <a href="https://bundledownload.dev" target="_blank">BundleDownload</a>
+        </div>
+      </div>
+      <div class="footer-copy">&copy; 2026</div>
+    </div>
+  </footer>
+
+  <script>
+    // ── Copy to clipboard ──
+    function copyCmd(el) {
+      const cmdEl = el.querySelector('.install-cmd') || el;
+      const text = (cmdEl.textContent || '').trim();
+      navigator.clipboard.writeText(text).then(() => {
+        el.classList.add('copied');
+        setTimeout(() => el.classList.remove('copied'), 1500);
+      });
+    }
+
+    // ── Skill filtering ──
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.dataset.filter;
+        document.querySelectorAll('.skill-card').forEach(card => {
+          if (filter === 'all' || card.dataset.category === filter) {
+            card.classList.remove('hidden');
+          } else {
+            card.classList.add('hidden');
+          }
+        });
+      });
+    });
+
+    // ── Scroll animations (Intersection Observer) ──
+    const fadeObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-in').forEach(el => fadeObserver.observe(el));
+
+    // ── Active nav tracking ──
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a[data-section]');
+
+    const sectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id;
+          navLinks.forEach(link => {
+            link.classList.toggle('active', link.dataset.section === id);
+          });
+        }
+      });
+    }, { threshold: 0.2, rootMargin: '-64px 0px -40% 0px' });
+
+    sections.forEach(s => sectionObserver.observe(s));
+
+    // ── Nav shadow on scroll ──
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 50);
+    }, { passive: true });
+
+    // ── Mobile menu ──
+    const hamburger = document.getElementById('hamburger');
+    const navLinksEl = document.getElementById('navLinks');
+
+    hamburger.addEventListener('click', () => {
+      navLinksEl.classList.toggle('open');
+    });
+
+    // Close mobile menu on link click
+    navLinksEl.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinksEl.classList.remove('open');
+      });
+    });
+  </script>
+</body>
+</html>
