@@ -585,17 +585,39 @@
       color: var(--text-secondary);
     }
 
+    .preset-cmds {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
     .preset-cmd {
       font-family: 'SF Mono', 'Fira Code', monospace;
-      font-size: 0.78rem;
+      font-size: 0.72rem;
       background: var(--text-primary);
       color: var(--vanilla-cream);
-      padding: 0.6rem 0.85rem;
+      padding: 0.5rem 0.85rem;
       border-radius: 8px;
       cursor: pointer;
       transition: all 0.3s ease;
       position: relative;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
+    .preset-cmd .os-tag {
+      font-size: 0.6rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--warm-brown);
+      background: rgba(255,255,255,0.12);
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+      flex-shrink: 0;
+      min-width: 52px;
+      text-align: center;
+    }
+    .preset-cmd .cmd-text { flex: 1; word-break: break-all; }
 
     .preset-cmd:hover {
       box-shadow: 0 4px 12px rgba(44, 36, 23, 0.3);
@@ -748,6 +770,63 @@
       border-radius: 4px;
       font-size: 0.75rem;
     }
+
+    .workflow-pipeline {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.75rem;
+    }
+    .pipeline-step {
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 0.25rem 0.6rem;
+      border-radius: 6px;
+      background: var(--vanilla-cream);
+      border: 1px solid var(--soft-tan);
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .pipeline-arrow {
+      color: var(--warm-brown);
+      font-size: 0.7rem;
+      opacity: 0.5;
+    }
+
+    .workflow-prompt {
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 0.75rem;
+      background: var(--text-primary);
+      color: var(--vanilla-cream);
+      padding: 0.6rem 0.85rem;
+      border-radius: 8px;
+      margin-bottom: 0.75rem;
+      cursor: pointer;
+      position: relative;
+      transition: box-shadow 0.3s ease;
+    }
+    .workflow-prompt:hover { box-shadow: 0 4px 12px rgba(44,36,23,0.3); }
+    .workflow-prompt .copied-toast {
+      position: absolute; top: 50%; right: 0.85rem;
+      transform: translateY(-50%);
+      font-size: 0.65rem; font-weight: 600;
+      color: var(--coral-accent); opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .workflow-prompt.copied .copied-toast { opacity: 1; }
+
+    .workflow-get-skills {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--coral-accent);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      transition: opacity 0.3s ease;
+    }
+    .workflow-get-skills:hover { opacity: 0.7; }
 
     .workflow-meta {
       display: flex;
@@ -1130,9 +1209,9 @@
             <span class="preset-pill">wrangler</span>
             <span class="preset-pill">tabby</span>
           </div>
-          <div class="preset-cmd" onclick="copyCmd(this)">
-            curl -fsSL https://bundledownload.dannygardner.me/install.sh | bash -s -- --preset dannys-stack
-            <span class="copied-toast">Copied!</span>
+          <div class="preset-cmds">
+            <div class="preset-cmd" onclick="copyCmd(this)"><span class="os-tag">Mac/Linux</span><span class="cmd-text">curl -fsSL https://bundledownload.dannygardner.me/install.sh | bash -s -- --preset dannys-stack</span><span class="copied-toast">Copied!</span></div>
+            <div class="preset-cmd" onclick="copyCmd(this)"><span class="os-tag">Windows</span><span class="cmd-text">powershell -c "irm https://bundledownload.dannygardner.me/install.ps1 | iex" --preset dannys-stack</span><span class="copied-toast">Copied!</span></div>
           </div>
         </div>
 
@@ -1146,15 +1225,15 @@
             <span class="preset-pill">vercel</span>
             <span class="preset-pill">wrangler</span>
           </div>
-          <div class="preset-cmd" onclick="copyCmd(this)">
-            curl -fsSL https://bundledownload.dannygardner.me/install.sh | bash -s -- --preset frontend-dev
-            <span class="copied-toast">Copied!</span>
+          <div class="preset-cmds">
+            <div class="preset-cmd" onclick="copyCmd(this)"><span class="os-tag">Mac/Linux</span><span class="cmd-text">curl -fsSL https://bundledownload.dannygardner.me/install.sh | bash -s -- --preset frontend-dev</span><span class="copied-toast">Copied!</span></div>
+            <div class="preset-cmd" onclick="copyCmd(this)"><span class="os-tag">Windows</span><span class="cmd-text">powershell -c "irm https://bundledownload.dannygardner.me/install.ps1 | iex" --preset frontend-dev</span><span class="copied-toast">Copied!</span></div>
           </div>
         </div>
 
         <div class="preset-card fade-in">
           <h4>cloud-ops</h4>
-          <p class="preset-desc">Cloud platform CLIs for infrastructure</p>
+          <p class="preset-desc">Cloud platform CLIs for infrastructure work</p>
           <div class="preset-tools">
             <span class="preset-pill">git</span>
             <span class="preset-pill">gh</span>
@@ -1162,15 +1241,35 @@
             <span class="preset-pill">az</span>
             <span class="preset-pill">gcloud</span>
           </div>
-          <div class="preset-cmd" onclick="copyCmd(this)">
-            curl -fsSL https://bundledownload.dannygardner.me/install.sh | bash -s -- --preset cloud-ops
-            <span class="copied-toast">Copied!</span>
+          <div class="preset-cmds">
+            <div class="preset-cmd" onclick="copyCmd(this)"><span class="os-tag">Mac/Linux</span><span class="cmd-text">curl -fsSL https://bundledownload.dannygardner.me/install.sh | bash -s -- --preset cloud-ops</span><span class="copied-toast">Copied!</span></div>
+            <div class="preset-cmd" onclick="copyCmd(this)"><span class="os-tag">Windows</span><span class="cmd-text">powershell -c "irm https://bundledownload.dannygardner.me/install.ps1 | iex" --preset cloud-ops</span><span class="copied-toast">Copied!</span></div>
+          </div>
+        </div>
+
+        <div class="preset-card fade-in">
+          <h4>ai-builder</h4>
+          <p class="preset-desc">AI-powered development &mdash; everything you need to build with AI agents, generate images, deploy instantly</p>
+          <div class="preset-tools">
+            <span class="preset-pill">node</span>
+            <span class="preset-pill">git</span>
+            <span class="preset-pill">gh</span>
+            <span class="preset-pill">claude-code</span>
+            <span class="preset-pill">gcloud</span>
+            <span class="preset-pill">vercel</span>
+            <span class="preset-pill">supabase</span>
+            <span class="preset-pill">wrangler</span>
+            <span class="preset-pill">whisperflow</span>
+          </div>
+          <div class="preset-cmds">
+            <div class="preset-cmd" onclick="copyCmd(this)"><span class="os-tag">Mac/Linux</span><span class="cmd-text">curl -fsSL https://bundledownload.dannygardner.me/install.sh | bash -s -- --preset ai-builder</span><span class="copied-toast">Copied!</span></div>
+            <div class="preset-cmd" onclick="copyCmd(this)"><span class="os-tag">Windows</span><span class="cmd-text">powershell -c "irm https://bundledownload.dannygardner.me/install.ps1 | iex" --preset ai-builder</span><span class="copied-toast">Copied!</span></div>
           </div>
         </div>
 
         <div class="preset-card fade-in">
           <h4>full-stack</h4>
-          <p class="preset-desc">Everything. All 12 tools.</p>
+          <p class="preset-desc">Everything. All 12 tools. The whole kitchen sink.</p>
           <div class="preset-tools">
             <span class="preset-pill">node</span>
             <span class="preset-pill">git</span>
@@ -1185,9 +1284,9 @@
             <span class="preset-pill">tabby</span>
             <span class="preset-pill">whisperflow</span>
           </div>
-          <div class="preset-cmd" onclick="copyCmd(this)">
-            curl -fsSL https://bundledownload.dannygardner.me/install.sh | bash -s -- --preset full-stack
-            <span class="copied-toast">Copied!</span>
+          <div class="preset-cmds">
+            <div class="preset-cmd" onclick="copyCmd(this)"><span class="os-tag">Mac/Linux</span><span class="cmd-text">curl -fsSL https://bundledownload.dannygardner.me/install.sh | bash -s -- --preset full-stack</span><span class="copied-toast">Copied!</span></div>
+            <div class="preset-cmd" onclick="copyCmd(this)"><span class="os-tag">Windows</span><span class="cmd-text">powershell -c "irm https://bundledownload.dannygardner.me/install.ps1 | iex" --preset full-stack</span><span class="copied-toast">Copied!</span></div>
           </div>
         </div>
       </div>
@@ -1227,14 +1326,21 @@
 
       <div class="workflows-grid">
         <div class="workflow-card coral-border fade-in">
-          <h3>Vertex AI Image Generation</h3>
-          <p>Production-grade image generation using Google's Imagen 4 model and video creation with Veo 2 &mdash; all authenticated through your existing <code>gcloud</code> CLI. No separate API keys needed.</p>
-          <div class="workflow-steps">
-            <strong>How it works:</strong> Prompt &rarr; <code>curl</code> to Vertex AI endpoint &rarr; base64 response &rarr; decoded PNG saved locally. Supports 1:1, 16:9, 9:16 aspect ratios and batch generation.
+          <h3>Scroll-Stop Product Video</h3>
+          <p>Combine 3 skills into a single pipeline that takes a product idea and outputs a deployed scroll-driven animation website with AI-generated assets.</p>
+          <div class="workflow-pipeline">
+            <span class="pipeline-step">Image Generator</span><span class="pipeline-arrow">&rarr;</span>
+            <span class="pipeline-step">Gemini Image Gen</span><span class="pipeline-arrow">&rarr;</span>
+            <span class="pipeline-step">Video Model</span><span class="pipeline-arrow">&rarr;</span>
+            <span class="pipeline-step">3D Animation Creator</span><span class="pipeline-arrow">&rarr;</span>
+            <span class="pipeline-step">Vercel Deploy</span>
           </div>
+          <div class="workflow-prompt" onclick="copyCmd(this)"><span class="cmd-text">Build me a scroll-stop animation site for [my product]. Generate the hero shot and exploded view, create the video transition, and deploy it.</span><span class="copied-toast">Copied!</span></div>
+          <a href="#skills" class="workflow-get-skills"><i class="fas fa-download"></i> Get these 3 skills</a>
           <div class="workflow-meta">
             <div class="workflow-tools">
               <div class="workflow-tool-icon"><img src="assets/icons/googlecloud.svg" alt="Google Cloud"></div>
+              <div class="workflow-tool-icon"><img src="assets/icons/vercel.svg" alt="Vercel"></div>
               <div class="workflow-tool-icon"><img src="assets/icons/anthropic.svg" alt="Claude Code"></div>
             </div>
             <span class="status-pill active">Active</span>
@@ -1242,11 +1348,36 @@
         </div>
 
         <div class="workflow-card sage-border fade-in">
-          <h3>Gemini Multi-Model Pipeline</h3>
-          <p>Intelligent image generation with automatic fallback across 4 Gemini models. Starts with <code>gemini-3-pro</code> for highest quality, falls back to <code>gemini-2.5-flash</code> on 503 errors. Handles dark UI backgrounds with blend modes.</p>
-          <div class="workflow-steps">
-            <strong>Model ladder:</strong> Pro (4K, best quality) &rarr; Flash 3.1 (4K, fast) &rarr; Flash 2.5 (reliable) &rarr; Flash 2.0 (cheapest). Each costs ~$0.07/image or less.
+          <h3>AI-Powered Landing Page</h3>
+          <p>Go from "I need a website" to a live, polished landing page with AI-generated visuals &mdash; no manual design work.</p>
+          <div class="workflow-pipeline">
+            <span class="pipeline-step">Frontend Design</span><span class="pipeline-arrow">&rarr;</span>
+            <span class="pipeline-step">Gemini Image Gen</span><span class="pipeline-arrow">&rarr;</span>
+            <span class="pipeline-step">Vercel Deploy</span><span class="pipeline-arrow">&rarr;</span>
+            <span class="pipeline-step">LinkedIn Post</span>
           </div>
+          <div class="workflow-prompt" onclick="copyCmd(this)"><span class="cmd-text">Build a landing page for [my product] with AI-generated hero images. Match this design system. Deploy to Vercel and draft a LinkedIn launch post.</span><span class="copied-toast">Copied!</span></div>
+          <a href="#skills" class="workflow-get-skills"><i class="fas fa-download"></i> Get these 3 skills</a>
+          <div class="workflow-meta">
+            <div class="workflow-tools">
+              <div class="workflow-tool-icon"><img src="assets/icons/vercel.svg" alt="Vercel"></div>
+              <div class="workflow-tool-icon"><img src="assets/icons/cloudflare.svg" alt="Cloudflare"></div>
+              <div class="workflow-tool-icon"><img src="assets/icons/anthropic.svg" alt="Claude Code"></div>
+            </div>
+            <span class="status-pill active">Active</span>
+          </div>
+        </div>
+
+        <div class="workflow-card gold-border fade-in">
+          <h3>Multi-Model Image Pipeline</h3>
+          <p>Chain skills to create consistent visual assets across an entire project &mdash; with automatic model fallback and coordinated prompts for visual consistency.</p>
+          <div class="workflow-pipeline">
+            <span class="pipeline-step">Image Generator</span><span class="pipeline-arrow">&rarr;</span>
+            <span class="pipeline-step">Gemini Image Gen</span><span class="pipeline-arrow">&rarr;</span>
+            <span class="pipeline-step">Project Assets</span>
+          </div>
+          <div class="workflow-prompt" onclick="copyCmd(this)"><span class="cmd-text">Generate a coordinated image set for [my product] — hero shot on white, exploded/deconstructed view, and a video transition prompt. Use Imagen 4 for quality.</span><span class="copied-toast">Copied!</span></div>
+          <a href="#skills" class="workflow-get-skills"><i class="fas fa-download"></i> Get these 2 skills</a>
           <div class="workflow-meta">
             <div class="workflow-tools">
               <div class="workflow-tool-icon"><img src="assets/icons/googlecloud.svg" alt="Google Cloud"></div>
@@ -1255,30 +1386,20 @@
           </div>
         </div>
 
-        <div class="workflow-card gold-border fade-in">
-          <h3>AI Video Generation</h3>
-          <p>Create scroll-stopping product videos by generating start and end frames with Imagen, then animating the transition. Supports deconstruction, assembly, and before/after transformations.</p>
-          <div class="workflow-steps">
-            <strong>Pipeline:</strong> Image Generator skill creates 2 frames &rarr; feed to Runway Gen-3 ($0.50/clip), Kling 2.0 ($0.14/clip), or Veo 2 (~$1.40/4s) &rarr; 5-6s video output at 16:9.
-          </div>
-          <div class="workflow-meta">
-            <div class="workflow-tools">
-              <div class="workflow-tool-icon"><img src="assets/icons/googlecloud.svg" alt="Google Cloud"></div>
-            </div>
-            <span class="status-pill experimental">Experimental</span>
-          </div>
-        </div>
-
         <div class="workflow-card orange-border fade-in">
-          <h3>Prompt-to-Production Frontend</h3>
-          <p>Full pipeline from a single prompt to a deployed, animated website. Combines Claude Code skills for design, Vertex AI for asset generation, and Vercel for instant deployment.</p>
-          <div class="workflow-steps">
-            <strong>Flow:</strong> Describe the site &rarr; frontend-design skill builds it &rarr; Imagen generates visuals &rarr; 3d-animation-creator adds scroll effects &rarr; <code>vercel --prod</code> ships it live.
+          <h3>Build + Ship + Announce</h3>
+          <p>End-to-end project launch in one session &mdash; build the feature, add scroll-stop animation, deploy, and draft a story-driven LinkedIn post about it.</p>
+          <div class="workflow-pipeline">
+            <span class="pipeline-step">Frontend Design</span><span class="pipeline-arrow">&rarr;</span>
+            <span class="pipeline-step">3D Animation Creator</span><span class="pipeline-arrow">&rarr;</span>
+            <span class="pipeline-step">Vercel Deploy</span><span class="pipeline-arrow">&rarr;</span>
+            <span class="pipeline-step">LinkedIn Post</span>
           </div>
+          <div class="workflow-prompt" onclick="copyCmd(this)"><span class="cmd-text">Build [this feature], add a scroll-driven animation for the demo, deploy it to Vercel, and write a LinkedIn post about the build process.</span><span class="copied-toast">Copied!</span></div>
+          <a href="#skills" class="workflow-get-skills"><i class="fas fa-download"></i> Get these 3 skills</a>
           <div class="workflow-meta">
             <div class="workflow-tools">
               <div class="workflow-tool-icon"><img src="assets/icons/vercel.svg" alt="Vercel"></div>
-              <div class="workflow-tool-icon"><img src="assets/icons/cloudflare.svg" alt="Cloudflare"></div>
               <div class="workflow-tool-icon"><img src="assets/icons/anthropic.svg" alt="Claude Code"></div>
             </div>
             <span class="status-pill active">Active</span>
@@ -1345,17 +1466,8 @@
   <script>
     // ── Copy to clipboard ──
     function copyCmd(el) {
-      const cmdEl = el.querySelector('.install-cmd') || el.querySelector('.preset-cmd') ? el : null;
-      let text = '';
-      if (el.querySelector('.install-cmd')) {
-        text = el.querySelector('.install-cmd').textContent.trim();
-      } else {
-        // For preset-cmd, get text but exclude the "Copied!" toast
-        const clone = el.cloneNode(true);
-        const toast = clone.querySelector('.copied-toast');
-        if (toast) toast.remove();
-        text = clone.textContent.trim();
-      }
+      const cmdText = el.querySelector('.cmd-text') || el.querySelector('.install-cmd');
+      const text = cmdText ? cmdText.textContent.trim() : el.textContent.replace('Copied!', '').trim();
       navigator.clipboard.writeText(text).then(() => {
         el.classList.add('copied');
         setTimeout(() => el.classList.remove('copied'), 1500);
