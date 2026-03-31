@@ -451,6 +451,122 @@
       gap: 1.5rem;
     }
 
+    /* ── WORKFLOW CAROUSEL ── */
+    .wf-carousel {
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      padding: 0 2rem;
+    }
+    .wf-carousel::-webkit-scrollbar { display: none; }
+
+    .wf-track {
+      display: flex;
+      gap: 1.5rem;
+      padding: 0.5rem 0;
+    }
+
+    .wf-slide {
+      flex: 0 0 min(85vw, 700px);
+      scroll-snap-align: center;
+      position: relative;
+      border-radius: 24px;
+      overflow: hidden;
+      min-height: 420px;
+      background: var(--card-bg);
+      box-shadow: 0 8px 40px rgba(139,115,85,0.12);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+    .wf-slide:hover {
+      transform: translateY(-6px) scale(1.01);
+      box-shadow: 0 16px 60px rgba(139,115,85,0.18);
+    }
+
+    .wf-bg {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      opacity: 0.12;
+    }
+
+    .wf-content {
+      position: relative;
+      padding: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .wf-number {
+      font-size: 4rem;
+      font-weight: 800;
+      color: var(--soft-tan);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .wf-content h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .wf-content > p {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      margin-bottom: 1.25rem;
+      max-width: 500px;
+    }
+
+    .wf-prompt {
+      background: var(--text-primary);
+      color: var(--vanilla-cream);
+      padding: 1rem 1.25rem;
+      border-radius: 12px;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 0.78rem;
+      line-height: 1.6;
+      cursor: pointer;
+      position: relative;
+      transition: box-shadow 0.3s ease;
+      margin-top: auto;
+    }
+    .wf-prompt:hover { box-shadow: 0 4px 16px rgba(44,36,23,0.4); }
+    .wf-prompt code { color: inherit; background: none; padding: 0; font-size: inherit; }
+    .wf-copy-hint {
+      display: block;
+      margin-top: 0.5rem;
+      font-family: var(--font);
+      font-size: 0.65rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--coral-accent);
+      opacity: 0.7;
+    }
+    .wf-prompt.copied .wf-copy-hint::after { content: ' — Copied!'; }
+
+    .wf-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      border: none;
+      background: var(--soft-tan);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      padding: 0;
+    }
+    .wf-dot.active { background: var(--coral-accent); transform: scale(1.3); }
+
+    @media (max-width: 600px) {
+      .wf-slide { flex: 0 0 90vw; min-height: 380px; }
+      .wf-content { padding: 1.75rem; }
+      .wf-number { font-size: 2.5rem; }
+      .wf-content h3 { font-size: 1.2rem; }
+    }
+
     .workflow-card {
       background: var(--card-bg);
       border-radius: 16px;
@@ -1203,175 +1319,119 @@
     </div>
   </section>
 
-  <!-- Skills -->
-  <section class="container fade-in">
-    <div class="section-header">
-      <h2>Claude Code Skills</h2>
-      <span class="section-badge">4 skills</span>
+  <!-- Workflows — horizontal swipeable large cards -->
+  <section style="padding:3rem 0 2rem;">
+    <div class="container fade-in">
+      <div class="section-header">
+        <h2>Workflows</h2>
+        <span class="section-badge">Swipe to explore</span>
+      </div>
+      <p style="color:var(--text-secondary);margin-bottom:2rem;max-width:600px;">Each workflow chains multiple skills into a single pipeline. Copy the prompt, run it in Claude Code, and watch it build.</p>
     </div>
-    <div class="filter-bar">
-      <button class="filter-btn active" data-filter="all">All</button>
-      <button class="filter-btn" data-filter="video">Video</button>
-      <button class="filter-btn" data-filter="image">Image</button>
-      <button class="filter-btn" data-filter="content">Content</button>
+
+    <div class="wf-carousel" id="wfCarousel">
+      <div class="wf-track">
+
+        <div class="wf-slide">
+          <div class="wf-bg" style="background-image:url('assets/wf-bg-1.jpg')"></div>
+          <div class="wf-content">
+            <span class="wf-number">01</span>
+            <h3>Scroll-Stop Product Video</h3>
+            <p>Concept &rarr; AI images &rarr; video transition &rarr; scroll-driven site &rarr; deployed. Full pipeline from a single prompt.</p>
+            <div class="pipeline">
+              <span class="pipeline-step">Image Generator</span>
+              <i class="fa-solid fa-arrow-right pipeline-arrow"></i>
+              <span class="pipeline-step">Imagen 4</span>
+              <i class="fa-solid fa-arrow-right pipeline-arrow"></i>
+              <span class="pipeline-step">Veo 3.1</span>
+              <i class="fa-solid fa-arrow-right pipeline-arrow"></i>
+              <span class="pipeline-step">3D Animation</span>
+              <i class="fa-solid fa-arrow-right pipeline-arrow"></i>
+              <span class="pipeline-step">Deploy</span>
+            </div>
+            <div class="wf-prompt" onclick="copyText(this)">
+              <code>Build me a scroll-stop animation site for [my product]. Generate hero and exploded-view images with Imagen 4, create a Veo transition video, then build a scroll-driven website and deploy.</code>
+              <span class="wf-copy-hint">Click to copy</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="wf-slide">
+          <div class="wf-bg" style="background-image:url('assets/wf-bg-2.jpg')"></div>
+          <div class="wf-content">
+            <span class="wf-number">02</span>
+            <h3>AI-Powered Landing Page</h3>
+            <p>Describe your product. Get a polished landing page with AI-generated visuals, deployed and announced on LinkedIn.</p>
+            <div class="pipeline">
+              <span class="pipeline-step">Frontend Design</span>
+              <i class="fa-solid fa-arrow-right pipeline-arrow"></i>
+              <span class="pipeline-step">Imagen 4</span>
+              <i class="fa-solid fa-arrow-right pipeline-arrow"></i>
+              <span class="pipeline-step">Vercel Deploy</span>
+              <i class="fa-solid fa-arrow-right pipeline-arrow"></i>
+              <span class="pipeline-step">LinkedIn Post</span>
+            </div>
+            <div class="wf-prompt" onclick="copyText(this)">
+              <code>Build a landing page for [my product] with AI-generated hero images using Imagen 4. Match my brand palette. Deploy to Vercel and draft a LinkedIn launch post.</code>
+              <span class="wf-copy-hint">Click to copy</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="wf-slide">
+          <div class="wf-bg" style="background-image:url('assets/wf-bg-3.jpg')"></div>
+          <div class="wf-content">
+            <span class="wf-number">03</span>
+            <h3>Brand Avatar Pipeline</h3>
+            <p>Generate a brand logo &rarr; create an avatar character &rarr; animate it with Veo 3.1 &rarr; make it a scroll-driven mascot that follows users around the site.</p>
+            <div class="pipeline">
+              <span class="pipeline-step">Imagen 4 Logo</span>
+              <i class="fa-solid fa-arrow-right pipeline-arrow"></i>
+              <span class="pipeline-step">Avatar Gen</span>
+              <i class="fa-solid fa-arrow-right pipeline-arrow"></i>
+              <span class="pipeline-step">Veo 3.1</span>
+              <i class="fa-solid fa-arrow-right pipeline-arrow"></i>
+              <span class="pipeline-step">3D Animation</span>
+              <i class="fa-solid fa-arrow-right pipeline-arrow"></i>
+              <span class="pipeline-step">Scroll Effect</span>
+            </div>
+            <div class="wf-prompt" onclick="copyText(this)">
+              <code>Create a brand mascot for [my company]. Generate the logo, then an avatar character in different poses. Use Veo 3.1 to animate transitions between poses. Build a scroll-driven element where the character changes as you scroll.</code>
+              <span class="wf-copy-hint">Click to copy</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="wf-slide">
+          <div class="wf-bg" style="background-image:url('assets/wf-bg-4.jpg')"></div>
+          <div class="wf-content">
+            <span class="wf-number">04</span>
+            <h3>Build + Ship + Announce</h3>
+            <p>Code the feature, add scroll animations, deploy, and write the story — all in one Claude session.</p>
+            <div class="pipeline">
+              <span class="pipeline-step">Frontend Design</span>
+              <i class="fa-solid fa-arrow-right pipeline-arrow"></i>
+              <span class="pipeline-step">3D Animation</span>
+              <i class="fa-solid fa-arrow-right pipeline-arrow"></i>
+              <span class="pipeline-step">Vercel Deploy</span>
+              <i class="fa-solid fa-arrow-right pipeline-arrow"></i>
+              <span class="pipeline-step">LinkedIn Post</span>
+            </div>
+            <div class="wf-prompt" onclick="copyText(this)">
+              <code>Build [this feature], add a scroll-driven animation for the demo, deploy to Vercel, and write a LinkedIn post about the build process.</code>
+              <span class="wf-copy-hint">Click to copy</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </div>
-    <div class="skills-grid" id="skillsGrid">
 
-      <div class="skill-card" data-category="video">
-        <div class="skill-card-header">
-          <h3>3D Animation Creator</h3>
-          <div style="display:flex;align-items:center;gap:0.5rem;">
-            <span class="skill-tag video">Video</span>
-            <i class="fa-solid fa-chevron-down skill-expand-icon"></i>
-          </div>
-        </div>
-        <p>Turn any video into an Apple-style scroll-driven animation website. Frame extraction, canvas rendering, snap-stop scroll effects.</p>
-        <div class="skill-details">
-          <div class="skill-details-inner">
-            <div class="skill-detail-label">Triggers</div>
-            <div class="skill-detail-value">'3D animation', 'scroll-stop build', 'scroll animation website'</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="skill-card" data-category="image">
-        <div class="skill-card-header">
-          <h3>Image Generator</h3>
-          <div style="display:flex;align-items:center;gap:0.5rem;">
-            <span class="skill-tag image">Image</span>
-            <i class="fa-solid fa-chevron-down skill-expand-icon"></i>
-          </div>
-        </div>
-        <p>Generate coordinated prompt sets for scroll-stopping video content &mdash; hero shot, exploded view, and video transition.</p>
-        <div class="skill-details">
-          <div class="skill-details-inner">
-            <div class="skill-detail-label">Triggers</div>
-            <div class="skill-detail-value">'image generator', 'scroll-stop prompt', 'exploded view prompt'</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="skill-card" data-category="image">
-        <div class="skill-card-header">
-          <h3>Gemini Image Generation</h3>
-          <div style="display:flex;align-items:center;gap:0.5rem;">
-            <span class="skill-tag image">Image</span>
-            <i class="fa-solid fa-chevron-down skill-expand-icon"></i>
-          </div>
-        </div>
-        <p>Reference guide for AI image generation via Gemini API, Vertex AI (Imagen 4, Veo 2), with model comparison and error recovery.</p>
-        <div class="skill-details">
-          <div class="skill-details-inner">
-            <div class="skill-detail-label">Models</div>
-            <div class="skill-detail-value">gemini-3-pro, gemini-2.5-flash</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="skill-card" data-category="content">
-        <div class="skill-card-header">
-          <h3>LinkedIn Post Writer</h3>
-          <div style="display:flex;align-items:center;gap:0.5rem;">
-            <span class="skill-tag content">Content</span>
-            <i class="fa-solid fa-chevron-down skill-expand-icon"></i>
-          </div>
-        </div>
-        <p>Story-driven LinkedIn posts about developer workflows, architectural thinking, and AI-as-a-team philosophy.</p>
-        <div class="skill-details">
-          <div class="skill-details-inner">
-            <div class="skill-detail-label">Triggers</div>
-            <div class="skill-detail-value">'linkedin post', 'draft a post'</div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- Workflows -->
-  <section class="container fade-in">
-    <div class="section-header">
-      <h2>Workflows</h2>
-      <span class="section-badge">How skills combine</span>
-    </div>
-    <div class="workflows-grid">
-
-      <div class="workflow-card">
-        <h3>Scroll-Stop Product Video</h3>
-        <p>Full pipeline from concept to deployed scroll-driven animation site with AI-generated visuals.</p>
-        <div class="pipeline">
-          <span class="pipeline-step">Image Generator</span>
-          <i class="fa-solid fa-arrow-right pipeline-arrow"></i>
-          <span class="pipeline-step">Gemini Image Gen</span>
-          <i class="fa-solid fa-arrow-right pipeline-arrow"></i>
-          <span class="pipeline-step">Video Model</span>
-          <i class="fa-solid fa-arrow-right pipeline-arrow"></i>
-          <span class="pipeline-step">3D Animation Creator</span>
-          <i class="fa-solid fa-arrow-right pipeline-arrow"></i>
-          <span class="pipeline-step">Vercel Deploy</span>
-        </div>
-        <div class="workflow-prompt">
-          <button class="copy-btn" onclick="copyText(this)" title="Copy prompt"><i class="fa-regular fa-copy"></i></button>
-          <code>Build me a scroll-stop animation site for [my product]. Generate hero and exploded-view images, create a transition video, then build a scroll-driven website and deploy to Vercel.</code>
-        </div>
-        <a href="#" class="workflow-link" onclick="switchToBuilder(event)">Get these skills &rarr;</a>
-      </div>
-
-      <div class="workflow-card sage">
-        <h3>AI-Powered Landing Page</h3>
-        <p>Design and ship a landing page with AI-generated hero images and announce it on LinkedIn.</p>
-        <div class="pipeline">
-          <span class="pipeline-step">Frontend Design</span>
-          <i class="fa-solid fa-arrow-right pipeline-arrow"></i>
-          <span class="pipeline-step">Gemini Image Gen</span>
-          <i class="fa-solid fa-arrow-right pipeline-arrow"></i>
-          <span class="pipeline-step">Vercel Deploy</span>
-          <i class="fa-solid fa-arrow-right pipeline-arrow"></i>
-          <span class="pipeline-step">LinkedIn Post</span>
-        </div>
-        <div class="workflow-prompt">
-          <button class="copy-btn" onclick="copyText(this)" title="Copy prompt"><i class="fa-regular fa-copy"></i></button>
-          <code>Build a landing page for [my product] with AI-generated hero images. Deploy to Vercel and draft a LinkedIn announcement.</code>
-        </div>
-        <a href="#" class="workflow-link" onclick="switchToBuilder(event)">Get these skills &rarr;</a>
-      </div>
-
-      <div class="workflow-card gold">
-        <h3>Multi-Model Image Pipeline</h3>
-        <p>Generate a coordinated set of product images using multiple AI models for maximum quality.</p>
-        <div class="pipeline">
-          <span class="pipeline-step">Image Generator</span>
-          <i class="fa-solid fa-arrow-right pipeline-arrow"></i>
-          <span class="pipeline-step">Gemini Image Gen</span>
-          <i class="fa-solid fa-arrow-right pipeline-arrow"></i>
-          <span class="pipeline-step">Project Assets</span>
-        </div>
-        <div class="workflow-prompt">
-          <button class="copy-btn" onclick="copyText(this)" title="Copy prompt"><i class="fa-regular fa-copy"></i></button>
-          <code>Generate a coordinated image set for [my product]. Use the image generator for prompts, then Gemini for generation. Output to project assets.</code>
-        </div>
-        <a href="#" class="workflow-link" onclick="switchToBuilder(event)">Get these skills &rarr;</a>
-      </div>
-
-      <div class="workflow-card orange">
-        <h3>Build + Ship + Announce</h3>
-        <p>End-to-end: build a feature with scroll animation, deploy it, and write the LinkedIn post.</p>
-        <div class="pipeline">
-          <span class="pipeline-step">Frontend Design</span>
-          <i class="fa-solid fa-arrow-right pipeline-arrow"></i>
-          <span class="pipeline-step">3D Animation Creator</span>
-          <i class="fa-solid fa-arrow-right pipeline-arrow"></i>
-          <span class="pipeline-step">Vercel Deploy</span>
-          <i class="fa-solid fa-arrow-right pipeline-arrow"></i>
-          <span class="pipeline-step">LinkedIn Post</span>
-        </div>
-        <div class="workflow-prompt">
-          <button class="copy-btn" onclick="copyText(this)" title="Copy prompt"><i class="fa-regular fa-copy"></i></button>
-          <code>Build [this feature], add a scroll-driven animation, deploy to Vercel, and draft a LinkedIn announcement post.</code>
-        </div>
-        <a href="#" class="workflow-link" onclick="switchToBuilder(event)">Get these skills &rarr;</a>
-      </div>
-
+    <div class="container" style="display:flex;justify-content:center;gap:0.5rem;padding-top:1.5rem;">
+      <button class="wf-dot active" onclick="scrollToSlide(0)"></button>
+      <button class="wf-dot" onclick="scrollToSlide(1)"></button>
+      <button class="wf-dot" onclick="scrollToSlide(2)"></button>
+      <button class="wf-dot" onclick="scrollToSlide(3)"></button>
     </div>
   </section>
 
@@ -1379,7 +1439,7 @@
   <section class="container fade-in">
     <div class="section-header">
       <h2>What's Included</h2>
-      <span class="section-badge">18 tools</span>
+      <span class="section-badge">20 tools</span>
     </div>
     <p class="included-intro">Every workflow starts with the right tools. Here's what you can install.</p>
     <div class="included-grid" id="includedGrid"></div>
@@ -1764,24 +1824,26 @@
 
   /* ── DATA ── */
   const TOOLS = [
-    { id: 'git',          name: 'git',          phase: 'Foundation',     icon: 'git' },
-    { id: 'node',         name: 'node',         phase: 'Foundation',     icon: 'node' },
-    { id: 'gh',           name: 'gh',           phase: 'Standalone',     icon: 'github' },
-    { id: 'claude-code',  name: 'claude-code',  phase: 'Standalone',     icon: 'anthropic' },
-    { id: 'vercel',       name: 'vercel',       phase: 'Deploy',         icon: 'vercel' },
-    { id: 'cloudflare',   name: 'cloudflare',   phase: 'Deploy',         icon: 'cloudflare' },
-    { id: 'supabase',     name: 'supabase',     phase: 'Backend',        icon: 'supabase' },
-    { id: 'docker',       name: 'docker',       phase: 'Container',      icon: 'docker' },
-    { id: 'aws',          name: 'aws',          phase: 'Cloud',          icon: 'aws' },
-    { id: 'az',           name: 'az',           phase: 'Cloud',          icon: 'azure' },
-    { id: 'gcloud',       name: 'gcloud',       phase: 'Cloud',          icon: 'googlecloud' },
-    { id: 'python',       name: 'python',       phase: 'Runtime',        icon: 'python' },
-    { id: 'bun',          name: 'bun',          phase: 'Runtime',        icon: 'bun' },
-    { id: 'rust',         name: 'rust',         phase: 'Runtime',        icon: 'rust' },
-    { id: 'terraform',    name: 'terraform',    phase: 'Infrastructure', icon: 'terraform' },
+    { id: 'git',          name: 'Git',          phase: 'Foundation',     icon: 'git' },
+    { id: 'node',         name: 'Node.js',      phase: 'Foundation',     icon: 'node' },
+    { id: 'python',       name: 'Python 3',     phase: 'Foundation',     icon: 'python' },
+    { id: 'java',         name: 'Java',         phase: 'Foundation',     icon: 'java' },
+    { id: 'bun',          name: 'Bun',          phase: 'Foundation',     icon: 'bun' },
+    { id: 'rust',         name: 'Rust',         phase: 'Foundation',     icon: 'rust' },
+    { id: 'cpp',          name: 'C/C++',        phase: 'Foundation',     icon: 'cpp' },
+    { id: 'gh',           name: 'GitHub CLI',   phase: 'Standalone',     icon: 'github' },
+    { id: 'claude-code',  name: 'Claude Code',  phase: 'Standalone',     icon: 'anthropic' },
+    { id: 'vercel',       name: 'Vercel',       phase: 'Deploy',         icon: 'vercel' },
+    { id: 'cloudflare',   name: 'Cloudflare',   phase: 'Deploy',         icon: 'cloudflare' },
+    { id: 'supabase',     name: 'Supabase',     phase: 'Backend',        icon: 'supabase' },
+    { id: 'docker',       name: 'Docker',       phase: 'Container',      icon: 'docker' },
+    { id: 'aws',          name: 'AWS CLI',      phase: 'Cloud',          icon: 'aws' },
+    { id: 'az',           name: 'Azure CLI',    phase: 'Cloud',          icon: 'azure' },
+    { id: 'gcloud',       name: 'Google Cloud', phase: 'Cloud',          icon: 'googlecloud' },
+    { id: 'terraform',    name: 'Terraform',    phase: 'Infrastructure', icon: 'terraform' },
     { id: 'kubectl',      name: 'kubectl',      phase: 'Infrastructure', icon: 'kubectl' },
-    { id: 'tabby',        name: 'tabby',        phase: 'App',            icon: 'tabby' },
-    { id: 'whisperflow',  name: 'whisperflow',  phase: 'App',            icon: 'whisperflow' }
+    { id: 'tabby',        name: 'Tabby',        phase: 'App',            icon: 'tabby' },
+    { id: 'whisperflow',  name: 'WhisperFlow',  phase: 'App',            icon: 'whisperflow' }
   ];
 
   const SKILLS = [
@@ -1792,10 +1854,10 @@
   ];
 
   const PRESETS = {
-    'dannys-stack': ['node','git','gh','claude-code','vercel','supabase','cloudflare','tabby'],
-    'ai-builder':   ['node','git','gh','claude-code','gcloud','vercel','supabase','cloudflare','whisperflow'],
+    'dannys-stack': ['node','git','gh','python','claude-code','vercel','supabase','cloudflare','aws','az','gcloud','whisperflow','tabby'],
+    'ai-builder':   ['node','git','gh','python','claude-code','gcloud','vercel','supabase','cloudflare','whisperflow'],
     'frontend-dev': ['node','git','gh','vercel','cloudflare'],
-    'cloud-ops':    ['git','gh','aws','az','gcloud'],
+    'cloud-ops':    ['git','gh','aws','az','gcloud','terraform','kubectl','docker'],
     'full-stack':   TOOLS.map(t => t.id)
   };
 
@@ -2058,6 +2120,36 @@
   }, { threshold: 0.1 });
 
   document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // ── Workflow carousel ──
+  const carousel = document.getElementById('wfCarousel');
+  const dots = document.querySelectorAll('.wf-dot');
+
+  function scrollToSlide(i) {
+    const slides = carousel.querySelectorAll('.wf-slide');
+    if (slides[i]) slides[i].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    dots.forEach((d, j) => d.classList.toggle('active', j === i));
+  }
+
+  if (carousel) {
+    carousel.addEventListener('scroll', () => {
+      const slides = carousel.querySelectorAll('.wf-slide');
+      const scrollLeft = carousel.scrollLeft;
+      const slideWidth = slides[0]?.offsetWidth + 24; // gap
+      const activeIndex = Math.round(scrollLeft / slideWidth);
+      dots.forEach((d, j) => d.classList.toggle('active', j === activeIndex));
+    }, { passive: true });
+  }
+
+  // Copy text from workflow prompts
+  function copyText(el) {
+    const code = el.querySelector('code');
+    if (code) {
+      navigator.clipboard.writeText(code.textContent.trim());
+      el.classList.add('copied');
+      setTimeout(() => el.classList.remove('copied'), 1500);
+    }
+  }
 
   // ── Tips filter ──
   document.querySelectorAll('.tips-filter-btn').forEach(btn => {
