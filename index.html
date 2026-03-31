@@ -1449,171 +1449,296 @@
 
       <div class="tips-filter fade-in">
         <button class="tips-filter-btn active" data-tipcat="all">All</button>
-        <button class="tips-filter-btn" data-tipcat="essential">Essential</button>
+        <button class="tips-filter-btn" data-tipcat="setup">Setup</button>
+        <button class="tips-filter-btn" data-tipcat="skills">Skills</button>
+        <button class="tips-filter-btn" data-tipcat="workflows">Workflows</button>
         <button class="tips-filter-btn" data-tipcat="prompting">Prompting</button>
-        <button class="tips-filter-btn" data-tipcat="workflow">Workflow</button>
-        <button class="tips-filter-btn" data-tipcat="advanced">Advanced</button>
-        <button class="tips-filter-btn" data-tipcat="config">Config</button>
+        <button class="tips-filter-btn" data-tipcat="power">Power User</button>
+        <button class="tips-filter-btn" data-tipcat="image">Image Gen</button>
       </div>
 
       <div class="tips-grid fade-in">
-        <!-- ESSENTIAL -->
-        <div class="tip-category-header" data-tipcat="essential"><span class="cat-dot" style="background:var(--coral-accent)"></span> Essential</div>
 
-        <div class="tip-card cat-essential" data-tipcat="essential">
-          <div class="tip-icon"><i class="fas fa-terminal"></i></div>
-          <div class="tip-body"><div class="tip-title">Run shell commands inline</div>
-          <div class="tip-desc">Type <code>! command</code> in the prompt to run any shell command without leaving the conversation. Output lands right in context.</div></div>
+        <!-- SETUP -->
+        <div class="tip-category-header" data-tipcat="setup"><span class="cat-dot" style="background:var(--coral-accent)"></span> Setup &amp; Config</div>
+
+        <div class="tip-card cat-essential" data-tipcat="setup">
+          <div class="tip-icon"><i class="fas fa-shield-halved"></i></div>
+          <div class="tip-body"><div class="tip-title">Always bypass permissions</div>
+          <div class="tip-desc">Run <code>claude --dangerously-skip-permissions</code> to skip all permission prompts. Saves massive time. You can also set <code>"skipDangerousModePermissionPrompt": true</code> in <code>~/.claude/settings.json</code>.</div></div>
         </div>
 
-        <div class="tip-card cat-essential" data-tipcat="essential">
-          <div class="tip-icon"><i class="fas fa-forward"></i></div>
-          <div class="tip-body"><div class="tip-title">Use /fast for speed</div>
-          <div class="tip-desc">Toggle <code>/fast</code> for faster output on the same model. Great for quick edits and simple tasks where you don't need deep reasoning.</div></div>
-        </div>
-
-        <div class="tip-card cat-essential" data-tipcat="essential">
-          <div class="tip-icon"><i class="fas fa-keyboard"></i></div>
-          <div class="tip-body"><div class="tip-title">Escape to cancel, double-Escape to undo</div>
-          <div class="tip-desc">Press <code>Esc</code> to stop generation. Press <code>Esc Esc</code> to undo the last action. Press <code>Ctrl+C</code> to cancel the current input.</div></div>
-        </div>
-
-        <div class="tip-card cat-essential" data-tipcat="essential">
-          <div class="tip-icon"><i class="fas fa-clock-rotate-left"></i></div>
-          <div class="tip-body"><div class="tip-title">Resume with /resume</div>
-          <div class="tip-desc">If Claude gets cut off or you restart, <code>/resume</code> picks up from where you left off with full conversation context.</div></div>
-        </div>
-
-        <div class="tip-card cat-essential" data-tipcat="essential">
+        <div class="tip-card cat-essential" data-tipcat="setup">
           <div class="tip-icon"><i class="fas fa-file-lines"></i></div>
           <div class="tip-body"><div class="tip-title">CLAUDE.md is your instruction file</div>
-          <div class="tip-desc">Drop a <code>CLAUDE.md</code> in your repo root for project-specific rules. Claude reads it at the start of every conversation. Use <code>~/.claude/CLAUDE.md</code> for global rules.</div></div>
+          <div class="tip-desc">Drop a <code>CLAUDE.md</code> in your repo root for project-specific rules (git conventions, coding style, what NOT to do). Use <code>~/.claude/CLAUDE.md</code> for global rules that apply everywhere.</div></div>
+        </div>
+
+        <div class="tip-card cat-essential" data-tipcat="setup">
+          <div class="tip-icon"><i class="fas fa-brain"></i></div>
+          <div class="tip-body"><div class="tip-title">Enable always-thinking mode</div>
+          <div class="tip-desc">Set <code>"alwaysThinkingEnabled": true</code> in settings. Claude thinks harder on every prompt — better reasoning, fewer mistakes, worth the extra tokens.</div></div>
+        </div>
+
+        <div class="tip-card cat-essential" data-tipcat="setup">
+          <div class="tip-icon"><i class="fas fa-wand-magic-sparkles"></i></div>
+          <div class="tip-body"><div class="tip-title">Use skills over MCPs</div>
+          <div class="tip-desc">Skills (SKILL.md files) are more reliable than MCP servers. They don't disconnect, don't leak credentials, and Claude understands them natively. Put reusable workflows in <code>~/.claude/skills/</code>.</div></div>
+        </div>
+
+        <div class="tip-card cat-essential" data-tipcat="setup">
+          <div class="tip-icon"><i class="fas fa-puzzle-piece"></i></div>
+          <div class="tip-body"><div class="tip-title">Install Superpowers plugin</div>
+          <div class="tip-desc">Superpowers adds brainstorming, plan writing, TDD, code review, debugging, and parallel agent skills. Enable in <code>settings.json</code> under <code>"enabledPlugins"</code>.</div></div>
+        </div>
+
+        <div class="tip-card cat-essential" data-tipcat="setup">
+          <div class="tip-icon"><i class="fas fa-microphone"></i></div>
+          <div class="tip-body"><div class="tip-title">Enable voice mode</div>
+          <div class="tip-desc">Set <code>"voiceEnabled": true</code> in settings. Talk to Claude instead of typing — great for brainstorming, describing UIs, or working hands-free.</div></div>
+        </div>
+
+        <div class="tip-card cat-essential" data-tipcat="setup">
+          <div class="tip-icon"><i class="fas fa-folder-tree"></i></div>
+          <div class="tip-body"><div class="tip-title">Project settings override global</div>
+          <div class="tip-desc">Put <code>.claude/settings.json</code> in any repo for project-specific tool permissions, MCP servers, and hooks. Team members get the same config automatically.</div></div>
+        </div>
+
+        <!-- SKILLS -->
+        <div class="tip-category-header" data-tipcat="skills"><span class="cat-dot" style="background:var(--sage-green)"></span> Claude Code Skills</div>
+
+        <div class="tip-card cat-prompting" data-tipcat="skills">
+          <div class="tip-icon"><i class="fas fa-paintbrush"></i></div>
+          <div class="tip-body"><div class="tip-title">Frontend Design skill</div>
+          <div class="tip-desc">Say "build me a landing page" and the frontend-design skill activates. It picks distinctive fonts, bold color palettes, and avoids generic AI aesthetics. Never uses Inter or purple gradients by default.</div></div>
+        </div>
+
+        <div class="tip-card cat-prompting" data-tipcat="skills">
+          <div class="tip-icon"><i class="fas fa-film"></i></div>
+          <div class="tip-body"><div class="tip-title">3D Animation Creator skill</div>
+          <div class="tip-desc">Give it a video file and say "scroll-stop build." It extracts frames, builds an Apple-style scroll-driven website with starscape, annotation cards, navbar pill transform, and count-up animations.</div></div>
+        </div>
+
+        <div class="tip-card cat-prompting" data-tipcat="skills">
+          <div class="tip-icon"><i class="fas fa-images"></i></div>
+          <div class="tip-body"><div class="tip-title">Image Generator skill</div>
+          <div class="tip-desc">Say "image generator" and it creates 3 coordinated prompts: hero product shot, exploded/deconstructed view, and video transition. Outputs a premium HTML page with tabbed copy buttons and confetti.</div></div>
+        </div>
+
+        <div class="tip-card cat-prompting" data-tipcat="skills">
+          <div class="tip-icon"><i class="fas fa-gem"></i></div>
+          <div class="tip-body"><div class="tip-title">Gemini Image Generation skill</div>
+          <div class="tip-desc">Reference for generating images via Vertex AI (Imagen 4, Veo 2) or Gemini API. Includes model comparison table, error recovery, dark UI handling with blend modes. Use Vertex AI over nanobanana MCP — it's more reliable.</div></div>
+        </div>
+
+        <div class="tip-card cat-prompting" data-tipcat="skills">
+          <div class="tip-icon"><i class="fab fa-linkedin"></i></div>
+          <div class="tip-body"><div class="tip-title">LinkedIn Post Writer skill</div>
+          <div class="tip-desc">Say "linkedin post" and it crafts a story-driven post with Hook → Tension → Shift → Implication → Closer structure. First-person, conversational, no hashtag spam.</div></div>
+        </div>
+
+        <div class="tip-card cat-prompting" data-tipcat="skills">
+          <div class="tip-icon"><i class="fas fa-cube"></i></div>
+          <div class="tip-body"><div class="tip-title">Magic UI / shadcn skills</div>
+          <div class="tip-desc">Use component library skills to build UIs with pre-built animated components (Magic UI) or Tailwind-based primitives (shadcn/ui). Claude knows the component APIs and composes them correctly.</div></div>
+        </div>
+
+        <div class="tip-card cat-prompting" data-tipcat="skills">
+          <div class="tip-icon"><i class="fas fa-pen-ruler"></i></div>
+          <div class="tip-body"><div class="tip-title">UI/UX Pro skill</div>
+          <div class="tip-desc">Focused on design quality — proper spacing, typography hierarchy, color theory, and accessibility. Catches common UI mistakes like low contrast, inconsistent padding, and missing hover states.</div></div>
+        </div>
+
+        <div class="tip-card cat-prompting" data-tipcat="skills">
+          <div class="tip-icon"><i class="fas fa-video"></i></div>
+          <div class="tip-body"><div class="tip-title">Video Generation skill</div>
+          <div class="tip-desc">Generate videos from start + end frames using Veo 2/3.1, Runway Gen-3, or Kling 2.0. Use with Image Generator to create product animation videos from AI-generated images.</div></div>
+        </div>
+
+        <div class="tip-card cat-prompting" data-tipcat="skills">
+          <div class="tip-icon"><i class="fas fa-gamepad"></i></div>
+          <div class="tip-body"><div class="tip-title">Playground skill</div>
+          <div class="tip-desc">Say "make a playground" to create interactive single-file HTML explorers with live controls, previews, and prompt output. Great for visualizing configurations or API parameters.</div></div>
+        </div>
+
+        <div class="tip-card cat-prompting" data-tipcat="skills">
+          <div class="tip-icon"><i class="fas fa-plus-circle"></i></div>
+          <div class="tip-body"><div class="tip-title">Making your own skills</div>
+          <div class="tip-desc">Create <code>~/.claude/skills/my-skill/SKILL.md</code> with frontmatter (name, description, trigger phrases) and markdown instructions. Claude auto-loads them. Skills are just markdown files — no API needed.</div></div>
+        </div>
+
+        <!-- WORKFLOWS -->
+        <div class="tip-category-header" data-tipcat="workflows"><span class="cat-dot" style="background:var(--warm-gold)"></span> Workflows</div>
+
+        <div class="tip-card cat-workflow" data-tipcat="workflows">
+          <div class="tip-icon"><i class="fas fa-image"></i></div>
+          <div class="tip-body"><div class="tip-title">Generate images with gcloud</div>
+          <div class="tip-desc">Use <code>gcloud auth print-access-token</code> + curl to Vertex AI. No API keys needed. Works with Imagen 4 for images, Veo 2 for video. Gemini skill has the exact endpoints and request format.</div></div>
+        </div>
+
+        <div class="tip-card cat-workflow" data-tipcat="workflows">
+          <div class="tip-icon"><i class="fas fa-banana"></i></div>
+          <div class="tip-body"><div class="tip-title">Nanobanana is unreliable — use direct API</div>
+          <div class="tip-desc">The nanobanana MCP disconnects frequently and leaks GCP credentials causing 404s. Skip it entirely. Use Gemini API keys or Vertex AI via gcloud — both are more reliable and give you model control.</div></div>
+        </div>
+
+        <div class="tip-card cat-workflow" data-tipcat="workflows">
+          <div class="tip-icon"><i class="fas fa-signature"></i></div>
+          <div class="tip-body"><div class="tip-title">Brand logo → avatar → character pipeline</div>
+          <div class="tip-desc">Use Image Generator to create a brand logo on white bg → generate an avatar/mascot version → use Veo 3.1 with start+end frames to animate the character → 3D Animation Creator turns it into a scroll-driven element.</div></div>
+        </div>
+
+        <div class="tip-card cat-workflow" data-tipcat="workflows">
+          <div class="tip-icon"><i class="fas fa-rocket"></i></div>
+          <div class="tip-body"><div class="tip-title">Prompt → Site → Deploy in one session</div>
+          <div class="tip-desc">Describe what you want → frontend-design skill builds it → Gemini skill generates assets → <code>vercel --prod</code> deploys it → LinkedIn Post skill writes the announcement. Full launch pipeline.</div></div>
+        </div>
+
+        <div class="tip-card cat-workflow" data-tipcat="workflows">
+          <div class="tip-icon"><i class="fas fa-scroll"></i></div>
+          <div class="tip-body"><div class="tip-title">Scroll-stop video from any product</div>
+          <div class="tip-desc">Image Generator creates hero + exploded prompts → Gemini generates the images → video model creates the transition → 3D Animation Creator builds the scroll-driven site with snap-stop annotations.</div></div>
+        </div>
+
+        <div class="tip-card cat-workflow" data-tipcat="workflows">
+          <div class="tip-icon"><i class="fas fa-code-branch"></i></div>
+          <div class="tip-body"><div class="tip-title">Git worktrees for parallel agent work</div>
+          <div class="tip-desc">Never <code>git checkout</code> in your main tree. Use <code>git worktree add ../feat-name feat/name</code> for each Claude agent. They work in isolation, you review and merge. Delete worktrees after.</div></div>
+        </div>
+
+        <div class="tip-card cat-workflow" data-tipcat="workflows">
+          <div class="tip-icon"><i class="fas fa-list-check"></i></div>
+          <div class="tip-body"><div class="tip-title">Plan → Build → Review → Ship</div>
+          <div class="tip-desc"><code>/plan</code> to design the approach → exit plan to implement → <code>/review</code> to catch issues → commit and push. Use the Superpowers skills for each step — they enforce discipline.</div></div>
+        </div>
+
+        <div class="tip-card cat-workflow" data-tipcat="workflows">
+          <div class="tip-icon"><i class="fas fa-globe"></i></div>
+          <div class="tip-body"><div class="tip-title">DNS + Deploy from the terminal</div>
+          <div class="tip-desc">Claude can add Cloudflare DNS records via API, deploy to Vercel with <code>vercel --prod</code>, and configure custom domains — all without leaving the conversation. Have your CF API key and email ready.</div></div>
         </div>
 
         <!-- PROMPTING -->
-        <div class="tip-category-header" data-tipcat="prompting"><span class="cat-dot" style="background:var(--sage-green)"></span> Prompting</div>
+        <div class="tip-category-header" data-tipcat="prompting"><span class="cat-dot" style="background:var(--sunset-orange)"></span> Prompting</div>
 
-        <div class="tip-card cat-prompting" data-tipcat="prompting">
+        <div class="tip-card cat-advanced" data-tipcat="prompting">
           <div class="tip-icon"><i class="fas fa-bullseye"></i></div>
-          <div class="tip-body"><div class="tip-title">Be specific about what, not how</div>
-          <div class="tip-desc">Say "Add a signup form with email validation and rate limiting" not "Write a function that takes an email string and validates it using regex." Let Claude decide the implementation.</div></div>
+          <div class="tip-body"><div class="tip-title">Say what, not how</div>
+          <div class="tip-desc">"Add a signup form with email validation and rate limiting" beats "Write a function that validates emails with regex." Claude picks the best implementation when you describe the outcome.</div></div>
         </div>
 
-        <div class="tip-card cat-prompting" data-tipcat="prompting">
+        <div class="tip-card cat-advanced" data-tipcat="prompting">
           <div class="tip-icon"><i class="fas fa-layer-group"></i></div>
-          <div class="tip-body"><div class="tip-title">Stack context with @files</div>
-          <div class="tip-desc">Reference files directly: <code>@src/auth.ts look at how auth works here and add OAuth support</code>. Claude reads the file and understands the existing patterns.</div></div>
+          <div class="tip-body"><div class="tip-title">Use @files for context</div>
+          <div class="tip-desc"><code>@src/auth.ts add OAuth support matching the existing patterns</code>. Claude reads the file and follows your conventions instead of guessing.</div></div>
         </div>
 
-        <div class="tip-card cat-prompting" data-tipcat="prompting">
-          <div class="tip-icon"><i class="fas fa-image"></i></div>
-          <div class="tip-body"><div class="tip-title">Paste screenshots and images</div>
-          <div class="tip-desc">Claude Code is multimodal. Paste a screenshot of a bug, a design mockup, or an error message directly into the prompt. Way faster than describing it.</div></div>
+        <div class="tip-card cat-advanced" data-tipcat="prompting">
+          <div class="tip-icon"><i class="fas fa-camera"></i></div>
+          <div class="tip-body"><div class="tip-title">Paste screenshots directly</div>
+          <div class="tip-desc">Claude is multimodal. Paste screenshots of bugs, mockups, error messages, or design references directly. "Make it look like this" + screenshot is incredibly effective.</div></div>
         </div>
 
-        <div class="tip-card cat-prompting" data-tipcat="prompting">
-          <div class="tip-icon"><i class="fas fa-diagram-project"></i></div>
-          <div class="tip-body"><div class="tip-title">Start big, then narrow down</div>
-          <div class="tip-desc">"Explain the auth system in this repo" → "Now add OAuth to it" → "Add tests for the OAuth flow." Build Claude's understanding incrementally rather than dumping everything at once.</div></div>
-        </div>
-
-        <div class="tip-card cat-prompting" data-tipcat="prompting">
+        <div class="tip-card cat-advanced" data-tipcat="prompting">
           <div class="tip-icon"><i class="fas fa-ban"></i></div>
-          <div class="tip-body"><div class="tip-title">Tell Claude what NOT to do</div>
-          <div class="tip-desc">"Don't add comments. Don't refactor surrounding code. Don't install new dependencies." Constraints prevent Claude from going overboard with "improvements."</div></div>
+          <div class="tip-body"><div class="tip-title">Constrain Claude explicitly</div>
+          <div class="tip-desc">"Don't add comments. Don't refactor surrounding code. Don't install new deps. Don't create new files unless necessary." Prevents Claude from over-engineering simple changes.</div></div>
         </div>
 
-        <!-- WORKFLOW -->
-        <div class="tip-category-header" data-tipcat="workflow"><span class="cat-dot" style="background:var(--warm-gold)"></span> Workflow</div>
-
-        <div class="tip-card cat-workflow" data-tipcat="workflow">
-          <div class="tip-icon"><i class="fas fa-code-branch"></i></div>
-          <div class="tip-body"><div class="tip-title">Use git worktrees for parallel work</div>
-          <div class="tip-desc">Run multiple Claude instances in separate worktrees for true parallelism: <code>git worktree add ../feature-auth feat/auth</code>. Each gets its own working directory.</div></div>
+        <div class="tip-card cat-advanced" data-tipcat="prompting">
+          <div class="tip-icon"><i class="fas fa-arrows-rotate"></i></div>
+          <div class="tip-body"><div class="tip-title">Iterate, don't restart</div>
+          <div class="tip-desc">If the output isn't right, say "no, make it more X" or "undo that and try Y." Claude remembers the full conversation. Restarting loses all context — iterate instead.</div></div>
         </div>
 
-        <div class="tip-card cat-workflow" data-tipcat="workflow">
-          <div class="tip-icon"><i class="fas fa-list-check"></i></div>
-          <div class="tip-body"><div class="tip-title">Plan before building</div>
-          <div class="tip-desc">Use <code>/plan</code> to enter plan mode. Claude researches, designs, and proposes an approach before writing any code. Prevents wasted effort on wrong directions.</div></div>
+        <div class="tip-card cat-advanced" data-tipcat="prompting">
+          <div class="tip-icon"><i class="fas fa-forward"></i></div>
+          <div class="tip-body"><div class="tip-title">/fast for quick tasks, /slow for complex ones</div>
+          <div class="tip-desc"><code>/fast</code> uses the same model with faster output — great for edits, formatting, small changes. Switch back for architecture decisions, debugging, or multi-file changes.</div></div>
         </div>
 
-        <div class="tip-card cat-workflow" data-tipcat="workflow">
-          <div class="tip-icon"><i class="fas fa-users"></i></div>
-          <div class="tip-body"><div class="tip-title">Use subagents for parallel tasks</div>
-          <div class="tip-desc">Claude can spawn background agents for independent tasks. Ask: "Research X while you implement Y." The agents work in parallel and report back.</div></div>
-        </div>
+        <!-- POWER USER -->
+        <div class="tip-category-header" data-tipcat="power"><span class="cat-dot" style="background:var(--deep-brown)"></span> Power User</div>
 
-        <div class="tip-card cat-workflow" data-tipcat="workflow">
-          <div class="tip-icon"><i class="fas fa-code-compare"></i></div>
-          <div class="tip-body"><div class="tip-title">Review before commit</div>
-          <div class="tip-desc">After making changes, say "review your diff before committing." Claude will catch its own mistakes, remove debug code, and verify correctness.</div></div>
-        </div>
-
-        <div class="tip-card cat-workflow" data-tipcat="workflow">
-          <div class="tip-icon"><i class="fas fa-robot"></i></div>
-          <div class="tip-body"><div class="tip-title">Let Claude run tests</div>
-          <div class="tip-desc">"Run the tests and fix whatever fails." Claude will execute, read errors, and iterate until tests pass. Don't hand-hold the debug cycle.</div></div>
-        </div>
-
-        <!-- ADVANCED -->
-        <div class="tip-category-header" data-tipcat="advanced"><span class="cat-dot" style="background:var(--sunset-orange)"></span> Advanced</div>
-
-        <div class="tip-card cat-advanced" data-tipcat="advanced">
+        <div class="tip-card cat-config" data-tipcat="power">
           <div class="tip-icon"><i class="fas fa-bolt"></i></div>
-          <div class="tip-body"><div class="tip-title">Hooks for automation</div>
-          <div class="tip-desc">Set up hooks in <code>settings.json</code> to run commands automatically on events. Example: auto-lint after every file edit, auto-test after every commit.</div></div>
+          <div class="tip-body"><div class="tip-title">Hooks automate repetitive tasks</div>
+          <div class="tip-desc">Configure hooks in <code>settings.json</code> to auto-run commands on events. Auto-lint after edits, auto-format on save, auto-test after commits. Claude's actions trigger your pipeline.</div></div>
         </div>
 
-        <div class="tip-card cat-advanced" data-tipcat="advanced">
-          <div class="tip-icon"><i class="fas fa-plug"></i></div>
-          <div class="tip-body"><div class="tip-title">MCP servers extend capabilities</div>
-          <div class="tip-desc">Connect MCP servers for Figma, Playwright, databases, and more. Claude gets direct tool access instead of working through CLI workarounds.</div></div>
+        <div class="tip-card cat-config" data-tipcat="power">
+          <div class="tip-icon"><i class="fas fa-users"></i></div>
+          <div class="tip-body"><div class="tip-title">Parallel agents with subagent dispatch</div>
+          <div class="tip-desc">For 2+ independent tasks, Claude spawns background agents that work in parallel. "Research the API docs while you build the frontend" — both happen simultaneously.</div></div>
         </div>
 
-        <div class="tip-card cat-advanced" data-tipcat="advanced">
-          <div class="tip-icon"><i class="fas fa-wand-magic-sparkles"></i></div>
-          <div class="tip-body"><div class="tip-title">Custom skills are reusable workflows</div>
-          <div class="tip-desc">Create <code>~/.claude/skills/my-skill/SKILL.md</code> with a name, description, and instructions. Claude auto-triggers the skill when you mention it. Like macros for AI.</div></div>
-        </div>
-
-        <div class="tip-card cat-advanced" data-tipcat="advanced">
+        <div class="tip-card cat-config" data-tipcat="power">
           <div class="tip-icon"><i class="fas fa-clock"></i></div>
-          <div class="tip-body"><div class="tip-title">Schedule agents with triggers</div>
-          <div class="tip-desc">Use <code>/schedule</code> to create cron-based remote agents that run on a schedule. Great for recurring tasks like daily code reviews or dependency checks.</div></div>
+          <div class="tip-body"><div class="tip-title">Schedule recurring agents</div>
+          <div class="tip-desc"><code>/schedule</code> creates cron-based remote agents. Set up daily code reviews, dependency vulnerability checks, or automated refactoring proposals that run on autopilot.</div></div>
         </div>
 
-        <div class="tip-card cat-advanced" data-tipcat="advanced">
+        <div class="tip-card cat-config" data-tipcat="power">
           <div class="tip-icon"><i class="fas fa-memory"></i></div>
           <div class="tip-body"><div class="tip-title">Memory persists across sessions</div>
-          <div class="tip-desc">"Remember that I prefer Tailwind over styled-components." Claude saves this to its memory system and applies it in future conversations automatically.</div></div>
+          <div class="tip-desc">"Remember I prefer Tailwind" or "Remember my GCP project is hackstoga." Claude saves these to file-based memory and applies them in every future conversation.</div></div>
         </div>
 
-        <!-- CONFIG -->
-        <div class="tip-category-header" data-tipcat="config"><span class="cat-dot" style="background:var(--deep-brown)"></span> Config</div>
-
-        <div class="tip-card cat-config" data-tipcat="config">
-          <div class="tip-icon"><i class="fas fa-shield-halved"></i></div>
-          <div class="tip-body"><div class="tip-title">Permission modes control safety</div>
-          <div class="tip-desc">Set <code>--allowedTools</code> to control which tools Claude can use without asking. Modes: ask (default), auto-edit (file edits only), full-auto (everything).</div></div>
+        <div class="tip-card cat-config" data-tipcat="power">
+          <div class="tip-icon"><i class="fas fa-clock-rotate-left"></i></div>
+          <div class="tip-body"><div class="tip-title">/resume picks up where you left off</div>
+          <div class="tip-desc">Crashed? Restarted terminal? <code>/resume</code> restores your full conversation context. Also works across different terminal sessions.</div></div>
         </div>
 
-        <div class="tip-card cat-config" data-tipcat="config">
-          <div class="tip-icon"><i class="fas fa-palette"></i></div>
-          <div class="tip-body"><div class="tip-title">Customize the status line</div>
-          <div class="tip-desc">Show token count, model name, or git branch in your terminal status line. Configure in <code>~/.claude/settings.json</code> under <code>statusLine</code>.</div></div>
+        <div class="tip-card cat-config" data-tipcat="power">
+          <div class="tip-icon"><i class="fas fa-plug"></i></div>
+          <div class="tip-body"><div class="tip-title">MCPs for tools that need auth</div>
+          <div class="tip-desc">Playwright MCP for browser automation, Figma MCP for design-to-code, Vercel MCP for deployment management. But prefer skills for anything that doesn't need live external connections.</div></div>
         </div>
 
-        <div class="tip-card cat-config" data-tipcat="config">
-          <div class="tip-icon"><i class="fas fa-key"></i></div>
-          <div class="tip-body"><div class="tip-title">Use /login to switch accounts</div>
-          <div class="tip-desc">Multiple Anthropic accounts? <code>/login</code> lets you switch between them. Use <code>/status</code> to check which account and model you're currently using.</div></div>
+        <div class="tip-card cat-config" data-tipcat="power">
+          <div class="tip-icon"><i class="fas fa-keyboard"></i></div>
+          <div class="tip-body"><div class="tip-title">Key shortcuts you should know</div>
+          <div class="tip-desc"><code>Esc</code> = stop generation. <code>Esc Esc</code> = undo last action. <code>Ctrl+C</code> = cancel input. <code>!</code> prefix = run shell command inline. <code>@file</code> = reference a file.</div></div>
         </div>
 
-        <div class="tip-card cat-config" data-tipcat="config">
-          <div class="tip-icon"><i class="fas fa-folder-tree"></i></div>
-          <div class="tip-body"><div class="tip-title">Project-level settings override global</div>
-          <div class="tip-desc">Put a <code>.claude/settings.json</code> in any project for repo-specific tool permissions, MCP servers, and hooks. Overrides your global <code>~/.claude/settings.json</code>.</div></div>
+        <!-- IMAGE GEN -->
+        <div class="tip-category-header" data-tipcat="image"><span class="cat-dot" style="background:var(--coral-accent)"></span> Image &amp; Video Generation</div>
+
+        <div class="tip-card cat-essential" data-tipcat="image">
+          <div class="tip-icon"><i class="fas fa-star"></i></div>
+          <div class="tip-body"><div class="tip-title">Imagen 4 is the best quality model</div>
+          <div class="tip-desc">Use <code>imagen-4.0-generate-001</code> on Vertex AI for the highest quality. Auth with <code>gcloud auth print-access-token</code> — no separate API key needed. ~$0.07/image.</div></div>
+        </div>
+
+        <div class="tip-card cat-essential" data-tipcat="image">
+          <div class="tip-icon"><i class="fas fa-layer-group"></i></div>
+          <div class="tip-body"><div class="tip-title">Gemini model fallback ladder</div>
+          <div class="tip-desc">gemini-3-pro (4K, best) → gemini-3.1-flash (4K, fast) → gemini-2.5-flash (most reliable) → gemini-2.0-flash (cheapest). Fall down the ladder on 503 errors. The Gemini skill handles this automatically.</div></div>
+        </div>
+
+        <div class="tip-card cat-essential" data-tipcat="image">
+          <div class="tip-icon"><i class="fas fa-square"></i></div>
+          <div class="tip-body"><div class="tip-title">Always use white backgrounds for products</div>
+          <div class="tip-desc">Prompt with "pure white #FFFFFF background, no gradient, no vignette." White backgrounds are essential for clean video transitions and scroll-stop website builds.</div></div>
+        </div>
+
+        <div class="tip-card cat-essential" data-tipcat="image">
+          <div class="tip-icon"><i class="fas fa-moon"></i></div>
+          <div class="tip-body"><div class="tip-title">Dark UI trick: blend mode</div>
+          <div class="tip-desc">Generate on black (#0a0a0a) background, then use <code>mix-blend-mode: lighten</code> in CSS — black pixels become invisible. Instant transparent-on-dark-UI effect.</div></div>
+        </div>
+
+        <div class="tip-card cat-essential" data-tipcat="image">
+          <div class="tip-icon"><i class="fas fa-video"></i></div>
+          <div class="tip-body"><div class="tip-title">Veo 2/3.1 for start+end frame video</div>
+          <div class="tip-desc">Generate two images (assembled + exploded, or before + after), then feed as start and end frames to Veo. 5-6 seconds at 16:9 is the sweet spot. Also works with Runway Gen-3 and Kling 2.0.</div></div>
+        </div>
+
+        <div class="tip-card cat-essential" data-tipcat="image">
+          <div class="tip-icon"><i class="fas fa-ban"></i></div>
+          <div class="tip-body"><div class="tip-title">Skip nanobanana MCP</div>
+          <div class="tip-desc">The nanobanana MCP server only works in claude.ai (not Claude Code CLI), disconnects frequently, and leaks GCP credentials causing 404 errors. Use Vertex AI directly via curl — it's more reliable.</div></div>
         </div>
 
       </div>
