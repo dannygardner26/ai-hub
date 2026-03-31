@@ -29,7 +29,6 @@
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     html { scroll-behavior: smooth; }
 
     body {
@@ -82,41 +81,47 @@
       cursor: pointer;
     }
 
-    .nav-links {
+    .nav-center {
       display: flex;
       align-items: center;
-      gap: 2rem;
-      list-style: none;
+      gap: 0;
+      background: var(--soft-tan);
+      border-radius: 24px;
+      padding: 3px;
     }
 
-    .nav-links a {
-      text-decoration: none;
-      color: var(--text-secondary);
+    .nav-tab {
+      padding: 0.4rem 1.5rem;
+      border-radius: 20px;
+      border: none;
+      background: transparent;
+      font-family: var(--font);
       font-size: 0.9rem;
       font-weight: 500;
-      position: relative;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .nav-tab.active {
+      background: var(--card-bg);
+      color: var(--coral-accent);
+      box-shadow: 0 2px 8px rgba(139, 115, 85, 0.12);
+    }
+
+    .nav-tab:hover:not(.active) {
+      color: var(--text-primary);
+    }
+
+    .nav-external {
+      text-decoration: none;
+      color: var(--warm-brown);
+      font-size: 0.9rem;
+      font-weight: 600;
       transition: color 0.3s ease;
     }
 
-    .nav-links a::after {
-      content: '';
-      position: absolute;
-      bottom: -4px;
-      left: 0;
-      width: 0;
-      height: 2px;
-      background: var(--coral-accent);
-      transition: width 0.3s ease;
-    }
-
-    .nav-links a.active { color: var(--coral-accent); }
-    .nav-links a.active::after { width: 100%; }
-    .nav-links a:hover { color: var(--coral-accent); }
-
-    .nav-links .external {
-      color: var(--warm-brown);
-      font-weight: 600;
-    }
+    .nav-external:hover { color: var(--coral-accent); }
 
     .hamburger {
       display: none;
@@ -135,6 +140,30 @@
       background: var(--text-primary);
       border-radius: 2px;
       transition: all 0.3s ease;
+    }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 64px;
+      left: 0;
+      right: 0;
+      background: rgba(250, 247, 240, 0.98);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--soft-tan);
+      padding: 1.5rem 2rem;
+      z-index: 999;
+      flex-direction: column;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .mobile-menu.open { display: flex; }
+
+    .mobile-menu .nav-tab {
+      width: 100%;
+      text-align: center;
+      padding: 0.6rem 1.5rem;
     }
 
     /* ── SECTIONS ── */
@@ -164,9 +193,13 @@
       border-radius: 20px;
     }
 
+    /* ── TAB CONTENT ── */
+    .tab-content { display: none; padding-top: 64px; }
+    .tab-content.active { display: block; }
+
     /* ── HERO ── */
     .hero {
-      padding-top: 9rem;
+      padding-top: 5rem;
       padding-bottom: 5rem;
       background: var(--bg-primary);
     }
@@ -197,499 +230,465 @@
       color: var(--text-secondary);
       line-height: 1.7;
       margin-bottom: 2rem;
-      max-width: 480px;
     }
 
-    .hero-buttons {
+    .hero-ctas {
       display: flex;
       gap: 1rem;
       flex-wrap: wrap;
     }
 
-    .btn {
+    .btn-primary {
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      padding: 0.85rem 1.75rem;
-      border-radius: 12px;
-      font-family: var(--font);
-      font-size: 0.95rem;
-      font-weight: 600;
-      text-decoration: none;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      border: 2px solid transparent;
-    }
-
-    .btn-coral {
+      padding: 0.85rem 2rem;
       background: var(--coral-accent);
       color: #fff;
-      border-color: var(--coral-accent);
+      border: none;
+      border-radius: 12px;
+      font-family: var(--font);
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
     }
-    .btn-coral:hover {
+
+    .btn-primary:hover {
       background: #e85d5d;
       transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(255, 107, 107, 0.3);
+      box-shadow: 0 8px 25px rgba(255, 107, 107, 0.3);
     }
 
-    .btn-outline {
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.85rem 2rem;
       background: transparent;
-      color: var(--warm-brown);
-      border-color: var(--warm-brown);
+      color: var(--text-primary);
+      border: 2px solid var(--soft-tan);
+      border-radius: 12px;
+      font-family: var(--font);
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
     }
-    .btn-outline:hover {
-      background: var(--warm-brown);
-      color: #fff;
+
+    .btn-secondary:hover {
+      border-color: var(--warm-brown);
       transform: translateY(-2px);
     }
 
-    /* Hero floating icons */
     .hero-icons {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 1.25rem;
-      max-width: 340px;
-      justify-self: center;
+      gap: 1.5rem;
     }
 
     .hero-icon-block {
-      width: 80px;
-      height: 80px;
-      border-radius: 16px;
+      width: 100px;
+      height: 100px;
+      background: var(--card-bg);
+      border-radius: 20px;
       display: flex;
       align-items: center;
       justify-content: center;
-      animation: floatY 3s ease-in-out infinite;
+      box-shadow: 0 6px 25px rgba(139, 115, 85, 0.1);
+      animation: float 3s ease-in-out infinite;
+      justify-self: center;
     }
 
     .hero-icon-block img {
-      width: 36px;
-      height: 36px;
+      width: 48px;
+      height: 48px;
     }
 
-    .hero-icon-block.dark {
-      background: var(--text-primary);
-    }
-    .hero-icon-block.dark img { filter: brightness(0) invert(1); }
+    .hero-icon-block:nth-child(2) { animation-delay: 0.5s; }
+    .hero-icon-block:nth-child(3) { animation-delay: 1s; }
+    .hero-icon-block:nth-child(4) { animation-delay: 1.5s; }
+    .hero-icon-block:nth-child(5) { animation-delay: 2s; }
+    .hero-icon-block:nth-child(6) { animation-delay: 2.5s; }
 
-    .hero-icon-block.coral {
-      background: var(--coral-accent);
-    }
-    .hero-icon-block.coral img { filter: brightness(0) invert(1); }
-
-    .hero-icon-block.light {
-      background: #fff;
-      border: 1px solid var(--soft-tan);
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
     }
 
-    .hero-icon-block:nth-child(1) { animation-duration: 3.2s; animation-delay: 0s; }
-    .hero-icon-block:nth-child(2) { animation-duration: 2.8s; animation-delay: 0.4s; }
-    .hero-icon-block:nth-child(3) { animation-duration: 3.5s; animation-delay: 0.8s; }
-    .hero-icon-block:nth-child(4) { animation-duration: 3s; animation-delay: 0.2s; }
-    .hero-icon-block:nth-child(5) { animation-duration: 3.4s; animation-delay: 0.6s; }
-    .hero-icon-block:nth-child(6) { animation-duration: 2.9s; animation-delay: 1s; }
-
-    @keyframes floatY {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-12px); }
-    }
-
-    /* ── SKILLS ── */
-    .skills-section { background: var(--bg-secondary); }
-
+    /* ── FILTER BAR ── */
     .filter-bar {
       display: flex;
-      gap: 0.75rem;
+      gap: 0.5rem;
       margin-bottom: 2rem;
       flex-wrap: wrap;
     }
 
     .filter-btn {
-      padding: 0.45rem 1.25rem;
+      padding: 0.4rem 1.2rem;
       border-radius: 20px;
+      border: 1px solid var(--soft-tan);
+      background: transparent;
       font-family: var(--font);
       font-size: 0.85rem;
       font-weight: 500;
+      color: var(--text-secondary);
       cursor: pointer;
       transition: all 0.3s ease;
-      border: 2px solid;
     }
 
-    .filter-btn[data-filter="all"] { border-color: var(--warm-brown); color: var(--warm-brown); background: transparent; }
-    .filter-btn[data-filter="all"].active { background: var(--warm-brown); color: #fff; }
+    .filter-btn.active,
+    .filter-btn:hover {
+      background: var(--coral-accent);
+      color: #fff;
+      border-color: var(--coral-accent);
+    }
 
-    .filter-btn[data-filter="video"] { border-color: var(--coral-accent); color: var(--coral-accent); background: transparent; }
-    .filter-btn[data-filter="video"].active { background: var(--coral-accent); color: #fff; }
-
-    .filter-btn[data-filter="image"] { border-color: var(--sage-green); color: var(--sage-green); background: transparent; }
-    .filter-btn[data-filter="image"].active { background: var(--sage-green); color: #fff; }
-
-    .filter-btn[data-filter="content"] { border-color: var(--warm-gold); color: var(--warm-gold); background: transparent; }
-    .filter-btn[data-filter="content"].active { background: var(--warm-gold); color: #fff; }
-
+    /* ── SKILL CARDS (EXPLORE) ── */
     .skills-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(2, 1fr);
       gap: 1.5rem;
     }
 
     .skill-card {
       background: var(--card-bg);
       border-radius: 16px;
-      padding: 2rem;
+      padding: 1.75rem;
       box-shadow: 0 6px 25px rgba(139, 115, 85, 0.1);
-      cursor: pointer;
       transition: all 0.4s ease;
+      cursor: pointer;
+      border: 2px solid transparent;
     }
 
     .skill-card:hover {
       transform: translateY(-8px);
-      box-shadow: 0 12px 40px rgba(139, 115, 85, 0.18);
+      box-shadow: 0 12px 35px rgba(139, 115, 85, 0.18);
     }
 
     .skill-card-header {
       display: flex;
-      align-items: center;
-      gap: 1rem;
+      align-items: flex-start;
+      justify-content: space-between;
       margin-bottom: 0.75rem;
     }
 
-    .skill-icon {
-      width: 48px;
-      height: 48px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.2rem;
-      color: #fff;
-      flex-shrink: 0;
-    }
-
-    .skill-icon.coral { background: var(--coral-accent); }
-    .skill-icon.sage { background: var(--sage-green); }
-    .skill-icon.gold { background: var(--warm-gold); }
-
-    .skill-card h3 {
+    .skill-card-header h3 {
       font-size: 1.15rem;
       font-weight: 600;
     }
 
     .skill-tag {
-      display: inline-block;
       font-size: 0.75rem;
       font-weight: 600;
-      padding: 0.2rem 0.65rem;
+      padding: 0.25rem 0.75rem;
       border-radius: 12px;
-      color: #fff;
-      margin-bottom: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
-    .skill-tag.coral { background: var(--coral-accent); }
-    .skill-tag.sage { background: var(--sage-green); }
-    .skill-tag.gold { background: var(--warm-gold); }
+    .skill-tag.video { background: rgba(255, 107, 107, 0.12); color: var(--coral-accent); }
+    .skill-tag.image { background: rgba(135, 169, 107, 0.12); color: var(--sage-green); }
+    .skill-tag.content { background: rgba(212, 175, 55, 0.12); color: var(--warm-gold); }
 
     .skill-card p {
+      font-size: 0.95rem;
       color: var(--text-secondary);
-      font-size: 0.92rem;
-      line-height: 1.65;
+      line-height: 1.6;
     }
 
-    .skill-detail {
+    .skill-details {
       max-height: 0;
       overflow: hidden;
-      transition: max-height 0.4s ease, margin-top 0.3s ease;
-      margin-top: 0;
+      transition: max-height 0.4s ease, margin-top 0.4s ease;
     }
 
-    .skill-card.expanded .skill-detail {
+    .skill-card.expanded .skill-details {
       max-height: 300px;
       margin-top: 1rem;
     }
 
-    .skill-detail-inner {
+    .skill-details-inner {
       padding-top: 1rem;
       border-top: 1px solid var(--soft-tan);
-      color: var(--text-secondary);
-      font-size: 0.85rem;
-      line-height: 1.7;
     }
 
-    .skill-card[data-category].hidden { display: none; }
-
-    /* ── BUNDLEDOWNLOAD ── */
-    .tools-section { background: var(--bg-primary); }
-
-    .tools-subtitle {
-      font-size: 1.1rem;
-      color: var(--text-secondary);
-      margin-top: -1.5rem;
-      margin-bottom: 2.5rem;
-    }
-
-    .install-blocks {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-      margin-bottom: 3rem;
-    }
-
-    .install-block {
-      background: var(--text-primary);
-      border-radius: 12px;
-      padding: 1.25rem 1.5rem;
-      cursor: pointer;
-      position: relative;
-      transition: all 0.3s ease;
-    }
-
-    .install-block:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(44, 36, 23, 0.3);
-    }
-
-    .install-label {
-      font-size: 0.75rem;
+    .skill-detail-label {
+      font-size: 0.8rem;
       font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.5px;
       color: var(--warm-brown);
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.4rem;
     }
 
-    .install-cmd {
-      font-family: 'SF Mono', 'Fira Code', monospace;
-      font-size: 0.85rem;
-      color: var(--vanilla-cream);
-      word-break: break-all;
-    }
-
-    .install-block .copied-toast {
-      position: absolute;
-      top: 0.75rem;
-      right: 1rem;
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: var(--coral-accent);
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-
-    .install-block.copied .copied-toast { opacity: 1; }
-
-    .tools-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1rem;
-      margin-bottom: 3rem;
-    }
-
-    .tool-card {
-      background: var(--card-bg);
-      border: 1px solid var(--soft-tan);
-      border-radius: 12px;
-      padding: 1.25rem;
-      text-align: center;
-      transition: all 0.3s ease;
-    }
-
-    .tool-card:hover {
-      border-color: var(--warm-brown);
-      transform: translateY(-4px);
-      box-shadow: 0 6px 20px rgba(139, 115, 85, 0.1);
-    }
-
-    .tool-card img {
-      width: 32px;
-      height: 32px;
-      margin-bottom: 0.5rem;
-    }
-
-    .tool-card h4 {
+    .skill-detail-value {
       font-size: 0.9rem;
-      font-weight: 600;
-      margin-bottom: 0.25rem;
-    }
-
-    .tool-phase {
-      font-size: 0.65rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--coral-accent);
-    }
-
-    .presets-header {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .presets-header h3 {
-      font-size: 1.3rem;
-      font-weight: 700;
-    }
-
-    .presets-header span {
-      font-size: 0.85rem;
       color: var(--text-secondary);
-      font-style: italic;
+      margin-bottom: 0.75rem;
+      font-family: 'SFMono-Regular', 'Consolas', monospace;
+      background: var(--bg-secondary);
+      padding: 0.4rem 0.75rem;
+      border-radius: 8px;
     }
 
-    .presets-grid {
+    .skill-expand-icon {
+      font-size: 0.8rem;
+      color: var(--warm-brown);
+      transition: transform 0.3s ease;
+    }
+
+    .skill-card.expanded .skill-expand-icon {
+      transform: rotate(180deg);
+    }
+
+    /* ── WORKFLOW CARDS ── */
+    .workflows-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.25rem;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
     }
 
-    .preset-card {
+    .workflow-card {
       background: var(--card-bg);
       border-radius: 16px;
       padding: 1.75rem;
       box-shadow: 0 6px 25px rgba(139, 115, 85, 0.1);
       transition: all 0.4s ease;
+      border-left: 4px solid var(--coral-accent);
     }
 
-    .preset-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 12px 35px rgba(139, 115, 85, 0.16);
+    .workflow-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 35px rgba(139, 115, 85, 0.18);
     }
 
-    .preset-card h4 {
-      font-size: 1.05rem;
+    .workflow-card.sage { border-left-color: var(--sage-green); }
+    .workflow-card.gold { border-left-color: var(--warm-gold); }
+    .workflow-card.orange { border-left-color: var(--sunset-orange); }
+
+    .workflow-card h3 {
+      font-size: 1.15rem;
       font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .workflow-card > p {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      margin-bottom: 1.25rem;
+      line-height: 1.6;
+    }
+
+    .pipeline {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .pipeline-step {
+      font-size: 0.78rem;
+      font-weight: 500;
+      padding: 0.3rem 0.75rem;
+      border-radius: 16px;
+      background: var(--bg-secondary);
+      color: var(--text-secondary);
+      white-space: nowrap;
+    }
+
+    .pipeline-arrow {
+      color: var(--warm-brown);
+      font-size: 0.75rem;
+    }
+
+    .workflow-prompt {
+      background: #1e1e2e;
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1rem;
+      position: relative;
+    }
+
+    .workflow-prompt code {
+      font-size: 0.85rem;
+      color: #cdd6f4;
+      font-family: 'SFMono-Regular', 'Consolas', monospace;
+      line-height: 1.5;
+      display: block;
+      white-space: pre-wrap;
+    }
+
+    .workflow-prompt .copy-btn {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      color: #cdd6f4;
+      padding: 0.3rem 0.6rem;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .workflow-prompt .copy-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .workflow-link {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--coral-accent);
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+
+    .workflow-link:hover { opacity: 0.8; }
+
+    /* ── WHAT'S INCLUDED GRID ── */
+    .included-intro {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      max-width: 600px;
+    }
+
+    .included-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+
+    .included-card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 1.25rem;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(139, 115, 85, 0.08);
+      transition: all 0.3s ease;
+    }
+
+    .included-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 25px rgba(139, 115, 85, 0.14);
+    }
+
+    .included-card img {
+      width: 36px;
+      height: 36px;
+      margin-bottom: 0.6rem;
+    }
+
+    .included-card .tool-name {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-primary);
       margin-bottom: 0.25rem;
     }
 
-    .preset-card .preset-desc {
-      font-size: 0.88rem;
-      color: var(--text-secondary);
-      font-style: italic;
-      margin-bottom: 1rem;
-    }
-
-    .preset-tools {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-      margin-bottom: 1rem;
-    }
-
-    .preset-pill {
-      font-size: 0.7rem;
-      font-weight: 600;
-      padding: 0.2rem 0.6rem;
-      border-radius: 10px;
-      background: var(--bg-secondary);
-      color: var(--text-secondary);
-    }
-
-    .preset-cmds {
-      display: flex;
-      flex-direction: column;
-      gap: 0.4rem;
-    }
-    .preset-cmd {
-      font-family: 'SF Mono', 'Fira Code', monospace;
-      font-size: 0.72rem;
-      background: var(--text-primary);
-      color: var(--vanilla-cream);
-      padding: 0.5rem 0.85rem;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      position: relative;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    .preset-cmd .os-tag {
-      font-size: 0.6rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
+    .included-card .tool-phase {
+      font-size: 0.75rem;
       color: var(--warm-brown);
-      background: rgba(255,255,255,0.12);
-      padding: 0.15rem 0.4rem;
-      border-radius: 4px;
-      flex-shrink: 0;
-      min-width: 52px;
-      text-align: center;
-    }
-    .preset-cmd .cmd-text { flex: 1; word-break: break-all; }
-
-    .preset-cmd:hover {
-      box-shadow: 0 4px 12px rgba(44, 36, 23, 0.3);
+      font-weight: 500;
     }
 
-    .preset-cmd .copied-toast {
-      position: absolute;
-      top: 50%;
-      right: 0.85rem;
-      transform: translateY(-50%);
-      font-size: 0.7rem;
-      font-weight: 600;
-      color: var(--coral-accent);
-      opacity: 0;
-      transition: opacity 0.3s ease;
+    /* ── BUILDER TAB ── */
+    .builder-section {
+      padding: 3rem 0;
     }
 
-    .preset-cmd.copied .copied-toast { opacity: 1; }
+    .builder-section:first-child {
+      padding-top: 5rem;
+    }
 
-    /* ── STACK BUILDER ── */
-    .builder-section { background: var(--bg-secondary); }
-
-    .builder-quick {
-      display: flex;
-      gap: 0.5rem;
-      flex-wrap: wrap;
+    .builder-header {
       margin-bottom: 1.5rem;
     }
-    .builder-quick-btn {
-      font-family: var(--font);
-      font-size: 0.78rem;
-      font-weight: 600;
-      padding: 0.4rem 0.9rem;
-      border-radius: 20px;
-      border: 1.5px solid var(--soft-tan);
-      background: var(--card-bg);
-      color: var(--text-secondary);
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-    .builder-quick-btn:hover { border-color: var(--coral-accent); color: var(--coral-accent); }
-    .builder-quick-btn.active {
-      background: var(--coral-accent);
-      border-color: var(--coral-accent);
-      color: #fff;
+
+    .builder-header h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
     }
 
-    .builder-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 0.75rem;
+    .preset-bar {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
       margin-bottom: 2rem;
     }
 
-    .builder-tool {
+    .preset-btn {
+      padding: 0.45rem 1.1rem;
+      border-radius: 20px;
+      border: 1px solid var(--soft-tan);
+      background: transparent;
+      font-family: var(--font);
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .preset-btn:hover {
+      border-color: var(--coral-accent);
+      color: var(--coral-accent);
+    }
+
+    .preset-btn.active {
+      background: var(--coral-accent);
+      color: #fff;
+      border-color: var(--coral-accent);
+    }
+
+    .preset-btn.clear {
+      color: var(--warm-brown);
+      border-style: dashed;
+    }
+
+    .preset-btn.clear:hover {
+      color: var(--coral-accent);
+      border-color: var(--coral-accent);
+    }
+
+    /* ── TOOL PICKER GRID ── */
+    .tool-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+
+    .tool-card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 1.25rem;
       display: flex;
       align-items: center;
-      gap: 0.75rem;
-      padding: 0.85rem 1rem;
-      background: var(--card-bg);
-      border: 2px solid var(--soft-tan);
-      border-radius: 12px;
+      gap: 0.85rem;
+      box-shadow: 0 4px 15px rgba(139, 115, 85, 0.08);
       cursor: pointer;
-      transition: all 0.25s ease;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
       user-select: none;
     }
-    .builder-tool:hover { border-color: var(--warm-brown); }
-    .builder-tool.selected {
-      border-color: var(--coral-accent);
-      background: rgba(255,107,107,0.05);
+
+    .tool-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 25px rgba(139, 115, 85, 0.14);
     }
-    .builder-tool .bt-check {
+
+    .tool-card.selected {
+      border-color: var(--coral-accent);
+    }
+
+    .tool-card .tool-check {
       width: 20px;
       height: 20px;
       border-radius: 6px;
@@ -699,456 +698,263 @@
       justify-content: center;
       flex-shrink: 0;
       transition: all 0.2s ease;
-      font-size: 0.65rem;
+      font-size: 0.7rem;
       color: transparent;
     }
-    .builder-tool.selected .bt-check {
+
+    .tool-card.selected .tool-check {
       background: var(--coral-accent);
       border-color: var(--coral-accent);
       color: #fff;
     }
-    .builder-tool img { width: 24px; height: 24px; flex-shrink: 0; }
-    .builder-tool .bt-info { flex: 1; min-width: 0; }
-    .builder-tool .bt-name {
-      font-size: 0.85rem;
+
+    .tool-card img {
+      width: 32px;
+      height: 32px;
+      flex-shrink: 0;
+    }
+
+    .tool-card .tool-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .tool-card .tool-name {
+      font-size: 0.9rem;
       font-weight: 600;
       color: var(--text-primary);
     }
-    .builder-tool .bt-phase {
-      font-size: 0.65rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
+
+    .tool-card .tool-phase {
+      font-size: 0.75rem;
       color: var(--warm-brown);
-    }
-
-    .builder-count {
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--text-secondary);
-      margin-bottom: 1rem;
-    }
-    .builder-count span { color: var(--coral-accent); }
-
-    .builder-output {
-      background: var(--card-bg);
-      border-radius: 16px;
-      padding: 1.5rem;
-      box-shadow: 0 6px 25px rgba(139,115,85,0.1);
-    }
-
-    .builder-os-tabs {
-      display: flex;
-      gap: 0;
-      margin-bottom: 1rem;
-    }
-    .builder-os-tab {
-      font-family: var(--font);
-      font-size: 0.78rem;
-      font-weight: 600;
-      padding: 0.5rem 1.2rem;
-      border: 1.5px solid var(--soft-tan);
-      background: transparent;
-      color: var(--text-secondary);
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-    .builder-os-tab:first-child { border-radius: 8px 0 0 8px; }
-    .builder-os-tab:last-child { border-radius: 0 8px 8px 0; border-left: none; }
-    .builder-os-tab.active {
-      background: var(--text-primary);
-      border-color: var(--text-primary);
-      color: var(--vanilla-cream);
-    }
-
-    .builder-cmd {
-      font-family: 'SF Mono', 'Fira Code', monospace;
-      font-size: 0.8rem;
-      background: var(--text-primary);
-      color: var(--vanilla-cream);
-      padding: 1rem 1.2rem;
-      border-radius: 10px;
-      line-height: 1.6;
-      word-break: break-all;
-      cursor: pointer;
-      position: relative;
-      transition: box-shadow 0.3s ease;
-      margin-bottom: 1rem;
-    }
-    .builder-cmd:hover { box-shadow: 0 4px 16px rgba(44,36,23,0.3); }
-    .builder-cmd .copied-toast {
-      position: absolute; top: 50%; right: 1rem;
-      transform: translateY(-50%);
-      font-size: 0.7rem; font-weight: 600;
-      color: var(--coral-accent); opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-    .builder-cmd.copied .copied-toast { opacity: 1; }
-
-    .builder-empty {
-      text-align: center;
-      padding: 1.5rem;
-      color: var(--warm-brown);
-      font-size: 0.9rem;
-      font-style: italic;
-    }
-
-    .builder-actions {
-      display: flex;
-      gap: 0.75rem;
-      margin-top: 0.5rem;
-    }
-    .builder-actions .btn {
-      font-size: 0.8rem;
-      padding: 0.6rem 1.2rem;
-    }
-
-    @media (max-width: 900px) {
-      .builder-grid { grid-template-columns: repeat(3, 1fr); }
-    }
-    @media (max-width: 600px) {
-      .builder-grid { grid-template-columns: repeat(2, 1fr); }
-      .builder-tool .bt-name { font-size: 0.78rem; }
-    }
-
-    /* ── OPENCLAW ── */
-    .openclaw-section { background: var(--bg-secondary); }
-
-    .openclaw-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-      align-items: center;
-    }
-
-    .openclaw-badge {
-      display: inline-block;
-      font-size: 0.8rem;
-      font-weight: 600;
-      padding: 0.3rem 0.9rem;
-      border-radius: 14px;
-      background: var(--sage-green);
-      color: #fff;
-      margin-bottom: 1rem;
-    }
-
-    .openclaw-grid h2 {
-      font-size: 2rem;
-      font-weight: 700;
-      margin-bottom: 1rem;
-    }
-
-    .openclaw-desc {
-      color: var(--text-secondary);
-      font-size: 1rem;
-      line-height: 1.7;
-      margin-bottom: 1.75rem;
-    }
-
-    .openclaw-features {
-      list-style: none;
-      margin-bottom: 2rem;
-    }
-
-    .openclaw-features li {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      padding: 0.5rem 0;
-      color: var(--text-secondary);
-      font-size: 0.95rem;
-    }
-
-    .openclaw-features li i {
-      color: var(--sage-green);
-      width: 20px;
-      text-align: center;
-    }
-
-    .openclaw-preview {
-      border: 2px dashed var(--soft-tan);
-      border-radius: 16px;
-      height: 300px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 1rem;
-      color: var(--warm-brown);
-    }
-
-    .openclaw-preview i {
-      font-size: 3rem;
-      opacity: 0.4;
-    }
-
-    .openclaw-preview span {
-      font-size: 0.9rem;
       font-weight: 500;
     }
 
-    /* ── WORKFLOWS ── */
-    .workflows-section { background: var(--bg-primary); }
-
-    .workflows-grid {
+    /* ── SKILL PICKER (BUILDER) ── */
+    .skill-picker-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
     }
 
-    .workflow-card {
+    .skill-pick-card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 1.25rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.85rem;
+      box-shadow: 0 4px 15px rgba(139, 115, 85, 0.08);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+      user-select: none;
+    }
+
+    .skill-pick-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 25px rgba(139, 115, 85, 0.14);
+    }
+
+    .skill-pick-card.selected {
+      border-color: var(--coral-accent);
+    }
+
+    .skill-pick-card .skill-check {
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      border: 2px solid var(--soft-tan);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+      transition: all 0.2s ease;
+      font-size: 0.7rem;
+      color: transparent;
+    }
+
+    .skill-pick-card.selected .skill-check {
+      background: var(--coral-accent);
+      border-color: var(--coral-accent);
+      color: #fff;
+    }
+
+    .skill-pick-card .skill-info h4 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.2rem;
+    }
+
+    .skill-pick-card .skill-info p {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
+
+    .skill-pick-card .skill-tag {
+      margin-top: 0.4rem;
+      display: inline-block;
+    }
+
+    /* ── OUTPUT PANEL ── */
+    .output-panel {
       background: var(--card-bg);
       border-radius: 16px;
       padding: 2rem;
       box-shadow: 0 6px 25px rgba(139, 115, 85, 0.1);
-      border-left: 5px solid;
-      transition: all 0.4s ease;
+      margin-top: 2rem;
+      position: sticky;
+      bottom: 2rem;
     }
 
-    .workflow-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 15px 40px rgba(139, 115, 85, 0.18);
-    }
-
-    .workflow-card.coral-border { border-left-color: var(--coral-accent); }
-    .workflow-card.sage-border { border-left-color: var(--sage-green); }
-    .workflow-card.gold-border { border-left-color: var(--warm-gold); }
-    .workflow-card.orange-border { border-left-color: var(--sunset-orange); }
-
-    .workflow-card h3 {
-      font-size: 1.25rem;
-      font-weight: 700;
-      margin-bottom: 0.75rem;
-    }
-
-    .workflow-card p {
-      color: var(--text-secondary);
-      font-size: 0.95rem;
-      line-height: 1.7;
-      margin-bottom: 0.75rem;
-    }
-
-    .workflow-steps {
-      font-size: 0.8rem;
-      font-weight: 500;
-      color: var(--warm-brown);
-      background: var(--bg-secondary);
-      border-radius: 8px;
-      padding: 0.75rem 1rem;
-      margin-bottom: 1rem;
-      line-height: 1.7;
-    }
-    .workflow-steps code {
-      background: rgba(139,115,85,0.12);
-      padding: 0.1rem 0.35rem;
-      border-radius: 4px;
-      font-size: 0.75rem;
-    }
-
-    .workflow-pipeline {
-      display: flex;
-      align-items: center;
-      gap: 0.35rem;
-      flex-wrap: wrap;
-      margin-bottom: 0.75rem;
-    }
-    .pipeline-step {
-      font-size: 0.7rem;
-      font-weight: 600;
-      padding: 0.25rem 0.6rem;
-      border-radius: 6px;
-      background: var(--vanilla-cream);
-      border: 1px solid var(--soft-tan);
-      color: var(--text-primary);
-      white-space: nowrap;
-    }
-    .pipeline-arrow {
-      color: var(--warm-brown);
-      font-size: 0.7rem;
-      opacity: 0.5;
-    }
-
-    .workflow-prompt {
-      font-family: 'SF Mono', 'Fira Code', monospace;
-      font-size: 0.75rem;
-      background: var(--text-primary);
-      color: var(--vanilla-cream);
-      padding: 0.6rem 0.85rem;
-      border-radius: 8px;
-      margin-bottom: 0.75rem;
-      cursor: pointer;
-      position: relative;
-      transition: box-shadow 0.3s ease;
-    }
-    .workflow-prompt:hover { box-shadow: 0 4px 12px rgba(44,36,23,0.3); }
-    .workflow-prompt .copied-toast {
-      position: absolute; top: 50%; right: 0.85rem;
-      transform: translateY(-50%);
-      font-size: 0.65rem; font-weight: 600;
-      color: var(--coral-accent); opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-    .workflow-prompt.copied .copied-toast { opacity: 1; }
-
-    .workflow-get-skills {
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: var(--coral-accent);
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3rem;
-      transition: opacity 0.3s ease;
-    }
-    .workflow-get-skills:hover { opacity: 0.7; }
-
-    .workflow-meta {
+    .output-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-    }
-
-    .workflow-tools {
-      display: flex;
-      gap: 0.5rem;
-    }
-
-    .workflow-tool-icon {
-      width: 32px;
-      height: 32px;
-      background: var(--bg-secondary);
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .workflow-tool-icon img { width: 20px; height: 20px; }
-
-    .status-pill {
-      font-size: 0.72rem;
-      font-weight: 600;
-      padding: 0.2rem 0.7rem;
-      border-radius: 10px;
-      color: #fff;
-    }
-
-    .status-pill.active { background: var(--sage-green); }
-    .status-pill.experimental { background: var(--sunset-orange); }
-
-    /* ── PROJECTS ── */
-    .projects-section { background: var(--bg-secondary); }
-
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
-    }
-
-    .project-card {
-      background: var(--card-bg);
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 6px 25px rgba(139, 115, 85, 0.1);
-      transition: all 0.4s ease;
-    }
-
-    .project-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 12px 40px rgba(139, 115, 85, 0.18);
-    }
-
-    .project-img {
-      height: 200px;
-      background: var(--soft-tan);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .project-img i {
-      font-size: 3rem;
-      color: var(--warm-brown);
-      opacity: 0.35;
-    }
-
-    .project-body {
-      padding: 1.5rem;
-    }
-
-    .project-body h3 {
-      font-size: 1.1rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-    }
-
-    .project-body p {
-      color: var(--text-secondary);
-      font-size: 0.9rem;
-      line-height: 1.6;
       margin-bottom: 1rem;
+      flex-wrap: wrap;
+      gap: 0.75rem;
     }
 
-    .project-link {
+    .output-counter {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .os-tabs {
+      display: flex;
+      gap: 0;
+      background: var(--soft-tan);
+      border-radius: 8px;
+      padding: 2px;
+    }
+
+    .os-tab {
+      padding: 0.35rem 1rem;
+      border-radius: 6px;
+      border: none;
+      background: transparent;
+      font-family: var(--font);
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .os-tab.active {
+      background: var(--card-bg);
+      color: var(--text-primary);
+      box-shadow: 0 1px 4px rgba(139, 115, 85, 0.1);
+    }
+
+    .output-code {
+      background: #1e1e2e;
+      border-radius: 10px;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1.25rem;
+      overflow-x: auto;
+    }
+
+    .output-code code {
+      font-size: 0.85rem;
+      color: #cdd6f4;
+      font-family: 'SFMono-Regular', 'Consolas', monospace;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+
+    .output-actions {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-copy {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.7rem 1.5rem;
+      background: var(--coral-accent);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-family: var(--font);
       font-size: 0.9rem;
       font-weight: 600;
-      color: var(--coral-accent);
-      text-decoration: none;
-      transition: color 0.3s ease;
+      cursor: pointer;
+      transition: all 0.3s ease;
     }
 
-    .project-link:hover { color: #e85d5d; }
+    .btn-copy:hover {
+      background: #e85d5d;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255, 107, 107, 0.3);
+    }
 
-    .project-link.disabled {
-      color: var(--warm-brown);
-      opacity: 0.6;
-      cursor: default;
+    .btn-download {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.7rem 1.5rem;
+      background: transparent;
+      color: var(--text-primary);
+      border: 2px solid var(--soft-tan);
+      border-radius: 10px;
+      font-family: var(--font);
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-download:hover {
+      border-color: var(--warm-brown);
+      transform: translateY(-2px);
     }
 
     /* ── FOOTER ── */
-    .site-footer {
+    .footer {
       background: var(--deep-brown);
-      padding: 2.5rem 0;
-    }
-
-    .footer-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
-
-    .footer-left {
       color: var(--warm-beige);
+      padding: 3rem 0;
+      text-align: center;
+    }
+
+    .footer p {
       font-size: 0.95rem;
-      font-weight: 500;
+      margin-bottom: 0.75rem;
     }
 
     .footer-links {
       display: flex;
+      justify-content: center;
       gap: 1.5rem;
+      margin-bottom: 1rem;
     }
 
     .footer-links a {
       color: var(--warm-beige);
       text-decoration: none;
       font-size: 0.9rem;
+      font-weight: 500;
       transition: color 0.3s ease;
     }
 
     .footer-links a:hover { color: var(--coral-accent); }
 
-    .footer-copy {
-      width: 100%;
-      text-align: center;
-      margin-top: 1.5rem;
-      padding-top: 1.25rem;
-      border-top: 1px solid rgba(245, 241, 232, 0.15);
-      color: rgba(245, 241, 232, 0.5);
+    .footer .copyright {
       font-size: 0.8rem;
+      opacity: 0.7;
     }
 
-    /* ── FADE IN ANIMATIONS ── */
+    /* ── ANIMATIONS ── */
     .fade-in {
       opacity: 0;
       transform: translateY(30px);
@@ -1162,746 +968,683 @@
 
     /* ── RESPONSIVE ── */
     @media (max-width: 900px) {
-      .hero-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-      .hero-icons { justify-self: start; }
-      .hero h1 { font-size: 2.8rem; }
-      .skills-grid { grid-template-columns: 1fr; }
-      .install-blocks { grid-template-columns: 1fr; }
-      .tools-grid { grid-template-columns: repeat(3, 1fr); }
-      .presets-grid { grid-template-columns: 1fr; }
-      .openclaw-grid { grid-template-columns: 1fr; }
-      .workflows-grid { grid-template-columns: 1fr; }
-      .projects-grid { grid-template-columns: 1fr 1fr; }
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+
+      .hero h1 { font-size: 2.5rem; }
+
+      .hero-icons {
+        grid-template-columns: repeat(3, 1fr);
+        max-width: 360px;
+        margin: 0 auto;
+      }
+
+      .hero-icon-block {
+        width: 80px;
+        height: 80px;
+      }
+
+      .hero-icon-block img {
+        width: 36px;
+        height: 36px;
+      }
+
+      .skills-grid,
+      .workflows-grid,
+      .skill-picker-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .included-grid,
+      .tool-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .nav-center,
+      .nav-external {
+        display: none;
+      }
+
+      .hamburger { display: flex; }
     }
 
     @media (max-width: 600px) {
-      .hero h1 { font-size: 2.2rem; }
-      .hero { padding-top: 7rem; }
-      section { padding: 3.5rem 0; }
       .container { padding: 0 1.25rem; }
-      .nav-links { display: none; }
-      .nav-links.open {
-        display: flex;
-        flex-direction: column;
-        position: absolute;
-        top: 64px;
-        left: 0;
-        right: 0;
-        background: rgba(250, 247, 240, 0.98);
-        backdrop-filter: blur(20px);
-        padding: 1.5rem 2rem;
-        border-bottom: 1px solid var(--soft-tan);
-        gap: 1.25rem;
+      section { padding: 3rem 0; }
+
+      .hero h1 { font-size: 2rem; }
+      .hero-subtitle { font-size: 1rem; }
+      .hero-ctas { flex-direction: column; }
+      .hero-ctas .btn-primary,
+      .hero-ctas .btn-secondary { width: 100%; justify-content: center; }
+
+      .hero-icons {
+        grid-template-columns: repeat(2, 1fr);
+        max-width: 240px;
       }
-      .hamburger { display: flex; }
-      .tools-grid { grid-template-columns: 1fr 1fr; }
-      .projects-grid { grid-template-columns: 1fr; }
-      .hero-icons { grid-template-columns: repeat(3, 1fr); gap: 1rem; }
-      .hero-icon-block { width: 64px; height: 64px; }
-      .hero-icon-block img { width: 28px; height: 28px; }
-      .section-header h2 { font-size: 1.6rem; }
+
+      .hero-icon-block {
+        width: 70px;
+        height: 70px;
+      }
+
+      .included-grid,
+      .tool-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .section-header h2 { font-size: 1.5rem; }
+
+      .output-panel { padding: 1.25rem; }
+      .output-actions { flex-direction: column; }
+      .btn-copy, .btn-download { width: 100%; justify-content: center; }
+
+      .preset-bar { gap: 0.4rem; }
+      .preset-btn { font-size: 0.78rem; padding: 0.35rem 0.85rem; }
     }
   </style>
 </head>
 <body>
 
-  <!-- NAV -->
-  <nav class="nav" id="nav">
-    <div class="nav-inner">
-      <a class="nav-logo" onclick="window.scrollTo({top:0,behavior:'smooth'})">AI Treasure Trove</a>
-      <ul class="nav-links" id="navLinks">
-        <li><a href="#skills" data-section="skills">Skills</a></li>
-        <li><a href="#tools" data-section="tools">Tools</a></li>
-        <li><a href="#builder" data-section="builder">Builder</a></li>
-        <li><a href="#openclaw" data-section="openclaw">OpenClaw</a></li>
-        <li><a href="#workflows" data-section="workflows">Workflows</a></li>
-        <li><a href="#projects" data-section="projects">Projects</a></li>
-        <li><a href="https://dannygardner.me" target="_blank" class="external">dannygardner.me &#8599;</a></li>
-      </ul>
-      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
-        <span></span><span></span><span></span>
-      </button>
+<!-- ════════════════════ NAV ════════════════════ -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="#">AI Treasure Trove</a>
+    <div class="nav-center">
+      <button class="nav-tab active" data-tab="explore">Explore</button>
+      <button class="nav-tab" data-tab="builder">Builder</button>
     </div>
-  </nav>
+    <a class="nav-external" href="https://dannygardner.me" target="_blank" rel="noopener">dannygardner.me &#8599;</a>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
 
-  <!-- HERO -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="nav-tab active" data-tab="explore">Explore</button>
+  <button class="nav-tab" data-tab="builder">Builder</button>
+  <a class="nav-external" href="https://dannygardner.me" target="_blank" rel="noopener" style="font-size:0.9rem;color:var(--warm-brown);text-decoration:none;font-weight:600;">dannygardner.me &#8599;</a>
+</div>
+
+<!-- ════════════════════ EXPLORE TAB ════════════════════ -->
+<div class="tab-content active" id="tab-explore">
+
+  <!-- Hero -->
   <section class="hero">
     <div class="container">
       <div class="hero-grid">
         <div class="fade-in">
           <h1>AI Treasure<br><em>Trove</em></h1>
-          <p class="hero-subtitle">Skills, tools, workflows, and projects for AI-powered development &mdash; all in one place.</p>
-          <div class="hero-buttons">
-            <a href="#skills" class="btn btn-coral">Explore Skills</a>
-            <a href="https://dannygardner.me" target="_blank" class="btn btn-outline">Visit Portfolio &rarr;</a>
+          <p class="hero-subtitle">Skills, tools, and workflows for AI-powered development</p>
+          <div class="hero-ctas">
+            <button class="btn-primary" id="heroBuilderBtn">Start Building <span>&rarr;</span></button>
+            <a class="btn-secondary" href="https://dannygardner.me" target="_blank" rel="noopener">Visit Portfolio <span>&rarr;</span></a>
           </div>
         </div>
         <div class="hero-icons fade-in">
-          <div class="hero-icon-block dark"><img src="assets/icons/anthropic.svg" alt="Anthropic"></div>
-          <div class="hero-icon-block coral"><img src="assets/icons/node.svg" alt="Node.js"></div>
-          <div class="hero-icon-block light"><img src="assets/icons/vercel.svg" alt="Vercel"></div>
-          <div class="hero-icon-block light"><img src="assets/icons/cloudflare.svg" alt="Cloudflare"></div>
-          <div class="hero-icon-block dark"><img src="assets/icons/github.svg" alt="GitHub"></div>
-          <div class="hero-icon-block coral"><img src="assets/icons/googlecloud.svg" alt="Google Cloud"></div>
+          <div class="hero-icon-block"><img src="assets/icons/anthropic.svg" alt="Anthropic"></div>
+          <div class="hero-icon-block"><img src="assets/icons/node.svg" alt="Node.js"></div>
+          <div class="hero-icon-block"><img src="assets/icons/vercel.svg" alt="Vercel"></div>
+          <div class="hero-icon-block"><img src="assets/icons/cloudflare.svg" alt="Cloudflare"></div>
+          <div class="hero-icon-block"><img src="assets/icons/github.svg" alt="GitHub"></div>
+          <div class="hero-icon-block"><img src="assets/icons/googlecloud.svg" alt="Google Cloud"></div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- SKILLS -->
-  <section class="skills-section" id="skills">
-    <div class="container">
-      <div class="section-header fade-in">
-        <h2>Skills</h2>
-        <span class="section-badge">4 Claude Code skills</span>
-      </div>
+  <!-- Skills -->
+  <section class="container fade-in">
+    <div class="section-header">
+      <h2>Claude Code Skills</h2>
+      <span class="section-badge">4 skills</span>
+    </div>
+    <div class="filter-bar">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="video">Video</button>
+      <button class="filter-btn" data-filter="image">Image</button>
+      <button class="filter-btn" data-filter="content">Content</button>
+    </div>
+    <div class="skills-grid" id="skillsGrid">
 
-      <div class="filter-bar fade-in">
-        <button class="filter-btn active" data-filter="all">All</button>
-        <button class="filter-btn" data-filter="video">Video</button>
-        <button class="filter-btn" data-filter="image">Image</button>
-        <button class="filter-btn" data-filter="content">Content</button>
-      </div>
-
-      <div class="skills-grid">
-        <!-- 3D Animation Creator -->
-        <div class="skill-card fade-in" data-category="video" onclick="this.classList.toggle('expanded')">
-          <div class="skill-card-header">
-            <div class="skill-icon coral"><i class="fas fa-film"></i></div>
-            <h3>3D Animation Creator</h3>
-          </div>
-          <span class="skill-tag coral">Video</span>
-          <p>Turn any video into an Apple-style scroll-driven animation website. Frame extraction, canvas rendering, snap-stop scroll effects.</p>
-          <div class="skill-detail">
-            <div class="skill-detail-inner">
-              Trigger: &lsquo;3D animation&rsquo;, &lsquo;scroll-stop build&rsquo;, &lsquo;scroll animation website&rsquo; &mdash; Includes starscape background, annotation cards, navbar pill transform, count-up animations, full mobile responsiveness.
-            </div>
+      <div class="skill-card" data-category="video">
+        <div class="skill-card-header">
+          <h3>3D Animation Creator</h3>
+          <div style="display:flex;align-items:center;gap:0.5rem;">
+            <span class="skill-tag video">Video</span>
+            <i class="fa-solid fa-chevron-down skill-expand-icon"></i>
           </div>
         </div>
-
-        <!-- Image Generator -->
-        <div class="skill-card fade-in" data-category="image" onclick="this.classList.toggle('expanded')">
-          <div class="skill-card-header">
-            <div class="skill-icon sage"><i class="fas fa-images"></i></div>
-            <h3>Image Generator</h3>
-          </div>
-          <span class="skill-tag sage">Image</span>
-          <p>Generate coordinated prompt sets for scroll-stopping video content &mdash; hero shot, exploded view, and video transition.</p>
-          <div class="skill-detail">
-            <div class="skill-detail-inner">
-              Trigger: &lsquo;image generator&rsquo;, &lsquo;scroll-stop prompt&rsquo;, &lsquo;exploded view prompt&rsquo; &mdash; Delivers via premium HTML page with tabbed navigation, one-click copy, and confetti animation.
-            </div>
-          </div>
-        </div>
-
-        <!-- Gemini Image Generation -->
-        <div class="skill-card fade-in" data-category="image" onclick="this.classList.toggle('expanded')">
-          <div class="skill-card-header">
-            <div class="skill-icon sage"><i class="fas fa-wand-magic-sparkles"></i></div>
-            <h3>Gemini Image Generation</h3>
-          </div>
-          <span class="skill-tag sage">Image</span>
-          <p>Reference guide for AI image generation via Gemini API, Vertex AI (Imagen 4, Veo 2), with model comparison and error recovery.</p>
-          <div class="skill-detail">
-            <div class="skill-detail-inner">
-              Models: gemini-3-pro (highest quality), gemini-2.5-flash (most reliable). Includes Vertex AI integration with gcloud auth, dark UI handling, video generation options.
-            </div>
-          </div>
-        </div>
-
-        <!-- LinkedIn Post Writer -->
-        <div class="skill-card fade-in" data-category="content" onclick="this.classList.toggle('expanded')">
-          <div class="skill-card-header">
-            <div class="skill-icon gold"><i class="fab fa-linkedin"></i></div>
-            <h3>LinkedIn Post Writer</h3>
-          </div>
-          <span class="skill-tag gold">Content</span>
-          <p>Story-driven LinkedIn posts about developer workflows, architectural thinking, and AI-as-a-team philosophy.</p>
-          <div class="skill-detail">
-            <div class="skill-detail-inner">
-              Trigger: &lsquo;linkedin post&rsquo;, &lsquo;draft a post&rsquo; &mdash; Structure: Hook &rarr; Tension &rarr; Shift &rarr; Implication &rarr; Closer. Voice: first-person, conversational, tension-based.
-            </div>
+        <p>Turn any video into an Apple-style scroll-driven animation website. Frame extraction, canvas rendering, snap-stop scroll effects.</p>
+        <div class="skill-details">
+          <div class="skill-details-inner">
+            <div class="skill-detail-label">Triggers</div>
+            <div class="skill-detail-value">'3D animation', 'scroll-stop build', 'scroll animation website'</div>
           </div>
         </div>
       </div>
+
+      <div class="skill-card" data-category="image">
+        <div class="skill-card-header">
+          <h3>Image Generator</h3>
+          <div style="display:flex;align-items:center;gap:0.5rem;">
+            <span class="skill-tag image">Image</span>
+            <i class="fa-solid fa-chevron-down skill-expand-icon"></i>
+          </div>
+        </div>
+        <p>Generate coordinated prompt sets for scroll-stopping video content &mdash; hero shot, exploded view, and video transition.</p>
+        <div class="skill-details">
+          <div class="skill-details-inner">
+            <div class="skill-detail-label">Triggers</div>
+            <div class="skill-detail-value">'image generator', 'scroll-stop prompt', 'exploded view prompt'</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="skill-card" data-category="image">
+        <div class="skill-card-header">
+          <h3>Gemini Image Generation</h3>
+          <div style="display:flex;align-items:center;gap:0.5rem;">
+            <span class="skill-tag image">Image</span>
+            <i class="fa-solid fa-chevron-down skill-expand-icon"></i>
+          </div>
+        </div>
+        <p>Reference guide for AI image generation via Gemini API, Vertex AI (Imagen 4, Veo 2), with model comparison and error recovery.</p>
+        <div class="skill-details">
+          <div class="skill-details-inner">
+            <div class="skill-detail-label">Models</div>
+            <div class="skill-detail-value">gemini-3-pro, gemini-2.5-flash</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="skill-card" data-category="content">
+        <div class="skill-card-header">
+          <h3>LinkedIn Post Writer</h3>
+          <div style="display:flex;align-items:center;gap:0.5rem;">
+            <span class="skill-tag content">Content</span>
+            <i class="fa-solid fa-chevron-down skill-expand-icon"></i>
+          </div>
+        </div>
+        <p>Story-driven LinkedIn posts about developer workflows, architectural thinking, and AI-as-a-team philosophy.</p>
+        <div class="skill-details">
+          <div class="skill-details-inner">
+            <div class="skill-detail-label">Triggers</div>
+            <div class="skill-detail-value">'linkedin post', 'draft a post'</div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </section>
 
-  <!-- BUNDLEDOWNLOAD / TOOLS -->
-  <section class="tools-section" id="tools">
-    <div class="container">
-      <div class="section-header fade-in">
-        <h2>BundleDownload</h2>
-        <span class="section-badge">12 tools, 4 presets</span>
-      </div>
-      <p class="tools-subtitle fade-in">One command. Every tool. Stop spending your first day installing things.</p>
+  <!-- Workflows -->
+  <section class="container fade-in">
+    <div class="section-header">
+      <h2>Workflows</h2>
+      <span class="section-badge">How skills combine</span>
+    </div>
+    <div class="workflows-grid">
 
-      <div class="install-blocks fade-in">
-        <div class="install-block" onclick="copyCmd(this)">
-          <div class="install-label">Mac / Linux</div>
-          <div class="install-cmd">curl -fsSL https://ai.dannygardner.me/install.sh | bash</div>
-          <span class="copied-toast">Copied!</span>
+      <div class="workflow-card">
+        <h3>Scroll-Stop Product Video</h3>
+        <p>Full pipeline from concept to deployed scroll-driven animation site with AI-generated visuals.</p>
+        <div class="pipeline">
+          <span class="pipeline-step">Image Generator</span>
+          <i class="fa-solid fa-arrow-right pipeline-arrow"></i>
+          <span class="pipeline-step">Gemini Image Gen</span>
+          <i class="fa-solid fa-arrow-right pipeline-arrow"></i>
+          <span class="pipeline-step">Video Model</span>
+          <i class="fa-solid fa-arrow-right pipeline-arrow"></i>
+          <span class="pipeline-step">3D Animation Creator</span>
+          <i class="fa-solid fa-arrow-right pipeline-arrow"></i>
+          <span class="pipeline-step">Vercel Deploy</span>
         </div>
-        <div class="install-block" onclick="copyCmd(this)">
-          <div class="install-label">Windows</div>
-          <div class="install-cmd">irm https://ai.dannygardner.me/install.ps1 | iex</div>
-          <span class="copied-toast">Copied!</span>
+        <div class="workflow-prompt">
+          <button class="copy-btn" onclick="copyText(this)" title="Copy prompt"><i class="fa-regular fa-copy"></i></button>
+          <code>Build me a scroll-stop animation site for [my product]. Generate hero and exploded-view images, create a transition video, then build a scroll-driven website and deploy to Vercel.</code>
         </div>
-      </div>
-
-      <div class="tools-grid">
-        <div class="tool-card fade-in"><img src="assets/icons/git.svg" alt="Git"><h4>Git</h4><div class="tool-phase">Foundation</div></div>
-        <div class="tool-card fade-in"><img src="assets/icons/node.svg" alt="Node.js"><h4>Node.js</h4><div class="tool-phase">Foundation</div></div>
-        <div class="tool-card fade-in"><img src="assets/icons/github.svg" alt="GitHub CLI"><h4>GitHub CLI</h4><div class="tool-phase">Standalone</div></div>
-        <div class="tool-card fade-in"><img src="assets/icons/anthropic.svg" alt="Claude Code"><h4>Claude Code</h4><div class="tool-phase">Standalone</div></div>
-        <div class="tool-card fade-in"><img src="assets/icons/aws.svg" alt="AWS CLI"><h4>AWS CLI</h4><div class="tool-phase">Standalone</div></div>
-        <div class="tool-card fade-in"><img src="assets/icons/azure.svg" alt="Azure CLI"><h4>Azure CLI</h4><div class="tool-phase">Standalone</div></div>
-        <div class="tool-card fade-in"><img src="assets/icons/googlecloud.svg" alt="Google Cloud CLI"><h4>Google Cloud CLI</h4><div class="tool-phase">Standalone</div></div>
-        <div class="tool-card fade-in"><img src="assets/icons/vercel.svg" alt="Vercel CLI"><h4>Vercel CLI</h4><div class="tool-phase">NPM Tool</div></div>
-        <div class="tool-card fade-in"><img src="assets/icons/cloudflare.svg" alt="Wrangler"><h4>Wrangler</h4><div class="tool-phase">NPM Tool</div></div>
-        <div class="tool-card fade-in"><img src="assets/icons/supabase.svg" alt="Supabase CLI"><h4>Supabase CLI</h4><div class="tool-phase">NPM Tool</div></div>
-        <div class="tool-card fade-in"><img src="assets/icons/tabby.svg" alt="Tabby"><h4>Tabby</h4><div class="tool-phase">App</div></div>
-        <div class="tool-card fade-in"><img src="assets/icons/whisperflow.svg" alt="WhisperFlow"><h4>WhisperFlow</h4><div class="tool-phase">App</div></div>
+        <a href="#" class="workflow-link" onclick="switchToBuilder(event)">Get these skills &rarr;</a>
       </div>
 
-      <div class="presets-header fade-in">
-        <h3>Presets</h3>
-        <span>or bring your own config</span>
+      <div class="workflow-card sage">
+        <h3>AI-Powered Landing Page</h3>
+        <p>Design and ship a landing page with AI-generated hero images and announce it on LinkedIn.</p>
+        <div class="pipeline">
+          <span class="pipeline-step">Frontend Design</span>
+          <i class="fa-solid fa-arrow-right pipeline-arrow"></i>
+          <span class="pipeline-step">Gemini Image Gen</span>
+          <i class="fa-solid fa-arrow-right pipeline-arrow"></i>
+          <span class="pipeline-step">Vercel Deploy</span>
+          <i class="fa-solid fa-arrow-right pipeline-arrow"></i>
+          <span class="pipeline-step">LinkedIn Post</span>
+        </div>
+        <div class="workflow-prompt">
+          <button class="copy-btn" onclick="copyText(this)" title="Copy prompt"><i class="fa-regular fa-copy"></i></button>
+          <code>Build a landing page for [my product] with AI-generated hero images. Deploy to Vercel and draft a LinkedIn announcement.</code>
+        </div>
+        <a href="#" class="workflow-link" onclick="switchToBuilder(event)">Get these skills &rarr;</a>
       </div>
 
-      <div class="presets-grid">
-        <div class="preset-card fade-in">
-          <h4>danny's-stack</h4>
-          <p class="preset-desc">The essentials for full-stack web development</p>
-          <div class="preset-tools">
-            <span class="preset-pill">node</span>
-            <span class="preset-pill">git</span>
-            <span class="preset-pill">gh</span>
-            <span class="preset-pill">claude-code</span>
-            <span class="preset-pill">vercel</span>
-            <span class="preset-pill">supabase</span>
-            <span class="preset-pill">wrangler</span>
-            <span class="preset-pill">tabby</span>
-          </div>
-          <div class="preset-cmds">
-            <div class="preset-cmd" onclick="copyCmd(this)"><span class="os-tag">Mac/Linux</span><span class="cmd-text">curl -fsSL https://ai.dannygardner.me/install.sh | bash -s -- --preset dannys-stack</span><span class="copied-toast">Copied!</span></div>
-            <div class="preset-cmd" onclick="copyCmd(this)"><span class="os-tag">Windows</span><span class="cmd-text">powershell -c "irm https://ai.dannygardner.me/install.ps1 | iex" --preset dannys-stack</span><span class="copied-toast">Copied!</span></div>
-          </div>
+      <div class="workflow-card gold">
+        <h3>Multi-Model Image Pipeline</h3>
+        <p>Generate a coordinated set of product images using multiple AI models for maximum quality.</p>
+        <div class="pipeline">
+          <span class="pipeline-step">Image Generator</span>
+          <i class="fa-solid fa-arrow-right pipeline-arrow"></i>
+          <span class="pipeline-step">Gemini Image Gen</span>
+          <i class="fa-solid fa-arrow-right pipeline-arrow"></i>
+          <span class="pipeline-step">Project Assets</span>
         </div>
-
-        <div class="preset-card fade-in">
-          <h4>frontend-dev</h4>
-          <p class="preset-desc">Frontend development essentials</p>
-          <div class="preset-tools">
-            <span class="preset-pill">node</span>
-            <span class="preset-pill">git</span>
-            <span class="preset-pill">gh</span>
-            <span class="preset-pill">vercel</span>
-            <span class="preset-pill">wrangler</span>
-          </div>
-          <div class="preset-cmds">
-            <div class="preset-cmd" onclick="copyCmd(this)"><span class="os-tag">Mac/Linux</span><span class="cmd-text">curl -fsSL https://ai.dannygardner.me/install.sh | bash -s -- --preset frontend-dev</span><span class="copied-toast">Copied!</span></div>
-            <div class="preset-cmd" onclick="copyCmd(this)"><span class="os-tag">Windows</span><span class="cmd-text">powershell -c "irm https://ai.dannygardner.me/install.ps1 | iex" --preset frontend-dev</span><span class="copied-toast">Copied!</span></div>
-          </div>
+        <div class="workflow-prompt">
+          <button class="copy-btn" onclick="copyText(this)" title="Copy prompt"><i class="fa-regular fa-copy"></i></button>
+          <code>Generate a coordinated image set for [my product]. Use the image generator for prompts, then Gemini for generation. Output to project assets.</code>
         </div>
-
-        <div class="preset-card fade-in">
-          <h4>cloud-ops</h4>
-          <p class="preset-desc">Cloud platform CLIs for infrastructure work</p>
-          <div class="preset-tools">
-            <span class="preset-pill">git</span>
-            <span class="preset-pill">gh</span>
-            <span class="preset-pill">aws</span>
-            <span class="preset-pill">az</span>
-            <span class="preset-pill">gcloud</span>
-          </div>
-          <div class="preset-cmds">
-            <div class="preset-cmd" onclick="copyCmd(this)"><span class="os-tag">Mac/Linux</span><span class="cmd-text">curl -fsSL https://ai.dannygardner.me/install.sh | bash -s -- --preset cloud-ops</span><span class="copied-toast">Copied!</span></div>
-            <div class="preset-cmd" onclick="copyCmd(this)"><span class="os-tag">Windows</span><span class="cmd-text">powershell -c "irm https://ai.dannygardner.me/install.ps1 | iex" --preset cloud-ops</span><span class="copied-toast">Copied!</span></div>
-          </div>
-        </div>
-
-        <div class="preset-card fade-in">
-          <h4>ai-builder</h4>
-          <p class="preset-desc">AI-powered development &mdash; everything you need to build with AI agents, generate images, deploy instantly</p>
-          <div class="preset-tools">
-            <span class="preset-pill">node</span>
-            <span class="preset-pill">git</span>
-            <span class="preset-pill">gh</span>
-            <span class="preset-pill">claude-code</span>
-            <span class="preset-pill">gcloud</span>
-            <span class="preset-pill">vercel</span>
-            <span class="preset-pill">supabase</span>
-            <span class="preset-pill">wrangler</span>
-            <span class="preset-pill">whisperflow</span>
-          </div>
-          <div class="preset-cmds">
-            <div class="preset-cmd" onclick="copyCmd(this)"><span class="os-tag">Mac/Linux</span><span class="cmd-text">curl -fsSL https://ai.dannygardner.me/install.sh | bash -s -- --preset ai-builder</span><span class="copied-toast">Copied!</span></div>
-            <div class="preset-cmd" onclick="copyCmd(this)"><span class="os-tag">Windows</span><span class="cmd-text">powershell -c "irm https://ai.dannygardner.me/install.ps1 | iex" --preset ai-builder</span><span class="copied-toast">Copied!</span></div>
-          </div>
-        </div>
-
-        <div class="preset-card fade-in">
-          <h4>full-stack</h4>
-          <p class="preset-desc">Everything. All 12 tools. The whole kitchen sink.</p>
-          <div class="preset-tools">
-            <span class="preset-pill">node</span>
-            <span class="preset-pill">git</span>
-            <span class="preset-pill">gh</span>
-            <span class="preset-pill">claude-code</span>
-            <span class="preset-pill">aws</span>
-            <span class="preset-pill">az</span>
-            <span class="preset-pill">gcloud</span>
-            <span class="preset-pill">vercel</span>
-            <span class="preset-pill">wrangler</span>
-            <span class="preset-pill">supabase</span>
-            <span class="preset-pill">tabby</span>
-            <span class="preset-pill">whisperflow</span>
-          </div>
-          <div class="preset-cmds">
-            <div class="preset-cmd" onclick="copyCmd(this)"><span class="os-tag">Mac/Linux</span><span class="cmd-text">curl -fsSL https://ai.dannygardner.me/install.sh | bash -s -- --preset full-stack</span><span class="copied-toast">Copied!</span></div>
-            <div class="preset-cmd" onclick="copyCmd(this)"><span class="os-tag">Windows</span><span class="cmd-text">powershell -c "irm https://ai.dannygardner.me/install.ps1 | iex" --preset full-stack</span><span class="copied-toast">Copied!</span></div>
-          </div>
-        </div>
+        <a href="#" class="workflow-link" onclick="switchToBuilder(event)">Get these skills &rarr;</a>
       </div>
+
+      <div class="workflow-card orange">
+        <h3>Build + Ship + Announce</h3>
+        <p>End-to-end: build a feature with scroll animation, deploy it, and write the LinkedIn post.</p>
+        <div class="pipeline">
+          <span class="pipeline-step">Frontend Design</span>
+          <i class="fa-solid fa-arrow-right pipeline-arrow"></i>
+          <span class="pipeline-step">3D Animation Creator</span>
+          <i class="fa-solid fa-arrow-right pipeline-arrow"></i>
+          <span class="pipeline-step">Vercel Deploy</span>
+          <i class="fa-solid fa-arrow-right pipeline-arrow"></i>
+          <span class="pipeline-step">LinkedIn Post</span>
+        </div>
+        <div class="workflow-prompt">
+          <button class="copy-btn" onclick="copyText(this)" title="Copy prompt"><i class="fa-regular fa-copy"></i></button>
+          <code>Build [this feature], add a scroll-driven animation, deploy to Vercel, and draft a LinkedIn announcement post.</code>
+        </div>
+        <a href="#" class="workflow-link" onclick="switchToBuilder(event)">Get these skills &rarr;</a>
+      </div>
+
     </div>
   </section>
 
-  <!-- STACK BUILDER -->
-  <section class="builder-section" id="builder">
-    <div class="container">
-      <div class="section-header fade-in">
-        <h2>Build Your Stack</h2>
-        <span class="section-badge">Pick & install</span>
-      </div>
-
-      <div class="builder-quick fade-in">
-        <button class="builder-quick-btn" data-preset="dannys-stack">danny's-stack</button>
-        <button class="builder-quick-btn" data-preset="ai-builder">ai-builder</button>
-        <button class="builder-quick-btn" data-preset="frontend-dev">frontend-dev</button>
-        <button class="builder-quick-btn" data-preset="cloud-ops">cloud-ops</button>
-        <button class="builder-quick-btn" data-preset="full-stack">full-stack</button>
-        <button class="builder-quick-btn" data-preset="none">Clear all</button>
-      </div>
-
-      <div class="builder-grid fade-in">
-        <div class="builder-tool" data-tool="git" onclick="toggleTool(this)">
-          <div class="bt-check"><i class="fas fa-check"></i></div>
-          <img src="assets/icons/git.svg" alt="Git">
-          <div class="bt-info"><div class="bt-name">Git</div><div class="bt-phase">Foundation</div></div>
-        </div>
-        <div class="builder-tool" data-tool="node" onclick="toggleTool(this)">
-          <div class="bt-check"><i class="fas fa-check"></i></div>
-          <img src="assets/icons/node.svg" alt="Node.js">
-          <div class="bt-info"><div class="bt-name">Node.js</div><div class="bt-phase">Foundation</div></div>
-        </div>
-        <div class="builder-tool" data-tool="gh" onclick="toggleTool(this)">
-          <div class="bt-check"><i class="fas fa-check"></i></div>
-          <img src="assets/icons/github.svg" alt="GitHub CLI">
-          <div class="bt-info"><div class="bt-name">GitHub CLI</div><div class="bt-phase">Standalone</div></div>
-        </div>
-        <div class="builder-tool" data-tool="claude-code" onclick="toggleTool(this)">
-          <div class="bt-check"><i class="fas fa-check"></i></div>
-          <img src="assets/icons/anthropic.svg" alt="Claude Code">
-          <div class="bt-info"><div class="bt-name">Claude Code</div><div class="bt-phase">Standalone</div></div>
-        </div>
-        <div class="builder-tool" data-tool="vercel" onclick="toggleTool(this)">
-          <div class="bt-check"><i class="fas fa-check"></i></div>
-          <img src="assets/icons/vercel.svg" alt="Vercel">
-          <div class="bt-info"><div class="bt-name">Vercel CLI</div><div class="bt-phase">NPM Tool</div></div>
-        </div>
-        <div class="builder-tool" data-tool="wrangler" onclick="toggleTool(this)">
-          <div class="bt-check"><i class="fas fa-check"></i></div>
-          <img src="assets/icons/cloudflare.svg" alt="Wrangler">
-          <div class="bt-info"><div class="bt-name">Wrangler</div><div class="bt-phase">NPM Tool</div></div>
-        </div>
-        <div class="builder-tool" data-tool="supabase" onclick="toggleTool(this)">
-          <div class="bt-check"><i class="fas fa-check"></i></div>
-          <img src="assets/icons/supabase.svg" alt="Supabase">
-          <div class="bt-info"><div class="bt-name">Supabase CLI</div><div class="bt-phase">NPM Tool</div></div>
-        </div>
-        <div class="builder-tool" data-tool="aws" onclick="toggleTool(this)">
-          <div class="bt-check"><i class="fas fa-check"></i></div>
-          <img src="assets/icons/aws.svg" alt="AWS">
-          <div class="bt-info"><div class="bt-name">AWS CLI</div><div class="bt-phase">Standalone</div></div>
-        </div>
-        <div class="builder-tool" data-tool="az" onclick="toggleTool(this)">
-          <div class="bt-check"><i class="fas fa-check"></i></div>
-          <img src="assets/icons/azure.svg" alt="Azure">
-          <div class="bt-info"><div class="bt-name">Azure CLI</div><div class="bt-phase">Standalone</div></div>
-        </div>
-        <div class="builder-tool" data-tool="gcloud" onclick="toggleTool(this)">
-          <div class="bt-check"><i class="fas fa-check"></i></div>
-          <img src="assets/icons/googlecloud.svg" alt="Google Cloud">
-          <div class="bt-info"><div class="bt-name">Google Cloud</div><div class="bt-phase">Standalone</div></div>
-        </div>
-        <div class="builder-tool" data-tool="tabby" onclick="toggleTool(this)">
-          <div class="bt-check"><i class="fas fa-check"></i></div>
-          <img src="assets/icons/tabby.svg" alt="Tabby">
-          <div class="bt-info"><div class="bt-name">Tabby</div><div class="bt-phase">App</div></div>
-        </div>
-        <div class="builder-tool" data-tool="whisperflow" onclick="toggleTool(this)">
-          <div class="bt-check"><i class="fas fa-check"></i></div>
-          <img src="assets/icons/whisperflow.svg" alt="WhisperFlow">
-          <div class="bt-info"><div class="bt-name">WhisperFlow</div><div class="bt-phase">App</div></div>
-        </div>
-      </div>
-
-      <div class="builder-count fade-in"><span id="builderCount">0</span> tools selected</div>
-
-      <div class="builder-output fade-in" id="builderOutput">
-        <div class="builder-empty" id="builderEmpty">Select tools above to generate your install command</div>
-        <div id="builderResult" style="display:none;">
-          <div class="builder-os-tabs">
-            <button class="builder-os-tab active" onclick="switchBuilderOS('mac')">Mac / Linux</button>
-            <button class="builder-os-tab" onclick="switchBuilderOS('win')">Windows</button>
-          </div>
-          <div class="builder-cmd" id="builderCmd" onclick="copyCmd(this)">
-            <span class="cmd-text" id="builderCmdText"></span>
-            <span class="copied-toast">Copied!</span>
-          </div>
-          <div class="builder-actions">
-            <button class="btn btn-coral" onclick="downloadConfig()"><i class="fas fa-download"></i> Download Config JSON</button>
-            <button class="btn btn-outline" onclick="copyCmd(document.getElementById('builderCmd'))"><i class="fas fa-copy"></i> Copy Command</button>
-          </div>
-        </div>
-      </div>
+  <!-- What's Included -->
+  <section class="container fade-in">
+    <div class="section-header">
+      <h2>What's Included</h2>
+      <span class="section-badge">18 tools</span>
     </div>
+    <p class="included-intro">Every workflow starts with the right tools. Here's what you can install.</p>
+    <div class="included-grid" id="includedGrid"></div>
   </section>
 
-  <!-- OPENCLAW -->
-  <section class="openclaw-section" id="openclaw">
-    <div class="container">
-      <div class="openclaw-grid">
-        <div class="fade-in">
-          <span class="openclaw-badge">Fleet Dashboard</span>
-          <h2>OpenClaw</h2>
-          <p class="openclaw-desc">Command and monitoring interface for distributed AI agent fleets. Configure Claude Code for autonomous development with coordinated workflows.</p>
-          <ul class="openclaw-features">
-            <li><i class="fas fa-robot"></i> Autonomous agent coordination</li>
-            <li><i class="fas fa-terminal"></i> Claude Code configuration management</li>
-            <li><i class="fas fa-chart-line"></i> Fleet monitoring &amp; orchestration</li>
-          </ul>
-          <span class="btn btn-outline" style="opacity:0.6; cursor:default;">Coming Soon</span>
+</div>
+
+<!-- ════════════════════ BUILDER TAB ════════════════════ -->
+<div class="tab-content" id="tab-builder">
+
+  <!-- Tool Picker -->
+  <div class="builder-section container">
+    <div class="builder-header">
+      <h2>Build Your Stack</h2>
+    </div>
+    <div class="preset-bar" id="presetBar">
+      <button class="preset-btn" data-preset="dannys-stack">danny's-stack</button>
+      <button class="preset-btn" data-preset="ai-builder">ai-builder</button>
+      <button class="preset-btn" data-preset="frontend-dev">frontend-dev</button>
+      <button class="preset-btn" data-preset="cloud-ops">cloud-ops</button>
+      <button class="preset-btn" data-preset="full-stack">full-stack</button>
+      <button class="preset-btn clear" data-preset="clear">Clear all</button>
+    </div>
+    <div class="tool-grid" id="toolGrid"></div>
+  </div>
+
+  <!-- Skill Picker -->
+  <div class="builder-section container">
+    <div class="section-header">
+      <h2>Add Claude Code Skills</h2>
+      <span class="section-badge" id="skillCountBadge">0 selected</span>
+    </div>
+    <div class="skill-picker-grid" id="skillPickerGrid"></div>
+  </div>
+
+  <!-- Output Panel -->
+  <div class="container" style="padding-bottom:3rem;">
+    <div class="output-panel" id="outputPanel">
+      <div class="output-header">
+        <span class="output-counter" id="outputCounter">0 tools, 0 skills selected</span>
+        <div class="os-tabs">
+          <button class="os-tab active" data-os="mac">Mac/Linux</button>
+          <button class="os-tab" data-os="win">Windows</button>
         </div>
-        <div class="openclaw-preview fade-in">
-          <i class="fas fa-desktop"></i>
-          <span>Dashboard Preview</span>
-        </div>
+      </div>
+      <div class="output-code">
+        <code id="outputCode">curl -fsSL https://ai.dannygardner.me/install.sh | bash -s --</code>
+      </div>
+      <div class="output-actions">
+        <button class="btn-copy" id="copyCommandBtn"><i class="fa-regular fa-copy"></i> Copy Command</button>
+        <button class="btn-download" id="downloadConfigBtn"><i class="fa-solid fa-download"></i> Download Config</button>
       </div>
     </div>
-  </section>
+  </div>
 
-  <!-- WORKFLOWS -->
-  <section class="workflows-section" id="workflows">
-    <div class="container">
-      <div class="section-header fade-in">
-        <h2>AI Workflows</h2>
-        <span class="section-badge">4 active pipelines</span>
-      </div>
+</div>
 
-      <div class="workflows-grid">
-        <div class="workflow-card coral-border fade-in">
-          <h3>Scroll-Stop Product Video</h3>
-          <p>Combine 3 skills into a single pipeline that takes a product idea and outputs a deployed scroll-driven animation website with AI-generated assets.</p>
-          <div class="workflow-pipeline">
-            <span class="pipeline-step">Image Generator</span><span class="pipeline-arrow">&rarr;</span>
-            <span class="pipeline-step">Gemini Image Gen</span><span class="pipeline-arrow">&rarr;</span>
-            <span class="pipeline-step">Video Model</span><span class="pipeline-arrow">&rarr;</span>
-            <span class="pipeline-step">3D Animation Creator</span><span class="pipeline-arrow">&rarr;</span>
-            <span class="pipeline-step">Vercel Deploy</span>
-          </div>
-          <div class="workflow-prompt" onclick="copyCmd(this)"><span class="cmd-text">Build me a scroll-stop animation site for [my product]. Generate the hero shot and exploded view, create the video transition, and deploy it.</span><span class="copied-toast">Copied!</span></div>
-          <a href="#skills" class="workflow-get-skills"><i class="fas fa-download"></i> Get these 3 skills</a>
-          <div class="workflow-meta">
-            <div class="workflow-tools">
-              <div class="workflow-tool-icon"><img src="assets/icons/googlecloud.svg" alt="Google Cloud"></div>
-              <div class="workflow-tool-icon"><img src="assets/icons/vercel.svg" alt="Vercel"></div>
-              <div class="workflow-tool-icon"><img src="assets/icons/anthropic.svg" alt="Claude Code"></div>
-            </div>
-            <span class="status-pill active">Active</span>
-          </div>
-        </div>
-
-        <div class="workflow-card sage-border fade-in">
-          <h3>AI-Powered Landing Page</h3>
-          <p>Go from "I need a website" to a live, polished landing page with AI-generated visuals &mdash; no manual design work.</p>
-          <div class="workflow-pipeline">
-            <span class="pipeline-step">Frontend Design</span><span class="pipeline-arrow">&rarr;</span>
-            <span class="pipeline-step">Gemini Image Gen</span><span class="pipeline-arrow">&rarr;</span>
-            <span class="pipeline-step">Vercel Deploy</span><span class="pipeline-arrow">&rarr;</span>
-            <span class="pipeline-step">LinkedIn Post</span>
-          </div>
-          <div class="workflow-prompt" onclick="copyCmd(this)"><span class="cmd-text">Build a landing page for [my product] with AI-generated hero images. Match this design system. Deploy to Vercel and draft a LinkedIn launch post.</span><span class="copied-toast">Copied!</span></div>
-          <a href="#skills" class="workflow-get-skills"><i class="fas fa-download"></i> Get these 3 skills</a>
-          <div class="workflow-meta">
-            <div class="workflow-tools">
-              <div class="workflow-tool-icon"><img src="assets/icons/vercel.svg" alt="Vercel"></div>
-              <div class="workflow-tool-icon"><img src="assets/icons/cloudflare.svg" alt="Cloudflare"></div>
-              <div class="workflow-tool-icon"><img src="assets/icons/anthropic.svg" alt="Claude Code"></div>
-            </div>
-            <span class="status-pill active">Active</span>
-          </div>
-        </div>
-
-        <div class="workflow-card gold-border fade-in">
-          <h3>Multi-Model Image Pipeline</h3>
-          <p>Chain skills to create consistent visual assets across an entire project &mdash; with automatic model fallback and coordinated prompts for visual consistency.</p>
-          <div class="workflow-pipeline">
-            <span class="pipeline-step">Image Generator</span><span class="pipeline-arrow">&rarr;</span>
-            <span class="pipeline-step">Gemini Image Gen</span><span class="pipeline-arrow">&rarr;</span>
-            <span class="pipeline-step">Project Assets</span>
-          </div>
-          <div class="workflow-prompt" onclick="copyCmd(this)"><span class="cmd-text">Generate a coordinated image set for [my product] — hero shot on white, exploded/deconstructed view, and a video transition prompt. Use Imagen 4 for quality.</span><span class="copied-toast">Copied!</span></div>
-          <a href="#skills" class="workflow-get-skills"><i class="fas fa-download"></i> Get these 2 skills</a>
-          <div class="workflow-meta">
-            <div class="workflow-tools">
-              <div class="workflow-tool-icon"><img src="assets/icons/googlecloud.svg" alt="Google Cloud"></div>
-            </div>
-            <span class="status-pill active">Active</span>
-          </div>
-        </div>
-
-        <div class="workflow-card orange-border fade-in">
-          <h3>Build + Ship + Announce</h3>
-          <p>End-to-end project launch in one session &mdash; build the feature, add scroll-stop animation, deploy, and draft a story-driven LinkedIn post about it.</p>
-          <div class="workflow-pipeline">
-            <span class="pipeline-step">Frontend Design</span><span class="pipeline-arrow">&rarr;</span>
-            <span class="pipeline-step">3D Animation Creator</span><span class="pipeline-arrow">&rarr;</span>
-            <span class="pipeline-step">Vercel Deploy</span><span class="pipeline-arrow">&rarr;</span>
-            <span class="pipeline-step">LinkedIn Post</span>
-          </div>
-          <div class="workflow-prompt" onclick="copyCmd(this)"><span class="cmd-text">Build [this feature], add a scroll-driven animation for the demo, deploy it to Vercel, and write a LinkedIn post about the build process.</span><span class="copied-toast">Copied!</span></div>
-          <a href="#skills" class="workflow-get-skills"><i class="fas fa-download"></i> Get these 3 skills</a>
-          <div class="workflow-meta">
-            <div class="workflow-tools">
-              <div class="workflow-tool-icon"><img src="assets/icons/vercel.svg" alt="Vercel"></div>
-              <div class="workflow-tool-icon"><img src="assets/icons/anthropic.svg" alt="Claude Code"></div>
-            </div>
-            <span class="status-pill active">Active</span>
-          </div>
-        </div>
-      </div>
+<!-- ════════════════════ FOOTER ════════════════════ -->
+<footer class="footer">
+  <div class="container">
+    <p>Built by Danny Gardner</p>
+    <div class="footer-links">
+      <a href="https://dannygardner.me" target="_blank" rel="noopener">Portfolio</a>
+      <a href="https://github.com/dangardner" target="_blank" rel="noopener">GitHub</a>
     </div>
-  </section>
+    <p class="copyright">&copy; 2026 Danny Gardner. All rights reserved.</p>
+  </div>
+</footer>
 
-  <!-- PROJECTS -->
-  <section class="projects-section" id="projects">
-    <div class="container">
-      <div class="section-header fade-in">
-        <h2>Projects &amp; Demos</h2>
-        <span class="section-badge">Built with AI</span>
+<script>
+(function() {
+  'use strict';
+
+  /* ── DATA ── */
+  const TOOLS = [
+    { id: 'git',          name: 'git',          phase: 'Foundation',     icon: 'git' },
+    { id: 'node',         name: 'node',         phase: 'Foundation',     icon: 'node' },
+    { id: 'gh',           name: 'gh',           phase: 'Standalone',     icon: 'github' },
+    { id: 'claude-code',  name: 'claude-code',  phase: 'Standalone',     icon: 'anthropic' },
+    { id: 'vercel',       name: 'vercel',       phase: 'Deploy',         icon: 'vercel' },
+    { id: 'cloudflare',   name: 'cloudflare',   phase: 'Deploy',         icon: 'cloudflare' },
+    { id: 'supabase',     name: 'supabase',     phase: 'Backend',        icon: 'supabase' },
+    { id: 'docker',       name: 'docker',       phase: 'Container',      icon: 'docker' },
+    { id: 'aws',          name: 'aws',          phase: 'Cloud',          icon: 'aws' },
+    { id: 'az',           name: 'az',           phase: 'Cloud',          icon: 'azure' },
+    { id: 'gcloud',       name: 'gcloud',       phase: 'Cloud',          icon: 'googlecloud' },
+    { id: 'python',       name: 'python',       phase: 'Runtime',        icon: 'python' },
+    { id: 'bun',          name: 'bun',          phase: 'Runtime',        icon: 'bun' },
+    { id: 'rust',         name: 'rust',         phase: 'Runtime',        icon: 'rust' },
+    { id: 'terraform',    name: 'terraform',    phase: 'Infrastructure', icon: 'terraform' },
+    { id: 'kubectl',      name: 'kubectl',      phase: 'Infrastructure', icon: 'kubectl' },
+    { id: 'tabby',        name: 'tabby',        phase: 'App',            icon: 'tabby' },
+    { id: 'whisperflow',  name: 'whisperflow',  phase: 'App',            icon: 'whisperflow' }
+  ];
+
+  const SKILLS = [
+    { id: '3d-animation-creator', name: '3D Animation Creator', desc: 'Scroll-driven video websites',                          tag: 'Video',   tagClass: 'video' },
+    { id: 'image-generator',      name: 'Image Generator',      desc: 'Coordinated prompt sets for product visuals',            tag: 'Image',   tagClass: 'image' },
+    { id: 'gemini-image-gen',     name: 'Gemini Image Generation', desc: 'Multi-model AI image gen via Vertex AI',              tag: 'Image',   tagClass: 'image' },
+    { id: 'linkedin-post-writer', name: 'LinkedIn Post Writer',  desc: 'Story-driven launch announcements',                     tag: 'Content', tagClass: 'content' }
+  ];
+
+  const PRESETS = {
+    'dannys-stack': ['node','git','gh','claude-code','vercel','supabase','cloudflare','tabby'],
+    'ai-builder':   ['node','git','gh','claude-code','gcloud','vercel','supabase','cloudflare','whisperflow'],
+    'frontend-dev': ['node','git','gh','vercel','cloudflare'],
+    'cloud-ops':    ['git','gh','aws','az','gcloud'],
+    'full-stack':   TOOLS.map(t => t.id)
+  };
+
+  let selectedTools  = new Set();
+  let selectedSkills = new Set();
+  let currentOS      = 'mac';
+
+  /* ── RENDER: Included grid (Explore) ── */
+  const includedGrid = document.getElementById('includedGrid');
+  TOOLS.forEach(tool => {
+    const card = document.createElement('div');
+    card.className = 'included-card';
+    card.innerHTML = `
+      <img src="assets/icons/${tool.icon}.svg" alt="${tool.name}">
+      <div class="tool-name">${tool.name}</div>
+      <div class="tool-phase">${tool.phase}</div>
+    `;
+    includedGrid.appendChild(card);
+  });
+
+  /* ── RENDER: Tool picker grid (Builder) ── */
+  const toolGrid = document.getElementById('toolGrid');
+  TOOLS.forEach(tool => {
+    const card = document.createElement('div');
+    card.className = 'tool-card';
+    card.dataset.tool = tool.id;
+    card.innerHTML = `
+      <div class="tool-check"><i class="fa-solid fa-check"></i></div>
+      <img src="assets/icons/${tool.icon}.svg" alt="${tool.name}">
+      <div class="tool-info">
+        <div class="tool-name">${tool.name}</div>
+        <div class="tool-phase">${tool.phase}</div>
       </div>
+    `;
+    card.addEventListener('click', () => toggleTool(tool.id));
+    toolGrid.appendChild(card);
+  });
 
-      <div class="projects-grid">
-        <div class="project-card fade-in">
-          <div class="project-img"><i class="fas fa-terminal"></i></div>
-          <div class="project-body">
-            <h3>BundleDownload</h3>
-            <p>One-command developer tool installer with animated landing page.</p>
-            <a href="https://bundledownload.dev" target="_blank" class="project-link">View Site &rarr;</a>
-          </div>
-        </div>
-
-        <div class="project-card fade-in">
-          <div class="project-img"><i class="fas fa-scroll"></i></div>
-          <div class="project-body">
-            <h3>Scroll-Stop Builder</h3>
-            <p>Apple-style scroll-driven video websites generated from a single video file.</p>
-            <span class="project-link disabled">Coming Soon</span>
-          </div>
-        </div>
-
-        <div class="project-card fade-in">
-          <div class="project-img"><i class="fas fa-robot"></i></div>
-          <div class="project-body">
-            <h3>OpenClaw Dashboard</h3>
-            <p>Fleet management interface for distributed AI agent operations.</p>
-            <span class="project-link" style="opacity:0.5; cursor:default;">Coming Soon</span>
-          </div>
-        </div>
+  /* ── RENDER: Skill picker grid (Builder) ── */
+  const skillPickerGrid = document.getElementById('skillPickerGrid');
+  SKILLS.forEach(skill => {
+    const card = document.createElement('div');
+    card.className = 'skill-pick-card';
+    card.dataset.skill = skill.id;
+    card.innerHTML = `
+      <div class="skill-check"><i class="fa-solid fa-check"></i></div>
+      <div class="skill-info">
+        <h4>${skill.name}</h4>
+        <p>${skill.desc}</p>
+        <span class="skill-tag ${skill.tagClass}">${skill.tag}</span>
       </div>
-    </div>
-  </section>
+    `;
+    card.addEventListener('click', () => toggleSkill(skill.id));
+    skillPickerGrid.appendChild(card);
+  });
 
-  <!-- FOOTER -->
-  <footer class="site-footer">
-    <div class="container">
-      <div class="footer-inner">
-        <div class="footer-left">Built by Danny Gardner</div>
-        <div class="footer-links">
-          <a href="https://dannygardner.me" target="_blank">Portfolio</a>
-          <a href="https://github.com/dangardner" target="_blank">GitHub</a>
-          <a href="https://bundledownload.dev" target="_blank">BundleDownload</a>
-        </div>
-      </div>
-      <div class="footer-copy">&copy; 2026</div>
-    </div>
-  </footer>
+  /* ── TOGGLE LOGIC ── */
+  function toggleTool(id) {
+    if (selectedTools.has(id)) selectedTools.delete(id);
+    else selectedTools.add(id);
+    syncToolUI();
+    syncPresetUI();
+    updateOutput();
+  }
 
-  <script>
-    // ── Copy to clipboard ──
-    function copyCmd(el) {
-      const cmdText = el.querySelector('.cmd-text') || el.querySelector('.install-cmd');
-      const text = cmdText ? cmdText.textContent.trim() : el.textContent.replace('Copied!', '').trim();
-      navigator.clipboard.writeText(text).then(() => {
-        el.classList.add('copied');
-        setTimeout(() => el.classList.remove('copied'), 1500);
-      });
+  function toggleSkill(id) {
+    if (selectedSkills.has(id)) selectedSkills.delete(id);
+    else selectedSkills.add(id);
+    syncSkillUI();
+    updateOutput();
+  }
+
+  function syncToolUI() {
+    toolGrid.querySelectorAll('.tool-card').forEach(card => {
+      card.classList.toggle('selected', selectedTools.has(card.dataset.tool));
+    });
+  }
+
+  function syncSkillUI() {
+    skillPickerGrid.querySelectorAll('.skill-pick-card').forEach(card => {
+      card.classList.toggle('selected', selectedSkills.has(card.dataset.skill));
+    });
+    document.getElementById('skillCountBadge').textContent = selectedSkills.size + ' selected';
+  }
+
+  function syncPresetUI() {
+    document.querySelectorAll('#presetBar .preset-btn[data-preset]').forEach(btn => {
+      const preset = btn.dataset.preset;
+      if (preset === 'clear') return;
+      const presetSet = new Set(PRESETS[preset]);
+      const isMatch = presetSet.size === selectedTools.size &&
+                      [...presetSet].every(t => selectedTools.has(t));
+      btn.classList.toggle('active', isMatch);
+    });
+  }
+
+  /* ── PRESETS ── */
+  document.getElementById('presetBar').addEventListener('click', e => {
+    const btn = e.target.closest('.preset-btn');
+    if (!btn) return;
+    const preset = btn.dataset.preset;
+    if (preset === 'clear') {
+      selectedTools.clear();
+    } else if (PRESETS[preset]) {
+      selectedTools = new Set(PRESETS[preset]);
     }
+    syncToolUI();
+    syncPresetUI();
+    updateOutput();
+  });
 
-    // ── Skill filtering ──
-    document.querySelectorAll('.filter-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        const filter = btn.dataset.filter;
-        document.querySelectorAll('.skill-card').forEach(card => {
-          if (filter === 'all' || card.dataset.category === filter) {
-            card.classList.remove('hidden');
-          } else {
-            card.classList.add('hidden');
-          }
-        });
-      });
+  /* ── OUTPUT ── */
+  function updateOutput() {
+    const tc = selectedTools.size;
+    const sc = selectedSkills.size;
+    document.getElementById('outputCounter').textContent =
+      `${tc} tool${tc !== 1 ? 's' : ''}, ${sc} skill${sc !== 1 ? 's' : ''} selected`;
+
+    const toolArgs = [...selectedTools].join(' ');
+    const codeEl = document.getElementById('outputCode');
+
+    if (currentOS === 'mac') {
+      codeEl.textContent = toolArgs
+        ? `curl -fsSL https://ai.dannygardner.me/install.sh | bash -s -- ${toolArgs}`
+        : `curl -fsSL https://ai.dannygardner.me/install.sh | bash -s --`;
+    } else {
+      codeEl.textContent = toolArgs
+        ? `powershell -c "irm https://ai.dannygardner.me/install.ps1 | iex" ${toolArgs}`
+        : `powershell -c "irm https://ai.dannygardner.me/install.ps1 | iex"`;
+    }
+  }
+
+  /* ── OS TABS ── */
+  document.querySelectorAll('.os-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.os-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      currentOS = tab.dataset.os;
+      updateOutput();
     });
+  });
 
-    // ── Scroll animations (Intersection Observer) ──
-    const fadeObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, { threshold: 0.1 });
-
-    document.querySelectorAll('.fade-in').forEach(el => fadeObserver.observe(el));
-
-    // ── Active nav tracking ──
-    const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('.nav-links a[data-section]');
-
-    const sectionObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const id = entry.target.id;
-          navLinks.forEach(link => {
-            link.classList.toggle('active', link.dataset.section === id);
-          });
-        }
-      });
-    }, { threshold: 0.2, rootMargin: '-64px 0px -40% 0px' });
-
-    sections.forEach(s => sectionObserver.observe(s));
-
-    // ── Nav shadow on scroll ──
-    const nav = document.getElementById('nav');
-    window.addEventListener('scroll', () => {
-      nav.classList.toggle('scrolled', window.scrollY > 50);
-    }, { passive: true });
-
-    // ── Mobile menu ──
-    const hamburger = document.getElementById('hamburger');
-    const navLinksEl = document.getElementById('navLinks');
-
-    hamburger.addEventListener('click', () => {
-      navLinksEl.classList.toggle('open');
+  /* ── COPY COMMAND ── */
+  document.getElementById('copyCommandBtn').addEventListener('click', () => {
+    const text = document.getElementById('outputCode').textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      const btn = document.getElementById('copyCommandBtn');
+      btn.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
+      setTimeout(() => {
+        btn.innerHTML = '<i class="fa-regular fa-copy"></i> Copy Command';
+      }, 2000);
     });
+  });
 
-    // Close mobile menu on link click
-    navLinksEl.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
-        navLinksEl.classList.remove('open');
-      });
-    });
-    // ── Stack Builder ──
-    const PRESETS = {
-      'dannys-stack': ['node','git','gh','claude-code','vercel','supabase','wrangler','tabby'],
-      'ai-builder': ['node','git','gh','claude-code','gcloud','vercel','supabase','wrangler','whisperflow'],
-      'frontend-dev': ['node','git','gh','vercel','wrangler'],
-      'cloud-ops': ['git','gh','aws','az','gcloud'],
-      'full-stack': ['git','node','gh','claude-code','aws','az','gcloud','vercel','wrangler','supabase','tabby','whisperflow'],
-      'none': []
+  /* ── DOWNLOAD CONFIG ── */
+  document.getElementById('downloadConfigBtn').addEventListener('click', () => {
+    const config = {
+      tools: [...selectedTools],
+      skills: [...selectedSkills]
     };
+    const blob = new Blob([JSON.stringify(config, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'bundledownload.json';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  });
 
-    let builderOS = 'mac';
+  /* ── TAB SWITCHING ── */
+  function switchTab(tabName) {
+    document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
+    document.querySelectorAll('.nav-tab').forEach(nt => nt.classList.remove('active'));
 
-    function toggleTool(el) {
-      el.classList.toggle('selected');
-      clearPresetButtons();
-      updateBuilder();
-    }
+    const target = document.getElementById('tab-' + tabName);
+    if (target) target.classList.add('active');
 
-    function clearPresetButtons() {
-      document.querySelectorAll('.builder-quick-btn').forEach(b => b.classList.remove('active'));
-    }
+    document.querySelectorAll(`.nav-tab[data-tab="${tabName}"]`).forEach(nt => nt.classList.add('active'));
 
-    function applyPreset(tools) {
-      document.querySelectorAll('.builder-tool').forEach(el => {
-        el.classList.toggle('selected', tools.includes(el.dataset.tool));
-      });
-      updateBuilder();
-    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    history.replaceState(null, '', '#' + tabName);
 
-    document.querySelectorAll('.builder-quick-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        clearPresetButtons();
-        btn.classList.add('active');
-        applyPreset(PRESETS[btn.dataset.preset] || []);
+    // Close mobile menu
+    document.getElementById('mobileMenu').classList.remove('open');
+  }
+
+  document.querySelectorAll('.nav-tab').forEach(tab => {
+    tab.addEventListener('click', () => switchTab(tab.dataset.tab));
+  });
+
+  // Hero "Start Building" button
+  document.getElementById('heroBuilderBtn').addEventListener('click', () => switchTab('builder'));
+
+  // Workflow "Get these skills" links
+  window.switchToBuilder = function(e) {
+    e.preventDefault();
+    switchTab('builder');
+  };
+
+  // Hash on load
+  const hash = window.location.hash.replace('#', '');
+  if (hash === 'builder' || hash === 'explore') {
+    switchTab(hash);
+  }
+
+  /* ── NAV SCROLL SHADOW ── */
+  window.addEventListener('scroll', () => {
+    document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 10);
+  }, { passive: true });
+
+  /* ── HAMBURGER ── */
+  document.getElementById('hamburger').addEventListener('click', () => {
+    document.getElementById('mobileMenu').classList.toggle('open');
+  });
+
+  /* ── SKILL CARD EXPAND (EXPLORE) ── */
+  document.querySelectorAll('#skillsGrid .skill-card').forEach(card => {
+    card.addEventListener('click', () => {
+      card.classList.toggle('expanded');
+    });
+  });
+
+  /* ── SKILL FILTER (EXPLORE) ── */
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      document.querySelectorAll('#skillsGrid .skill-card').forEach(card => {
+        if (filter === 'all' || card.dataset.category === filter) {
+          card.style.display = '';
+        } else {
+          card.style.display = 'none';
+        }
       });
     });
+  });
 
-    function switchBuilderOS(os) {
-      builderOS = os;
-      document.querySelectorAll('.builder-os-tab').forEach(t => t.classList.remove('active'));
-      document.querySelector(`.builder-os-tab:${os === 'mac' ? 'first' : 'last'}-child`).classList.add('active');
-      updateBuilder();
-    }
+  /* ── COPY PROMPT (WORKFLOW) ── */
+  window.copyText = function(btn) {
+    const code = btn.parentElement.querySelector('code');
+    navigator.clipboard.writeText(code.textContent).then(() => {
+      btn.innerHTML = '<i class="fa-solid fa-check"></i>';
+      setTimeout(() => {
+        btn.innerHTML = '<i class="fa-regular fa-copy"></i>';
+      }, 2000);
+    });
+  };
 
-    function getSelectedTools() {
-      return Array.from(document.querySelectorAll('.builder-tool.selected')).map(el => el.dataset.tool);
-    }
-
-    function updateBuilder() {
-      const tools = getSelectedTools();
-      const count = tools.length;
-      document.getElementById('builderCount').textContent = count;
-
-      if (count === 0) {
-        document.getElementById('builderEmpty').style.display = '';
-        document.getElementById('builderResult').style.display = 'none';
-        return;
+  /* ── INTERSECTION OBSERVER ── */
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
       }
+    });
+  }, { threshold: 0.1 });
 
-      document.getElementById('builderEmpty').style.display = 'none';
-      document.getElementById('builderResult').style.display = '';
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-      const toolList = tools.join(' ');
-      let cmd;
-      if (builderOS === 'mac') {
-        cmd = `curl -fsSL https://ai.dannygardner.me/install.sh | bash -s -- ${toolList}`;
-      } else {
-        cmd = `powershell -c "irm https://ai.dannygardner.me/install.ps1 | iex" ${toolList}`;
-      }
-      document.getElementById('builderCmdText').textContent = cmd;
-    }
+})();
+</script>
 
-    function downloadConfig() {
-      const tools = getSelectedTools();
-      if (tools.length === 0) return;
-      const config = {
-        name: 'my-stack',
-        description: 'Custom tool selection from ai.dannygardner.me',
-        tools: tools
-      };
-      const blob = new Blob([JSON.stringify(config, null, 2)], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'bundledownload.json';
-      a.click();
-      URL.revokeObjectURL(url);
-    }
-  </script>
 </body>
 </html>
