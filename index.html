@@ -637,6 +637,179 @@
 
     .preset-cmd.copied .copied-toast { opacity: 1; }
 
+    /* ── STACK BUILDER ── */
+    .builder-section { background: var(--bg-secondary); }
+
+    .builder-quick {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+    }
+    .builder-quick-btn {
+      font-family: var(--font);
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 0.4rem 0.9rem;
+      border-radius: 20px;
+      border: 1.5px solid var(--soft-tan);
+      background: var(--card-bg);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .builder-quick-btn:hover { border-color: var(--coral-accent); color: var(--coral-accent); }
+    .builder-quick-btn.active {
+      background: var(--coral-accent);
+      border-color: var(--coral-accent);
+      color: #fff;
+    }
+
+    .builder-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+    }
+
+    .builder-tool {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.85rem 1rem;
+      background: var(--card-bg);
+      border: 2px solid var(--soft-tan);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      user-select: none;
+    }
+    .builder-tool:hover { border-color: var(--warm-brown); }
+    .builder-tool.selected {
+      border-color: var(--coral-accent);
+      background: rgba(255,107,107,0.05);
+    }
+    .builder-tool .bt-check {
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      border: 2px solid var(--soft-tan);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.2s ease;
+      font-size: 0.65rem;
+      color: transparent;
+    }
+    .builder-tool.selected .bt-check {
+      background: var(--coral-accent);
+      border-color: var(--coral-accent);
+      color: #fff;
+    }
+    .builder-tool img { width: 24px; height: 24px; flex-shrink: 0; }
+    .builder-tool .bt-info { flex: 1; min-width: 0; }
+    .builder-tool .bt-name {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    .builder-tool .bt-phase {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--warm-brown);
+    }
+
+    .builder-count {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+    }
+    .builder-count span { color: var(--coral-accent); }
+
+    .builder-output {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 1.5rem;
+      box-shadow: 0 6px 25px rgba(139,115,85,0.1);
+    }
+
+    .builder-os-tabs {
+      display: flex;
+      gap: 0;
+      margin-bottom: 1rem;
+    }
+    .builder-os-tab {
+      font-family: var(--font);
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 0.5rem 1.2rem;
+      border: 1.5px solid var(--soft-tan);
+      background: transparent;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .builder-os-tab:first-child { border-radius: 8px 0 0 8px; }
+    .builder-os-tab:last-child { border-radius: 0 8px 8px 0; border-left: none; }
+    .builder-os-tab.active {
+      background: var(--text-primary);
+      border-color: var(--text-primary);
+      color: var(--vanilla-cream);
+    }
+
+    .builder-cmd {
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 0.8rem;
+      background: var(--text-primary);
+      color: var(--vanilla-cream);
+      padding: 1rem 1.2rem;
+      border-radius: 10px;
+      line-height: 1.6;
+      word-break: break-all;
+      cursor: pointer;
+      position: relative;
+      transition: box-shadow 0.3s ease;
+      margin-bottom: 1rem;
+    }
+    .builder-cmd:hover { box-shadow: 0 4px 16px rgba(44,36,23,0.3); }
+    .builder-cmd .copied-toast {
+      position: absolute; top: 50%; right: 1rem;
+      transform: translateY(-50%);
+      font-size: 0.7rem; font-weight: 600;
+      color: var(--coral-accent); opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .builder-cmd.copied .copied-toast { opacity: 1; }
+
+    .builder-empty {
+      text-align: center;
+      padding: 1.5rem;
+      color: var(--warm-brown);
+      font-size: 0.9rem;
+      font-style: italic;
+    }
+
+    .builder-actions {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 0.5rem;
+    }
+    .builder-actions .btn {
+      font-size: 0.8rem;
+      padding: 0.6rem 1.2rem;
+    }
+
+    @media (max-width: 900px) {
+      .builder-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .builder-grid { grid-template-columns: repeat(2, 1fr); }
+      .builder-tool .bt-name { font-size: 0.78rem; }
+    }
+
     /* ── OPENCLAW ── */
     .openclaw-section { background: var(--bg-secondary); }
 
@@ -1039,6 +1212,7 @@
       <ul class="nav-links" id="navLinks">
         <li><a href="#skills" data-section="skills">Skills</a></li>
         <li><a href="#tools" data-section="tools">Tools</a></li>
+        <li><a href="#builder" data-section="builder">Builder</a></li>
         <li><a href="#openclaw" data-section="openclaw">OpenClaw</a></li>
         <li><a href="#workflows" data-section="workflows">Workflows</a></li>
         <li><a href="#projects" data-section="projects">Projects</a></li>
@@ -1293,6 +1467,108 @@
     </div>
   </section>
 
+  <!-- STACK BUILDER -->
+  <section class="builder-section" id="builder">
+    <div class="container">
+      <div class="section-header fade-in">
+        <h2>Build Your Stack</h2>
+        <span class="section-badge">Pick & install</span>
+      </div>
+
+      <div class="builder-quick fade-in">
+        <button class="builder-quick-btn" data-preset="dannys-stack">danny's-stack</button>
+        <button class="builder-quick-btn" data-preset="ai-builder">ai-builder</button>
+        <button class="builder-quick-btn" data-preset="frontend-dev">frontend-dev</button>
+        <button class="builder-quick-btn" data-preset="cloud-ops">cloud-ops</button>
+        <button class="builder-quick-btn" data-preset="full-stack">full-stack</button>
+        <button class="builder-quick-btn" data-preset="none">Clear all</button>
+      </div>
+
+      <div class="builder-grid fade-in">
+        <div class="builder-tool" data-tool="git" onclick="toggleTool(this)">
+          <div class="bt-check"><i class="fas fa-check"></i></div>
+          <img src="assets/icons/git.svg" alt="Git">
+          <div class="bt-info"><div class="bt-name">Git</div><div class="bt-phase">Foundation</div></div>
+        </div>
+        <div class="builder-tool" data-tool="node" onclick="toggleTool(this)">
+          <div class="bt-check"><i class="fas fa-check"></i></div>
+          <img src="assets/icons/node.svg" alt="Node.js">
+          <div class="bt-info"><div class="bt-name">Node.js</div><div class="bt-phase">Foundation</div></div>
+        </div>
+        <div class="builder-tool" data-tool="gh" onclick="toggleTool(this)">
+          <div class="bt-check"><i class="fas fa-check"></i></div>
+          <img src="assets/icons/github.svg" alt="GitHub CLI">
+          <div class="bt-info"><div class="bt-name">GitHub CLI</div><div class="bt-phase">Standalone</div></div>
+        </div>
+        <div class="builder-tool" data-tool="claude-code" onclick="toggleTool(this)">
+          <div class="bt-check"><i class="fas fa-check"></i></div>
+          <img src="assets/icons/anthropic.svg" alt="Claude Code">
+          <div class="bt-info"><div class="bt-name">Claude Code</div><div class="bt-phase">Standalone</div></div>
+        </div>
+        <div class="builder-tool" data-tool="vercel" onclick="toggleTool(this)">
+          <div class="bt-check"><i class="fas fa-check"></i></div>
+          <img src="assets/icons/vercel.svg" alt="Vercel">
+          <div class="bt-info"><div class="bt-name">Vercel CLI</div><div class="bt-phase">NPM Tool</div></div>
+        </div>
+        <div class="builder-tool" data-tool="wrangler" onclick="toggleTool(this)">
+          <div class="bt-check"><i class="fas fa-check"></i></div>
+          <img src="assets/icons/cloudflare.svg" alt="Wrangler">
+          <div class="bt-info"><div class="bt-name">Wrangler</div><div class="bt-phase">NPM Tool</div></div>
+        </div>
+        <div class="builder-tool" data-tool="supabase" onclick="toggleTool(this)">
+          <div class="bt-check"><i class="fas fa-check"></i></div>
+          <img src="assets/icons/supabase.svg" alt="Supabase">
+          <div class="bt-info"><div class="bt-name">Supabase CLI</div><div class="bt-phase">NPM Tool</div></div>
+        </div>
+        <div class="builder-tool" data-tool="aws" onclick="toggleTool(this)">
+          <div class="bt-check"><i class="fas fa-check"></i></div>
+          <img src="assets/icons/aws.svg" alt="AWS">
+          <div class="bt-info"><div class="bt-name">AWS CLI</div><div class="bt-phase">Standalone</div></div>
+        </div>
+        <div class="builder-tool" data-tool="az" onclick="toggleTool(this)">
+          <div class="bt-check"><i class="fas fa-check"></i></div>
+          <img src="assets/icons/azure.svg" alt="Azure">
+          <div class="bt-info"><div class="bt-name">Azure CLI</div><div class="bt-phase">Standalone</div></div>
+        </div>
+        <div class="builder-tool" data-tool="gcloud" onclick="toggleTool(this)">
+          <div class="bt-check"><i class="fas fa-check"></i></div>
+          <img src="assets/icons/googlecloud.svg" alt="Google Cloud">
+          <div class="bt-info"><div class="bt-name">Google Cloud</div><div class="bt-phase">Standalone</div></div>
+        </div>
+        <div class="builder-tool" data-tool="tabby" onclick="toggleTool(this)">
+          <div class="bt-check"><i class="fas fa-check"></i></div>
+          <img src="assets/icons/tabby.svg" alt="Tabby">
+          <div class="bt-info"><div class="bt-name">Tabby</div><div class="bt-phase">App</div></div>
+        </div>
+        <div class="builder-tool" data-tool="whisperflow" onclick="toggleTool(this)">
+          <div class="bt-check"><i class="fas fa-check"></i></div>
+          <img src="assets/icons/whisperflow.svg" alt="WhisperFlow">
+          <div class="bt-info"><div class="bt-name">WhisperFlow</div><div class="bt-phase">App</div></div>
+        </div>
+      </div>
+
+      <div class="builder-count fade-in"><span id="builderCount">0</span> tools selected</div>
+
+      <div class="builder-output fade-in" id="builderOutput">
+        <div class="builder-empty" id="builderEmpty">Select tools above to generate your install command</div>
+        <div id="builderResult" style="display:none;">
+          <div class="builder-os-tabs">
+            <button class="builder-os-tab active" onclick="switchBuilderOS('mac')">Mac / Linux</button>
+            <button class="builder-os-tab" onclick="switchBuilderOS('win')">Windows</button>
+          </div>
+          <div class="builder-cmd" id="builderCmd" onclick="copyCmd(this)">
+            <span class="cmd-text" id="builderCmdText"></span>
+            <span class="copied-toast">Copied!</span>
+          </div>
+          <div class="builder-actions">
+            <button class="btn btn-coral" onclick="downloadConfig()"><i class="fas fa-download"></i> Download Config JSON</button>
+            <button class="btn btn-outline" onclick="copyCmd(document.getElementById('builderCmd'))"><i class="fas fa-copy"></i> Copy Command</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- OPENCLAW -->
   <section class="openclaw-section" id="openclaw">
     <div class="container">
@@ -1538,6 +1814,94 @@
         navLinksEl.classList.remove('open');
       });
     });
+    // ── Stack Builder ──
+    const PRESETS = {
+      'dannys-stack': ['node','git','gh','claude-code','vercel','supabase','wrangler','tabby'],
+      'ai-builder': ['node','git','gh','claude-code','gcloud','vercel','supabase','wrangler','whisperflow'],
+      'frontend-dev': ['node','git','gh','vercel','wrangler'],
+      'cloud-ops': ['git','gh','aws','az','gcloud'],
+      'full-stack': ['git','node','gh','claude-code','aws','az','gcloud','vercel','wrangler','supabase','tabby','whisperflow'],
+      'none': []
+    };
+
+    let builderOS = 'mac';
+
+    function toggleTool(el) {
+      el.classList.toggle('selected');
+      clearPresetButtons();
+      updateBuilder();
+    }
+
+    function clearPresetButtons() {
+      document.querySelectorAll('.builder-quick-btn').forEach(b => b.classList.remove('active'));
+    }
+
+    function applyPreset(tools) {
+      document.querySelectorAll('.builder-tool').forEach(el => {
+        el.classList.toggle('selected', tools.includes(el.dataset.tool));
+      });
+      updateBuilder();
+    }
+
+    document.querySelectorAll('.builder-quick-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        clearPresetButtons();
+        btn.classList.add('active');
+        applyPreset(PRESETS[btn.dataset.preset] || []);
+      });
+    });
+
+    function switchBuilderOS(os) {
+      builderOS = os;
+      document.querySelectorAll('.builder-os-tab').forEach(t => t.classList.remove('active'));
+      document.querySelector(`.builder-os-tab:${os === 'mac' ? 'first' : 'last'}-child`).classList.add('active');
+      updateBuilder();
+    }
+
+    function getSelectedTools() {
+      return Array.from(document.querySelectorAll('.builder-tool.selected')).map(el => el.dataset.tool);
+    }
+
+    function updateBuilder() {
+      const tools = getSelectedTools();
+      const count = tools.length;
+      document.getElementById('builderCount').textContent = count;
+
+      if (count === 0) {
+        document.getElementById('builderEmpty').style.display = '';
+        document.getElementById('builderResult').style.display = 'none';
+        return;
+      }
+
+      document.getElementById('builderEmpty').style.display = 'none';
+      document.getElementById('builderResult').style.display = '';
+
+      const toolList = tools.join(' ');
+      let cmd;
+      if (builderOS === 'mac') {
+        cmd = `curl -fsSL https://ai.dannygardner.me/install.sh | bash -s -- ${toolList}`;
+      } else {
+        cmd = `powershell -c "irm https://ai.dannygardner.me/install.ps1 | iex" ${toolList}`;
+      }
+      document.getElementById('builderCmdText').textContent = cmd;
+    }
+
+    function downloadConfig() {
+      const tools = getSelectedTools();
+      if (tools.length === 0) return;
+      const config = {
+        name: 'my-stack',
+        description: 'Custom tool selection from ai.dannygardner.me',
+        tools: tools
+      };
+      const blob = new Blob([JSON.stringify(config, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'bundledownload.json';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
   </script>
 </body>
 </html>
