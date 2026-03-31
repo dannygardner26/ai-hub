@@ -919,6 +919,111 @@
       transform: translateY(-2px);
     }
 
+    /* ── QUICK TIPS ── */
+    .tips-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+    }
+
+    .tip-card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      box-shadow: 0 4px 16px rgba(139,115,85,0.08);
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      transition: all 0.3s ease;
+      border-left: 3px solid transparent;
+    }
+    .tip-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(139,115,85,0.12);
+    }
+    .tip-card.cat-essential { border-left-color: var(--coral-accent); }
+    .tip-card.cat-prompting { border-left-color: var(--sage-green); }
+    .tip-card.cat-workflow { border-left-color: var(--warm-gold); }
+    .tip-card.cat-advanced { border-left-color: var(--sunset-orange); }
+    .tip-card.cat-config { border-left-color: var(--deep-brown); }
+
+    .tip-icon {
+      font-size: 1.1rem;
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      background: var(--warm-beige);
+      color: var(--warm-brown);
+    }
+
+    .tip-body { flex: 1; min-width: 0; }
+    .tip-title {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.25rem;
+    }
+    .tip-desc {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+    .tip-desc code {
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 0.75rem;
+      background: var(--warm-beige);
+      padding: 0.1rem 0.4rem;
+      border-radius: 4px;
+      color: var(--deep-brown);
+    }
+
+    .tip-category-header {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 1.5rem 0 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .tip-category-header .cat-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+    .tip-category-header:first-child { padding-top: 0; }
+
+    .tips-filter {
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+    }
+    .tips-filter-btn {
+      font-family: var(--font);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.35rem 0.85rem;
+      border-radius: 20px;
+      border: 1.5px solid var(--soft-tan);
+      background: transparent;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+    .tips-filter-btn:hover { border-color: var(--coral-accent); color: var(--coral-accent); }
+    .tips-filter-btn.active { background: var(--coral-accent); border-color: var(--coral-accent); color: #fff; }
+
+    @media (max-width: 600px) {
+      .tip-card { padding: 1rem 1.15rem; gap: 0.75rem; }
+      .tip-icon { width: 30px; height: 30px; font-size: 0.9rem; }
+    }
+
     /* ── FOOTER ── */
     .footer {
       background: var(--deep-brown);
@@ -1055,6 +1160,7 @@
     <div class="nav-center">
       <button class="nav-tab active" data-tab="explore">Explore</button>
       <button class="nav-tab" data-tab="builder">Builder</button>
+      <button class="nav-tab" data-tab="tips">Quick Tips</button>
     </div>
     <a class="nav-external" href="https://dannygardner.me" target="_blank" rel="noopener">dannygardner.me &#8599;</a>
     <button class="hamburger" id="hamburger" aria-label="Toggle menu">
@@ -1066,6 +1172,7 @@
 <div class="mobile-menu" id="mobileMenu">
   <button class="nav-tab active" data-tab="explore">Explore</button>
   <button class="nav-tab" data-tab="builder">Builder</button>
+  <button class="nav-tab" data-tab="tips">Quick Tips</button>
   <a class="nav-external" href="https://dannygardner.me" target="_blank" rel="noopener" style="font-size:0.9rem;color:var(--warm-brown);text-decoration:none;font-weight:600;">dannygardner.me &#8599;</a>
 </div>
 
@@ -1328,6 +1435,190 @@
     </div>
   </div>
 
+</div>
+
+<!-- ════════════════════ TIPS TAB ════════════════════ -->
+<div class="tab-content" id="tab-tips">
+  <section style="padding:5rem 0 2rem;">
+    <div class="container">
+      <div class="section-header fade-in">
+        <h2>Quick Tips</h2>
+        <span class="section-badge">Claude Code cheat sheet</span>
+      </div>
+      <p style="color:var(--text-secondary);margin-bottom:1.5rem;max-width:600px;" class="fade-in">Practical tips for getting the most out of Claude Code. Copy any command and try it.</p>
+
+      <div class="tips-filter fade-in">
+        <button class="tips-filter-btn active" data-tipcat="all">All</button>
+        <button class="tips-filter-btn" data-tipcat="essential">Essential</button>
+        <button class="tips-filter-btn" data-tipcat="prompting">Prompting</button>
+        <button class="tips-filter-btn" data-tipcat="workflow">Workflow</button>
+        <button class="tips-filter-btn" data-tipcat="advanced">Advanced</button>
+        <button class="tips-filter-btn" data-tipcat="config">Config</button>
+      </div>
+
+      <div class="tips-grid fade-in">
+        <!-- ESSENTIAL -->
+        <div class="tip-category-header" data-tipcat="essential"><span class="cat-dot" style="background:var(--coral-accent)"></span> Essential</div>
+
+        <div class="tip-card cat-essential" data-tipcat="essential">
+          <div class="tip-icon"><i class="fas fa-terminal"></i></div>
+          <div class="tip-body"><div class="tip-title">Run shell commands inline</div>
+          <div class="tip-desc">Type <code>! command</code> in the prompt to run any shell command without leaving the conversation. Output lands right in context.</div></div>
+        </div>
+
+        <div class="tip-card cat-essential" data-tipcat="essential">
+          <div class="tip-icon"><i class="fas fa-forward"></i></div>
+          <div class="tip-body"><div class="tip-title">Use /fast for speed</div>
+          <div class="tip-desc">Toggle <code>/fast</code> for faster output on the same model. Great for quick edits and simple tasks where you don't need deep reasoning.</div></div>
+        </div>
+
+        <div class="tip-card cat-essential" data-tipcat="essential">
+          <div class="tip-icon"><i class="fas fa-keyboard"></i></div>
+          <div class="tip-body"><div class="tip-title">Escape to cancel, double-Escape to undo</div>
+          <div class="tip-desc">Press <code>Esc</code> to stop generation. Press <code>Esc Esc</code> to undo the last action. Press <code>Ctrl+C</code> to cancel the current input.</div></div>
+        </div>
+
+        <div class="tip-card cat-essential" data-tipcat="essential">
+          <div class="tip-icon"><i class="fas fa-clock-rotate-left"></i></div>
+          <div class="tip-body"><div class="tip-title">Resume with /resume</div>
+          <div class="tip-desc">If Claude gets cut off or you restart, <code>/resume</code> picks up from where you left off with full conversation context.</div></div>
+        </div>
+
+        <div class="tip-card cat-essential" data-tipcat="essential">
+          <div class="tip-icon"><i class="fas fa-file-lines"></i></div>
+          <div class="tip-body"><div class="tip-title">CLAUDE.md is your instruction file</div>
+          <div class="tip-desc">Drop a <code>CLAUDE.md</code> in your repo root for project-specific rules. Claude reads it at the start of every conversation. Use <code>~/.claude/CLAUDE.md</code> for global rules.</div></div>
+        </div>
+
+        <!-- PROMPTING -->
+        <div class="tip-category-header" data-tipcat="prompting"><span class="cat-dot" style="background:var(--sage-green)"></span> Prompting</div>
+
+        <div class="tip-card cat-prompting" data-tipcat="prompting">
+          <div class="tip-icon"><i class="fas fa-bullseye"></i></div>
+          <div class="tip-body"><div class="tip-title">Be specific about what, not how</div>
+          <div class="tip-desc">Say "Add a signup form with email validation and rate limiting" not "Write a function that takes an email string and validates it using regex." Let Claude decide the implementation.</div></div>
+        </div>
+
+        <div class="tip-card cat-prompting" data-tipcat="prompting">
+          <div class="tip-icon"><i class="fas fa-layer-group"></i></div>
+          <div class="tip-body"><div class="tip-title">Stack context with @files</div>
+          <div class="tip-desc">Reference files directly: <code>@src/auth.ts look at how auth works here and add OAuth support</code>. Claude reads the file and understands the existing patterns.</div></div>
+        </div>
+
+        <div class="tip-card cat-prompting" data-tipcat="prompting">
+          <div class="tip-icon"><i class="fas fa-image"></i></div>
+          <div class="tip-body"><div class="tip-title">Paste screenshots and images</div>
+          <div class="tip-desc">Claude Code is multimodal. Paste a screenshot of a bug, a design mockup, or an error message directly into the prompt. Way faster than describing it.</div></div>
+        </div>
+
+        <div class="tip-card cat-prompting" data-tipcat="prompting">
+          <div class="tip-icon"><i class="fas fa-diagram-project"></i></div>
+          <div class="tip-body"><div class="tip-title">Start big, then narrow down</div>
+          <div class="tip-desc">"Explain the auth system in this repo" → "Now add OAuth to it" → "Add tests for the OAuth flow." Build Claude's understanding incrementally rather than dumping everything at once.</div></div>
+        </div>
+
+        <div class="tip-card cat-prompting" data-tipcat="prompting">
+          <div class="tip-icon"><i class="fas fa-ban"></i></div>
+          <div class="tip-body"><div class="tip-title">Tell Claude what NOT to do</div>
+          <div class="tip-desc">"Don't add comments. Don't refactor surrounding code. Don't install new dependencies." Constraints prevent Claude from going overboard with "improvements."</div></div>
+        </div>
+
+        <!-- WORKFLOW -->
+        <div class="tip-category-header" data-tipcat="workflow"><span class="cat-dot" style="background:var(--warm-gold)"></span> Workflow</div>
+
+        <div class="tip-card cat-workflow" data-tipcat="workflow">
+          <div class="tip-icon"><i class="fas fa-code-branch"></i></div>
+          <div class="tip-body"><div class="tip-title">Use git worktrees for parallel work</div>
+          <div class="tip-desc">Run multiple Claude instances in separate worktrees for true parallelism: <code>git worktree add ../feature-auth feat/auth</code>. Each gets its own working directory.</div></div>
+        </div>
+
+        <div class="tip-card cat-workflow" data-tipcat="workflow">
+          <div class="tip-icon"><i class="fas fa-list-check"></i></div>
+          <div class="tip-body"><div class="tip-title">Plan before building</div>
+          <div class="tip-desc">Use <code>/plan</code> to enter plan mode. Claude researches, designs, and proposes an approach before writing any code. Prevents wasted effort on wrong directions.</div></div>
+        </div>
+
+        <div class="tip-card cat-workflow" data-tipcat="workflow">
+          <div class="tip-icon"><i class="fas fa-users"></i></div>
+          <div class="tip-body"><div class="tip-title">Use subagents for parallel tasks</div>
+          <div class="tip-desc">Claude can spawn background agents for independent tasks. Ask: "Research X while you implement Y." The agents work in parallel and report back.</div></div>
+        </div>
+
+        <div class="tip-card cat-workflow" data-tipcat="workflow">
+          <div class="tip-icon"><i class="fas fa-code-compare"></i></div>
+          <div class="tip-body"><div class="tip-title">Review before commit</div>
+          <div class="tip-desc">After making changes, say "review your diff before committing." Claude will catch its own mistakes, remove debug code, and verify correctness.</div></div>
+        </div>
+
+        <div class="tip-card cat-workflow" data-tipcat="workflow">
+          <div class="tip-icon"><i class="fas fa-robot"></i></div>
+          <div class="tip-body"><div class="tip-title">Let Claude run tests</div>
+          <div class="tip-desc">"Run the tests and fix whatever fails." Claude will execute, read errors, and iterate until tests pass. Don't hand-hold the debug cycle.</div></div>
+        </div>
+
+        <!-- ADVANCED -->
+        <div class="tip-category-header" data-tipcat="advanced"><span class="cat-dot" style="background:var(--sunset-orange)"></span> Advanced</div>
+
+        <div class="tip-card cat-advanced" data-tipcat="advanced">
+          <div class="tip-icon"><i class="fas fa-bolt"></i></div>
+          <div class="tip-body"><div class="tip-title">Hooks for automation</div>
+          <div class="tip-desc">Set up hooks in <code>settings.json</code> to run commands automatically on events. Example: auto-lint after every file edit, auto-test after every commit.</div></div>
+        </div>
+
+        <div class="tip-card cat-advanced" data-tipcat="advanced">
+          <div class="tip-icon"><i class="fas fa-plug"></i></div>
+          <div class="tip-body"><div class="tip-title">MCP servers extend capabilities</div>
+          <div class="tip-desc">Connect MCP servers for Figma, Playwright, databases, and more. Claude gets direct tool access instead of working through CLI workarounds.</div></div>
+        </div>
+
+        <div class="tip-card cat-advanced" data-tipcat="advanced">
+          <div class="tip-icon"><i class="fas fa-wand-magic-sparkles"></i></div>
+          <div class="tip-body"><div class="tip-title">Custom skills are reusable workflows</div>
+          <div class="tip-desc">Create <code>~/.claude/skills/my-skill/SKILL.md</code> with a name, description, and instructions. Claude auto-triggers the skill when you mention it. Like macros for AI.</div></div>
+        </div>
+
+        <div class="tip-card cat-advanced" data-tipcat="advanced">
+          <div class="tip-icon"><i class="fas fa-clock"></i></div>
+          <div class="tip-body"><div class="tip-title">Schedule agents with triggers</div>
+          <div class="tip-desc">Use <code>/schedule</code> to create cron-based remote agents that run on a schedule. Great for recurring tasks like daily code reviews or dependency checks.</div></div>
+        </div>
+
+        <div class="tip-card cat-advanced" data-tipcat="advanced">
+          <div class="tip-icon"><i class="fas fa-memory"></i></div>
+          <div class="tip-body"><div class="tip-title">Memory persists across sessions</div>
+          <div class="tip-desc">"Remember that I prefer Tailwind over styled-components." Claude saves this to its memory system and applies it in future conversations automatically.</div></div>
+        </div>
+
+        <!-- CONFIG -->
+        <div class="tip-category-header" data-tipcat="config"><span class="cat-dot" style="background:var(--deep-brown)"></span> Config</div>
+
+        <div class="tip-card cat-config" data-tipcat="config">
+          <div class="tip-icon"><i class="fas fa-shield-halved"></i></div>
+          <div class="tip-body"><div class="tip-title">Permission modes control safety</div>
+          <div class="tip-desc">Set <code>--allowedTools</code> to control which tools Claude can use without asking. Modes: ask (default), auto-edit (file edits only), full-auto (everything).</div></div>
+        </div>
+
+        <div class="tip-card cat-config" data-tipcat="config">
+          <div class="tip-icon"><i class="fas fa-palette"></i></div>
+          <div class="tip-body"><div class="tip-title">Customize the status line</div>
+          <div class="tip-desc">Show token count, model name, or git branch in your terminal status line. Configure in <code>~/.claude/settings.json</code> under <code>statusLine</code>.</div></div>
+        </div>
+
+        <div class="tip-card cat-config" data-tipcat="config">
+          <div class="tip-icon"><i class="fas fa-key"></i></div>
+          <div class="tip-body"><div class="tip-title">Use /login to switch accounts</div>
+          <div class="tip-desc">Multiple Anthropic accounts? <code>/login</code> lets you switch between them. Use <code>/status</code> to check which account and model you're currently using.</div></div>
+        </div>
+
+        <div class="tip-card cat-config" data-tipcat="config">
+          <div class="tip-icon"><i class="fas fa-folder-tree"></i></div>
+          <div class="tip-body"><div class="tip-title">Project-level settings override global</div>
+          <div class="tip-desc">Put a <code>.claude/settings.json</code> in any project for repo-specific tool permissions, MCP servers, and hooks. Overrides your global <code>~/.claude/settings.json</code>.</div></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
 </div>
 
 <!-- ════════════════════ FOOTER ════════════════════ -->
@@ -1642,6 +1933,18 @@
   }, { threshold: 0.1 });
 
   document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // ── Tips filter ──
+  document.querySelectorAll('.tips-filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tips-filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const cat = btn.dataset.tipcat;
+      document.querySelectorAll('.tip-card, .tip-category-header').forEach(el => {
+        el.style.display = (cat === 'all' || el.dataset.tipcat === cat) ? '' : 'none';
+      });
+    });
+  });
 
 })();
 </script>
